@@ -36,12 +36,6 @@ SMODS.Joker({
 	end,
 	calculate = function(self, card, context)
 		local hpt = card.ability.extra
-        local list_of_conjs = {
-            "squareroot",
-            "difference",
-            "expodentia",
-            "naturalnum",
-        }
         local list_of_rewards = {
             function() return { dollars = hpt.money} end,
             function() return { xmult = hpt.xmult } end,
