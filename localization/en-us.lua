@@ -6,8 +6,9 @@ return {
                 text = {
                     {
                         "{C:attention}Disprove{} the following",
-                        "{C:attention}conjecture{}  to win {C:attention}a reward!{}",
-                        "{C:attention}Disprove{} the {C:attention}conjecture{} by playing a counterexample.",
+                        "{C:attention}conjecture{} to win {C:attention}a reward!{}",
+                        "{C:attention}Disprove{} the {C:attention}conjecture{} ",
+                        "by playing a counterexample.",
                         "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
                     },
                     {
@@ -26,8 +27,9 @@ return {
                 text = {
                     {
                         "{C:attention}Disprove{} the following",
-                        "{C:attention}conjecture{}  to win {C:attention}a reward!{}",
-                        "{C:attention}Disprove{} the {C:attention}conjecture{} by playing a counterexample.",
+                        "{C:attention}conjecture{} to win {C:attention}a reward!{}",
+                        "{C:attention}Disprove{} the {C:attention}conjecture{} ",
+                        "by playing a counterexample.",
                         "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
                     },
                     {
@@ -46,8 +48,9 @@ return {
                 text = {
                     {
                         "{C:attention}Disprove{} the following",
-                        "{C:attention}conjecture{}  to win {C:attention}a reward!{}",
-                        "{C:attention}Disprove{} the {C:attention}conjecture{} by playing a counterexample.",
+                        "{C:attention}conjecture{} to win {C:attention}a reward!{}",
+                        "{C:attention}Disprove{} the {C:attention}conjecture{} ",
+                        "by playing a counterexample.",
                         "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
                     },
                     {
@@ -66,8 +69,9 @@ return {
                 text = {
                     {
                         "{C:attention}Disprove{} the following",
-                        "{C:attention}conjecture{}  to win {C:attention}a reward!{}",
-                        "{C:attention}Disprove{} the {C:attention}conjecture{} by playing a counterexample.",
+                        "{C:attention}conjecture{} to win {C:attention}a reward!{}",
+                        "{C:attention}Disprove{} the {C:attention}conjecture{} ",
+                        "by playing a counterexample.",
                         "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
                     },
                     {
