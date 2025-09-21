@@ -7,8 +7,8 @@
 	"prefix": "med",
 	"main_file": "main.lua",
 	"priority": 0,
-	"badge_colour": "#8465ec",
-	"badge_text_colour": "#ffffff",
+	"badge_colour": "8465ec",
+	"badge_text_colour": "ffffff",
 	"version": "0.0.1",
 	"dependencies": [
 		"Steamodded (>=1.0.0~BETA-0711a)"

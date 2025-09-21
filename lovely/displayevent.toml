@@ -1,0 +1,90 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+              _reward and {n=G.UIT.R, config={align = "cm"}, nodes={
+                {n=G.UIT.T, config={text = localize('ph_blind_reward'), scale = 0.35, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE, shadow = not disabled}},
+                {n=G.UIT.T, config={text = string.rep(localize("$"), blind_choice.config.dollars)..'+', scale = 0.35, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}
+              }} or nil,
+'''
+position = "after"
+payload = '''
+  {n=G.UIT.R, config={align = "cm"}, nodes={
+                {n=G.UIT.T, config={text = localize('k_event'), scale = 0.3, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE, shadow = not disabled}},
+                {n=G.UIT.T, config={text = G.GAME.sajevents[jank], scale = 0.3, colour = disabled and G.C.UI.TEXT_INACTIVE or get_color_from_saj_event(G.GAME.sajevents[jank]), shadow = not disabled}}
+              }}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+function create_UIBox_blind_choice(type, run_info)
+'''
+position = "after"
+payload = '''
+local jank = 1
+  if type == 'Small' then
+    jank = 1
+  elseif type == 'Big' then
+    jank = 2
+  else
+    jank = 3
+  end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = '''
+                    delay(0.4); ease_ante(1); delay(0.4); check_for_unlock({type = 'ante_up', ante = G.GAME.round_resets.ante + 1})
+'''
+position = "at"
+payload = '''
+                    delay(0.4); ease_ante(1); delay(0.4); generate_saj_for_curante(); check_for_unlock({type = 'ante_up', ante = G.GAME.round_resets.ante + 1})
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+function Game:init_game_object()
+'''
+position = "after"
+payload = '''
+local poollllllllllll = { Shop = 3, Lab = 1} -- weights, must be integers
+local function generate_shop_adjacent_event()
+    local table = {}
+    for k, v in pairs(poollllllllllll) do
+        for i = 1, v do
+            table[#table+1] = k
+        end
+    end
+    return table[math.random(#table)]
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+    local bosses_used = {}
+    for k, v in pairs(G.P_BLINDS) do 
+        if v.boss then bosses_used[k] = 0 end
+    end
+    return {
+'''
+position = "after"
+payload = '''
+sajevents = {generate_shop_adjacent_event(), generate_shop_adjacent_event(), generate_shop_adjacent_event()},
+'''
+match_indent = true

@@ -90,6 +90,7 @@ return {
     misc = {
         dictionary={
 			k_solved="Solved!",
+			k_event="Blind event: ",
         }
     }
 }
