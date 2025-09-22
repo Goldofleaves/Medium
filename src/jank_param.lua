@@ -36,7 +36,7 @@ SMODS.Scoring_Calculation({
 				SMODS.GUI.score_container({
 					type = 'chips',
 					text = 'chip_text',
-					align = 'cr',
+					align = 'cm',
 					w = 1,
 					scale = scale
 				})
