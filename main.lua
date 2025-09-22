@@ -85,3 +85,10 @@ SMODS.Atlas{
 	px = 34,
 	py = 34
 }
+
+SMODS.Atlas {
+  key = "lab_sign",
+  path = "labsign.png",
+  px = 113,py = 57,
+  frames = 4, atlas_table = 'ANIMATION_ATLAS'
+}

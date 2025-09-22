@@ -112,3 +112,62 @@ payload = '''
   end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'globals.lua'
+pattern = '''
+    --||||||||||||||||||||||||||||||
+    self.STATES = {
+'''
+position = "after"
+payload = '''
+        LAB = 1478,
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''
+              G.STATE = G.STATES.SHOP
+'''
+position = "at"
+payload = '''
+if G.GAME.current_sajevent == "Shop" then
+G.STATE = G.STATES.SHOP
+elseif G.GAME.current_sajevent == "Lab" then
+G.STATE = G.STATES.LAB
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+        if self.STATE == self.STATES.SHOP then 
+            self:update_shop(dt)
+        end
+'''
+position = "after"
+payload = '''
+        if self.STATE == self.STATES.LAB then 
+            self:update_lab(dt)
+        end
+'''
+match_indent = true
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''
+    if state == G.STATES.SHOP then 
+        ease_colour(G.C.DYN_UI.MAIN, mix_colours(G.C.RED, G.C.BLACK, 0.9))
+'''
+position = "after"
+payload = '''
+    elseif state == G.STATES.LAB then
+        ease_colour(G.C.DYN_UI.MAIN, mix_colours(G.C.GREEN, G.C.BLACK, 0.9))
+'''
+match_indent = true
+
