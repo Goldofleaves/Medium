@@ -1,0 +1,16 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+function create_UIBox_blind_choice(type, run_info)
+'''
+position = "after"
+payload = '''
+SMODS.set_scoring_calculation("med_jank")
+'''
+match_indent = true
