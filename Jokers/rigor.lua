@@ -35,6 +35,7 @@ SMODS.Joker({
 		return { key = key, vars = vars }
 	end,
 	calculate = function(self, card, context)
+        print(G.GAME.current_sajevent)
 		local hpt = card.ability.extra
         local list_of_rewards = {
             function() return { dollars = hpt.money} end,

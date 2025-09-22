@@ -91,6 +91,8 @@ return {
         dictionary={
 			k_solved="Solved!",
 			k_event="Blind event: ",
+            ui_labtext = "Merge your items!",
+            ui_lab_indication_temp = "This is the lab but i havent made anything yet so this is used as an indication"
         }
     }
 }

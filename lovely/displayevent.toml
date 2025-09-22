@@ -88,3 +88,27 @@ payload = '''
 sajevents = {generate_shop_adjacent_event(), generate_shop_adjacent_event(), generate_shop_adjacent_event()},
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+function Game:update(dt)
+'''
+position = "after"
+payload = '''
+  if G.GAME and G.GAME.round_resets and G.GAME.round_resets.loc_blind_states then
+  local shitfuck = "Shop"
+  local functgfyhjftyj = function(n)
+    local array = {Small = 1, Big = 2, Boss = 3}
+    return array[n]
+  end
+  for k, v in pairs(G.GAME.round_resets.loc_blind_states) do
+    if v == "Defeated" or v == "Current" or v == "Select" then
+      shitfuck = G.GAME.sajevents[functgfyhjftyj(k)]
+    end
+  end
+  G.GAME.current_sajevent = shitfuck
+  end
+'''
+match_indent = true
