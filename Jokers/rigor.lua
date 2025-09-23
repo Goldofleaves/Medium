@@ -1,5 +1,5 @@
 
-SMODS.Atlas{key = "conjecture", path = "conjecture.png", px = 71, py = 95}
+SMODS.Atlas{key = "mediumjokers_conjecture", path = "conjecture.png", px = 71, py = 95}
 local function uniquerandom(num)
     local result = pseudorandom("fuck", 1, 4)
     if result ~= num then
@@ -21,7 +21,7 @@ SMODS.Joker({
 		},
 	},
 	pos = {x=0,y=0},
-	atlas = "conjecture",
+	atlas = "mediumjokers_conjecture",
 	loc_vars = function(self, info_queue, card)
 		local hpt = card.ability.extra
 		local key, vars, ret

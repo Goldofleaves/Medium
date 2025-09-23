@@ -1,6 +1,12 @@
 return {
     descriptions = {
         Joker = {
+            j_med_chiptunetracker = {
+                name = "Chiptune Tracker",
+                text = {
+                    "{V:1}+#1# {}Jank",
+                    }
+                },
             j_med_rigor_1 = {
                 name = "Rigor",
                 text = {
