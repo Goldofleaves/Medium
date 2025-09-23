@@ -1,7 +1,7 @@
-local pool = { Shop = 3, Lab = 1} -- weights, must be integers
+MEDIUM.pool = { Shop = 3, Lab = 1} -- weights, must be integers
 function generate_shop_adjacent_event()
     local table = {}
-    for k, v in pairs(pool) do
+    for k, v in pairs(MEDIUM.pool) do
         for i = 1, v do
             table[#table+1] = k
         end

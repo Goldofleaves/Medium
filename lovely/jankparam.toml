@@ -5,12 +5,11 @@ priority = -1
 
 [[patches]]
 [patches.pattern]
-target = 'functions/UI_definitions.lua'
+target = 'game.lua'
 pattern = '''
-function create_UIBox_blind_choice(type, run_info)
+function Game:init_game_object()
 '''
 position = "after"
 payload = '''
-SMODS.set_scoring_calculation("med_jank")
 '''
 match_indent = true

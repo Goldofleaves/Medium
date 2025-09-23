@@ -21,24 +21,6 @@ payload = '''
 '''
 match_indent = true
 
-[[patches]]
-[patches.pattern]
-target = 'functions/UI_definitions.lua'
-pattern = '''
-function create_UIBox_HUD_blind()
-'''
-position = "after"
-payload = '''
-local jank = 1
-  if type == 'Small' then
-    jank = 1
-  elseif type == 'Big' then
-    jank = 2
-  else
-    jank = 3
-  end
-'''
-match_indent = true
 
 [[patches]]
 [patches.pattern]
@@ -53,7 +35,7 @@ position = "after"
 payload = '''
   {n=G.UIT.R, config={align = "cm"}, nodes={
                 {n=G.UIT.T, config={text = localize('k_event'), scale = 0.3, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE, shadow = true}},
-                {n=G.UIT.T, config={text = G.GAME.sajevents[jank], scale = 0.3, colour = get_color_from_saj_event(G.GAME.sajevents[jank]), shadow = true}}
+                {n=G.UIT.T, config={ref_table = G.GAME.blind, ref_value = "sajevent", scale = 0.3, colour = G.C.EDITION, shadow = true}}
               }},
 '''
 match_indent = true
@@ -97,10 +79,11 @@ function Game:init_game_object()
 '''
 position = "after"
 payload = '''
-local poollllllllllll = { Shop = 3, Lab = 1} -- weights, must be integers
+MEDIUM = {}
+MEDIUM.pool = { Shop = 3, Lab = 1} -- weights, must be integers
 local function generate_shop_adjacent_event()
     local table = {}
-    for k, v in pairs(poollllllllllll) do
+    for k, v in pairs(MEDIUM.pool) do
         for i = 1, v do
             table[#table+1] = k
         end
@@ -146,6 +129,15 @@ payload = '''
     end
   end
   G.GAME.current_sajevent = shitfuck
+  end
+  if G.GAME and G.GAME.blind and G.GAME.blind.loc_name then
+  if G.GAME.blind.loc_name == 'Small Blind' then
+    G.GAME.blind.sajevent = G.GAME.sajevents[1]
+  elseif G.GAME.blind.loc_name == 'Big Blind' then
+    G.GAME.blind.sajevent = G.GAME.sajevents[2]
+  else
+    G.GAME.blind.sajevent = G.GAME.sajevents[3]
+  end
   end
 '''
 match_indent = true

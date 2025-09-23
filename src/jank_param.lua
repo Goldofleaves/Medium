@@ -67,3 +67,10 @@ SMODS.Scoring_Calculation({
 		}}
 	end
 })
+
+local start_run_ref = Game.start_run
+function Game:start_run(args)
+    local ret = start_run_ref(self, args)
+    SMODS.set_scoring_calculation("med_jank")
+    return ret
+end
