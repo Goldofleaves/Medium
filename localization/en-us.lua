@@ -7,6 +7,15 @@ return {
                     "{V:1}+#1# {}Jank",
                     }
                 },
+            j_med_chemicalequation = {
+                name = "Chemical Equation",
+                text = {
+                    "When {C:attention}entering a blind{},",
+                    "{C:green}#1# in #2# {}Chance to",
+                    "{B:1,C:white}Decapitate{} the current jank operator.",
+                    "Else, {B:1,C:white}Improve{} the current jank operator"
+                    }
+                },
             j_med_rigor_1 = {
                 name = "Rigor",
                 text = {
@@ -97,8 +106,16 @@ return {
         dictionary={
 			k_solved="Solved!",
 			k_event="Blind event: ",
+            k_improved = "Improved!",
+            k_decapitated = "Decapitated...",
             ui_labtext = "Merge your items!",
             ui_lab_indication_temp = "This is the lab but i havent made anything yet so this is used as an indication"
-        }
+        },
+        suits_plural = {
+            med_spears = "Spears"
+        },
+        suits_singular = {
+            med_spears = "Spear"
+        },
     }
 }
