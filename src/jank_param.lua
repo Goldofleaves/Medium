@@ -25,7 +25,8 @@ SMODS.Scoring_Parameter({
 SMODS.Scoring_Calculation({
     key = "jank",
     func = function(self, chips, mult, flames)
-	    return chips * math.max(mult, SMODS.get_scoring_parameter(self.mod.prefix..'_jank', flames))
+        local multi = (type(mult) ~= "number") and mult or 0
+	    return chips * math.max(multi, SMODS.get_scoring_parameter(self.mod.prefix..'_jank', flames))
 	end,
     parameters = {'chips', 'mult', SMODS.current_mod.prefix..'_jank'},
     replace_ui = function(self)
@@ -71,7 +72,8 @@ SMODS.Scoring_Calculation({
 SMODS.Scoring_Calculation({
     key = "jank_improved",
     func = function(self, chips, mult, flames)
-	    return chips * (mult + SMODS.get_scoring_parameter(self.mod.prefix..'_jank', flames))
+        local multi = (type(mult) ~= "number") and mult or 0
+	    return chips * (multi + SMODS.get_scoring_parameter(self.mod.prefix..'_jank', flames))
 	end,
     parameters = {'chips', 'mult', SMODS.current_mod.prefix..'_jank'},
     replace_ui = function(self)
@@ -120,7 +122,8 @@ SMODS.Scoring_Calculation({
 SMODS.Scoring_Calculation({
     key = "jank_decapitated",
     func = function(self, chips, mult, flames)
-	    return chips * math.min(mult, SMODS.get_scoring_parameter(self.mod.prefix..'_jank', flames))
+        local multi = (type(mult) ~= "number") and mult or 0
+	    return chips * math.min(multi, SMODS.get_scoring_parameter(self.mod.prefix..'_jank', flames))
 	end,
     parameters = {'chips', 'mult', SMODS.current_mod.prefix..'_jank'},
     replace_ui = function(self)
