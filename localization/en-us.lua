@@ -19,6 +19,18 @@ return {
                     "them."
                 }
             },
+            decapitated_jank = {
+                name = "Decapitated Operator",
+                text = {
+                    "Score = {C:mult}Mult{} x min({C:chips}Chips{}, {C:attention}Jank{})"
+                }
+            },
+            improved_jank = {
+                name = "Improved Operator",
+                text = {
+                    "Score = {C:mult}Mult{} x ({C:chips}Chips{} + {C:attention}Jank{})"
+                }
+            },
         },
         Joker = {
             j_med_chiptunetracker = {

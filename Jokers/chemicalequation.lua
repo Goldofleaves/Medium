@@ -6,9 +6,14 @@ SMODS.Joker({
             odds = 4
 		},
 	},
+    remove_from_deck = function (self, card, from_debuff)
+        SMODS.set_scoring_calculation("med_jank")
+    end,
 	pos = {x=1,y=0},
 	atlas = "medium_jokers",
 	loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = { set = "Other", key = "decapitated_jank" } 
+        info_queue[#info_queue+1] = { set = "Other", key = "improved_jank" } 
 		local hpt = card.ability.extra
         local numerator, denominator = SMODS.get_probability_vars(card, 1, hpt.odds, "med_chemequation")
 		local vars = {
