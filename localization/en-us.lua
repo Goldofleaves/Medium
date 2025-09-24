@@ -1,5 +1,25 @@
 return {
     descriptions = {
+        Other = {
+            fusion_suits = {
+                name = "Fusion Suits",
+                text = {
+                    "{C:attention}Suits {}created",
+                    "by {C:attention}merging{}",
+                    "2 or more suits."
+                }
+            },
+            average = {
+                name = "Averaging Suits",
+                text = {
+                    "Set all suits",
+                    "of all cards ",
+                    "being {C:attention}averaged{}",
+                    "to the {C:attention}fusion{} of",
+                    "them."
+                }
+            },
+        },
         Joker = {
             j_med_chiptunetracker = {
                 name = "Chiptune Tracker",
@@ -14,6 +34,15 @@ return {
                     "{C:green}#1# in #2# {}Chance to",
                     "{B:1,C:white}Decapitate{} the current jank operator.",
                     "Else, {B:1,C:white}Improve{} the current jank operator"
+                    }
+                },
+            j_med_muddywater = {
+                name = "Muddy Water",
+                text = {
+                    "If {C:attention}played{} hand contains only 2 cards",
+                    "and their {C:attention}suits{} are both",
+                    "{C:attention}different{} and not {C:attention}fusion{} suits,",
+                    "{X:green,C:white}Average{} the 2 suits."
                     }
                 },
             j_med_rigor_1 = {
@@ -108,6 +137,7 @@ return {
 			k_event="Blind event: ",
             k_improved = "Improved!",
             k_decapitated = "Decapitated...",
+            k_averaged = "Averaged!",
             ui_labtext = "Merge your items!",
             ui_lab_indication_temp = "This is the lab but i havent made anything yet so this is used as an indication"
         },

@@ -6,6 +6,8 @@ SMODS.Joker({
             odds = 4
 		},
 	},
+	pos = {x=1,y=0},
+	atlas = "medium_jokers",
 	loc_vars = function(self, info_queue, card)
 		local hpt = card.ability.extra
         local numerator, denominator = SMODS.get_probability_vars(card, 1, hpt.odds, "med_chemequation")

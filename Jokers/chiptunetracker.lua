@@ -1,4 +1,4 @@
-SMODS.Atlas{key = "mediumjokers_chiptunetracker", path = "chiptunetracker.png", px = 71, py = 95}
+SMODS.Atlas{key = "medium_jokers", path = "jokers.png", px = 71, py = 95}
 
 SMODS.Joker({
 	key = "chiptunetracker",
@@ -9,7 +9,7 @@ SMODS.Joker({
 		},
 	},
 	pos = {x=0,y=0},
-	atlas = "mediumjokers_chiptunetracker",
+	atlas = "medium_jokers",
 	loc_vars = function(self, info_queue, card)
 		local hpt = card.ability.extra
 		local vars = {
