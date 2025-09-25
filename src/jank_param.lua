@@ -36,7 +36,6 @@ SMODS.Scoring_Parameter({
     end
 })
 local fuck = function (a, b)
-    print(b)
     if type(a) ~= "number" then
         a = 1
     end
