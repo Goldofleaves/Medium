@@ -12,8 +12,8 @@ function generate_saj_for_curante()
     G.GAME.sajevents = {}
     for i = 1, 3 do
         G.GAME.sajevents[i] = generate_shop_adjacent_event()
-        G.GAME.sajevents[3] = "Shop"
     end
+    G.GAME.sajevents[3] = "Shop"
 end
 function get_color_from_saj_event(thing)
     if thing == "Shop" then
