@@ -35,6 +35,7 @@ local blacklist = {
 local function load_files(path, dirs_only)
 	local info = nativefs.getDirectoryItemsInfo(path)
 	for i, v in pairs(info) do
+		if v.name ~= "main.lua" then
 		if v.type == "directory" and not blacklist[v.name] then	
 			load_files(path.."/"..v.name)
 		elseif not dirs_only then
@@ -45,10 +46,11 @@ local function load_files(path, dirs_only)
 			end
 		end
 	end
+	end
 end
 local path = SMODS.current_mod.path
 
-load_files(path, true)
+load_files(path, false)
 --#endregion
 
 -- MISC

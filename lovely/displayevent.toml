@@ -63,35 +63,23 @@ match_indent = true
 [patches.pattern]
 target = 'functions/state_events.lua'
 pattern = '''
-                    delay(0.4); ease_ante(1); delay(0.4); check_for_unlock({type = 'ante_up', ante = G.GAME.round_resets.ante + 1})
-'''
-position = "at"
-payload = '''
-                    delay(0.4); ease_ante(1); delay(0.4); generate_saj_for_curante(); check_for_unlock({type = 'ante_up', ante = G.GAME.round_resets.ante + 1})
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'game.lua'
-pattern = '''
-function Game:init_game_object()
+                G.FUNCS.draw_from_hand_to_discard()
+                if G.GAME.blind:get_type() == 'Boss' then
+                    G.GAME.voucher_restock = nil
+                    if G.GAME.modifiers.set_eternal_ante and (G.GAME.round_resets.ante == G.GAME.modifiers.set_eternal_ante) then 
+                        for k, v in ipairs(G.jokers.cards) do
+                            v:set_eternal(true)
+                        end
+                    end
+                    if G.GAME.modifiers.set_joker_slots_ante and (G.GAME.round_resets.ante == G.GAME.modifiers.set_joker_slots_ante) then 
+                        G.jokers.config.card_limit = 0
+                    end
 '''
 position = "after"
 payload = '''
-if not MEDIUM then MEDIUM = {} end
-if not MEDIUM.sajeventpool then MEDIUM.sajeventpool = { Shop = 3, Lab = 1} end -- weights, must be integers
-local function generate_shop_adjacent_event()
-    local table = {}
-    for k, v in pairs(MEDIUM.sajeventpool) do
-        for i = 1, v do
-            table[#table+1] = k
-        end
-    end
-    return table[math.random(#table)]
-end
+                    generate_saj_for_curante()
 '''
-match_indent = true
+match_indent = false
 
 [[patches]]
 [patches.pattern]
@@ -105,7 +93,26 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-sajevents = {generate_shop_adjacent_event(), generate_shop_adjacent_event(), generate_shop_adjacent_event()},
+sajevents = {'Shop', 'Shop', 'Shop'},
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+    G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = (function()
+            unlock_notify()
+            return true
+        end)
+      }))
+'''
+position = "after"
+payload = '''
+print("Hi!")
+generate_saj_for_curante()
 '''
 match_indent = true
 
