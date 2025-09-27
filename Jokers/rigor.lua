@@ -45,17 +45,17 @@ SMODS.Joker({
         }
         local solved = false
         if context.individual and context.cardarea == G.play then
-            if hpt.currentconjecture == 1 then
+            if hpt.currentconjecture == 1 then -- sqrt of num is smaller than itself
                 local bool = false
-                if #context.full_hand == 1 then
-                    if context.full_hand[1]:get_id() == 14 then
+                if #context.full_hand == 1 then -- if scored hand is of 1 card
+                    if context.full_hand[1]:get_id() == 14 then -- if scored card is an ace
                         bool = true
                     end
                 end
                 if bool then
                     solved = true
                 end
-            elseif hpt.currentconjecture == 2 then
+            elseif hpt.currentconjecture == 2 then -- a - b is a natural number
                 local bool = false
                 if #context.full_hand == 2 then
                     if context.full_hand[1]:get_id() < context.full_hand[2]:get_id() then

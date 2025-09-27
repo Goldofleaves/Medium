@@ -12,10 +12,11 @@ local localvars = function (self, info_queue, card)
 end
 
 local localization = {
-    name = "Revo's vault Crossmod Joker",
+    name = "Revo's Vault Crossmod Joker",
     text = {
         "This joker will be available",
-        "if you have revo's vault installed."
+        "if you have",
+        "{C:attention}Revo's Vault{} enabled."
     }
 }
 

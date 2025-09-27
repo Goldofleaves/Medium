@@ -1,0 +1,33 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+function Game:update(dt)
+'''
+position = "after"
+payload = '''
+local fuck = MEDIUM.animated_sprites or {}
+    for index, value in pairs(fuck) do
+        value.current_cycle = value.current_cycle + 1
+        if value.current_cycle > value.cycle_time then
+            value.current_frame = value.current_frame + 1
+            if value.current_frame > value.max_frames then
+                value.current_frame = 1
+            end
+            value.current_cycle = 1
+        end
+    end
+-- animated jokers
+local fucking_function = SMODS.find_card or function() return {} end
+if next(fucking_function("j_med_achts")) then -- If player has achts
+    for _, achts in ipairs(SMODS.find_card("j_med_achts")) do -- For each copy of achts
+		achts.children.center:set_sprite_pos { x = fuck.achts.current_frame - 1, y = 1 }
+    end
+end
+'''
+match_indent = true

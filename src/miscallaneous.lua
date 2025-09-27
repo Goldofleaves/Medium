@@ -26,3 +26,12 @@ function Card:is_suit(suit, bypass_debuff, flush_calc)
     end
     return ret
 end
+-- animated sprites support
+MEDIUM.animated_sprites = {
+	achts = {
+		current_frame = 1,
+		max_frames = 6,
+		current_cycle = 1,
+		cycle_time = 10
+	}
+}

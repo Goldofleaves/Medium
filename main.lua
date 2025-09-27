@@ -1,3 +1,4 @@
+MEDIUM = {}
 --(idk if this has to go here, but i assume its better if this is done before any files are loaded so nothing crashes because of it not being called yet)
 --for adding custom loc_colours, dont touch this!
 loc_colour()
@@ -92,4 +93,3 @@ SMODS.Atlas {
   px = 113,py = 57,
   frames = 4, atlas_table = 'ANIMATION_ATLAS'
 }
-MEDIUM = {}

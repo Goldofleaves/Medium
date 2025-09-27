@@ -79,8 +79,8 @@ function Game:init_game_object()
 '''
 position = "after"
 payload = '''
-MEDIUM = {}
-MEDIUM.sajeventpool = { Shop = 3, Lab = 1} -- weights, must be integers
+if not MEDIUM then MEDIUM = {} end
+if not MEDIUM.sajeventpool then MEDIUM.sajeventpool = { Shop = 3, Lab = 1} end -- weights, must be integers
 local function generate_shop_adjacent_event()
     local table = {}
     for k, v in pairs(MEDIUM.sajeventpool) do
