@@ -1,4 +1,4 @@
-MEDIUM.sajeventpool = { Shop = 3, Lab = 1} -- weights, must be integers
+MEDIUM.sajeventpool = {Shop = 1, Lab = 1} -- weights, must be integers
 function generate_shop_adjacent_event()
     local table = {}
     for k, v in pairs(MEDIUM.sajeventpool) do
@@ -12,6 +12,7 @@ function generate_saj_for_curante()
     G.GAME.sajevents = {}
     for i = 1, 3 do
         G.GAME.sajevents[i] = generate_shop_adjacent_event()
+        G.GAME.sajevents[3] = "Shop"
     end
 end
 function get_color_from_saj_event(thing)
