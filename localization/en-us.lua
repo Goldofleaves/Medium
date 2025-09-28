@@ -1,5 +1,16 @@
 return {
     descriptions = {
+        Enhanced={
+            m_med_plus_four={
+                name="Wild +4 Card",
+                text={
+                    "This card counts as",
+                    "{C:attention}all suits{}.",
+                    "Draw {C:attention}#1#{} cards when",
+                    "This card is played."
+                },
+            },
+        },
         Other = {
             fusion_suits = {
                 name = "Fusion Suits",
