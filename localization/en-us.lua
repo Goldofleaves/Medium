@@ -7,7 +7,8 @@ return {
                     "This card counts as",
                     "{C:attention}all suits{}.",
                     "Draw {C:attention}#1#{} cards when",
-                    "This card is played."
+                    "This card is played.",
+                    "No rank, Always scored."
                 },
             },
         },
@@ -161,6 +162,7 @@ return {
             k_improved = "Improved!",
             k_decapitated = "Decapitated...",
             k_averaged = "Averaged!",
+            k_drawn = "Drawn!",
             ui_labtext = "Merge your items!",
             ui_lab_indication_temp = "This is the lab but i havent made anything yet so this is used as an indication"
         },

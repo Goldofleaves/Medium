@@ -12,6 +12,12 @@ SMODS.Enhancement {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.drawn_cards } }
     end,
+    calculate = function(self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            SMODS.draw_cards(card.ability.extra.drawn_cards)
+            return {message = localize("k_drawn")}
+        end
+    end,
 }
 
 local card_is_suit_ref = Card.is_suit
