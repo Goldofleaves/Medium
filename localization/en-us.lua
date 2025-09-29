@@ -45,6 +45,18 @@ return {
             },
         },
         Joker = {
+            j_med_achts = {
+                name = "A Coin Has Two Sides",
+                text = {
+                    "{C:attention}Flip a coin{} when",
+                    "{C:attention}selecting blind{},",
+                    "{B:1,C:white}Increment{} the default value",
+                    "of {V:1}Jank{} by {C:attention}#2#{} if landed on {C:attention}Tails,{}",
+                    "{V:1}+#3# {}Jank if",
+                    "landed on {C:attention}Heads.{}",
+                    "{C:inactive}(Currently: {C:attention}#1#{C:inactive})"
+                    }
+                },
             j_med_chiptunetracker = {
                 name = "Chiptune Tracker",
                 text = {
@@ -157,8 +169,13 @@ return {
     },
     misc = {
         dictionary={
-			k_solved="Solved!",
-			k_event="Blind event: ",
+			k_incremented = "Incremented!",
+			k_coins_heads = "Heads!",
+			k_coins_tails = "Tails!",
+			k_coins_heads_display = "Heads",
+			k_coins_tails_display = "Tails",
+			k_solved = "Solved!",
+			k_event = "Blind event: ",
             k_improved = "Improved!",
             k_decapitated = "Decapitated...",
             k_averaged = "Averaged!",

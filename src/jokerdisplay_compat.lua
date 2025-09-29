@@ -24,10 +24,10 @@ jd_def.j_med_chiptunetracker = {
 }    
 jd_def.j_med_muddywater = {
         text = {
-            { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY},
+            { ref_table = "card.joker_display_values", ref_value = "suit", colour = G.C.IMPORTANT},
         },
         reminder_text = {
-            { ref_table = "card.joker_display_values", ref_value = "suit", colour = G.C.IMPORTANT},
+            { ref_table = "card.joker_display_values", ref_value = "active", colour = G.C.GREY},
         },
         calc_function = function(card)
             local suit = "("..localize("k_none")..")"
@@ -45,6 +45,25 @@ jd_def.j_med_muddywater = {
     end
     card.joker_display_values.suit = suit
     card.joker_display_values.active = active
+        end
+}
+
+jd_def.j_med_achts = {
+        text = {
+            { ref_table = "card.ability.extra", ref_value = "jokerdisplayval", colour = G.C.GREEN},
+        },
+        reminder_text = {
+            { ref_table = "card.joker_display_values", ref_value = "effect", colour = G.C.IMPORTANT},
+        },
+        calc_function = function(card)
+            local fuck = card.ability.extra
+            local ret = ""
+            if fuck.currentroll == 0 then
+                ret = "Inc. Def. Jank by "..fuck.incrementval
+            else
+                ret = "+"..fuck.plusjankval.." Jank"
+            end
+            card.joker_display_values.effect = ret
         end
 }
 end
