@@ -132,11 +132,15 @@ function Game:update(dt)
 '''
 position = "after"
 payload = '''
+jerk = MEDIUM.milestonetimer or -1
+if jerk > 0 then
+    MEDIUM.milestonetimer = MEDIUM.milestonetimer - 1
+  end
+  if MEDIUM.milestonetimer == 0 then
+  MEDIUM.milestonetimer = nil
+  ease_background_colour_blind(G.STATE)
+  end
 jank = MEDIUM.cassettetimer or -1
-if love.keyboard.isDown("y") then
-    print("z")
-		check_for_unlock({type = "test"})
-end
 if MEDIUM.cassetterevived then
             G:delete_run()
             G.SAVED_GAME = get_compressed(G.SETTINGS.profile .. '/debugsave_fuck.jkr')
@@ -153,7 +157,6 @@ if MEDIUM.cassetterevived then
             MEDIUM.cassetterevived = nil
 end
 if jank > 0 then
-		check_for_unlock({type = "badheadache"})
     MEDIUM.cassettetimer = MEDIUM.cassettetimer - 1
     print(MEDIUM.cassettetimer)
   end
