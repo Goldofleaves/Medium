@@ -132,6 +132,21 @@ function Game:update(dt)
 '''
 position = "after"
 payload = '''
+if MEDIUM.cassetterevived then
+            G:delete_run()
+            G.SAVED_GAME = get_compressed(G.SETTINGS.profile .. '/debugsave_fuck.jkr')
+            if G.SAVED_GAME ~= nil then
+                G.SAVED_GAME = STR_UNPACK(G.SAVED_GAME)
+            end
+            G:start_run({
+                savetext = G.SAVED_GAME
+            })
+				if G.jokers then
+					G.jokers.config.card_limit = G.jokers.config.card_limit - 1
+				end
+            ease_dollars(math.ceil(-G.GAME.dollars/3 * 2))
+            MEDIUM.cassetterevived = nil
+end
   if G.GAME and G.GAME.round_resets and G.GAME.round_resets.loc_blind_states then
   local shitfuck = "Shop"
   local functgfyhjftyj = function(n)

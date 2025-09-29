@@ -57,6 +57,15 @@ return {
                     "{C:inactive}(Currently: {C:attention}#1#{C:inactive})"
                     }
                 },
+            j_med_cassette = {
+                name = "Cassette",
+                text = {
+                    "When you {C:attention}lose{},",
+                    "go back to when",
+                    "this Joker was {C:attention}bought{},",
+                    "and {C:attention}change something{}..."
+                    }
+                },
             j_med_chiptunetracker = {
                 name = "Chiptune Tracker",
                 text = {
