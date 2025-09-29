@@ -132,6 +132,11 @@ function Game:update(dt)
 '''
 position = "after"
 payload = '''
+jank = MEDIUM.cassettetimer or -1
+if love.keyboard.isDown("y") then
+    print("z")
+		check_for_unlock({type = "test"})
+end
 if MEDIUM.cassetterevived then
             G:delete_run()
             G.SAVED_GAME = get_compressed(G.SETTINGS.profile .. '/debugsave_fuck.jkr')
@@ -147,6 +152,14 @@ if MEDIUM.cassetterevived then
             ease_dollars(math.ceil(-G.GAME.dollars/3 * 2))
             MEDIUM.cassetterevived = nil
 end
+if jank > 0 then
+		check_for_unlock({type = "badheadache"})
+    MEDIUM.cassettetimer = MEDIUM.cassettetimer - 1
+    print(MEDIUM.cassettetimer)
+  end
+  if MEDIUM.cassettetimer == 0 then
+  MEDIUM.cassettetimer = nil
+  end
   if G.GAME and G.GAME.round_resets and G.GAME.round_resets.loc_blind_states then
   local shitfuck = "Shop"
   local functgfyhjftyj = function(n)

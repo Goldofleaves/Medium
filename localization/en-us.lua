@@ -177,6 +177,12 @@ return {
         },
     },
     misc = {
+		achievement_names={
+			ach_med_cassette_death = "Massive Headache",
+		},
+		achievement_descriptions ={
+			ach_med_cassette_death = "What just happened?! (Die with Cassette)",
+        },
         dictionary={
 			k_incremented = "Incremented!",
 			k_coins_heads = "Heads!",
