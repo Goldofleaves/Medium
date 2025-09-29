@@ -1,3 +1,7 @@
+SMODS.Sound{
+    key = "sfx_milestone",
+    path = "sfx_milestone.ogg",
+}
 G.PROFILES[G.SETTINGS.profile].milestones = G.PROFILES[G.SETTINGS.profile].milestones or {}
 localize_milestone = function (key)
     local jank = G.localization.descriptions.Milestones or {
@@ -28,6 +32,7 @@ trigger_milestone_ui = function(key)
         ease_background_colour{new_colour = G.C.ORANGE, special_colour = G.C.PURPLE, contrast = 1.5}
         attention_text({text = "Completed Milestone with key "..key, hold = 12})
         MEDIUM.milestonetimer = 400
+        play_sound("med_sfx_milestone") 
     --[[G.SPLASH_BACK:define_draw_steps({
             {
                 shader = "splash",
