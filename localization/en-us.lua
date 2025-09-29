@@ -1,5 +1,21 @@
 return {
     descriptions = {
+        Milestones = {
+            undiscovered = {
+                name = "Locked Milestone",
+                text = {
+                    "You have yet to",
+                    "{C:attention}achieve{} this Milestone."
+                }
+            },
+            mile_med_cassette_death = {
+                name = "Massive Headache",
+                text = {
+                    "What was that?!",
+                    "{C:inactive}(End a run with Cassette in deck)"
+                }
+            },
+        },
         Enhanced={
             m_med_plus_four={
                 name="Wild +4 Card",
@@ -177,12 +193,6 @@ return {
         },
     },
     misc = {
-		achievement_names={
-			ach_med_cassette_death = "Massive Headache",
-		},
-		achievement_descriptions ={
-			ach_med_cassette_death = "What just happened?! (Die with Cassette)",
-        },
         dictionary={
 			k_incremented = "Incremented!",
 			k_coins_heads = "Heads!",
