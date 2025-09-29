@@ -1,20 +1,6 @@
 SMODS.Scoring_Parameter({
   key = 'jank',
-  hands = {
-        ['Pair'] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ['Four of a Kind'] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Flush Five"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Flush House"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Five of a Kind"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Straight Flush"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Full House"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Flush"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Straight"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Three of a Kind"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["Two Pair"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-        ["High Card"] = {[SMODS.current_mod.prefix..'_jank'] = 1, ['l_'..SMODS.current_mod.prefix..'_jank'] = 1, ['s_'..SMODS.current_mod.prefix..'_jank'] = 1},
-    },
-  default_value = 0,
+  default_value = G.GAME and G.GAME.jankvalue or 0,
   colour = G.C.ORANGE,
   calculation_keys = {'jank', 'xjank'},
     calc_effect = function(self, effect, scored_card, key, amount, from_edition)
@@ -35,6 +21,18 @@ SMODS.Scoring_Parameter({
         end
     end
 })
+function increment_jank_default_value(num)
+	G.GAME.jankvalue = G.GAME.jankvalue + num
+	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
+	local fuck = get_current_jank_operator()
+	SMODS.set_scoring_calculation(fuck)
+end
+function set_jank_default_value(num)
+	G.GAME.jankvalue =num
+	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
+	local fuck = get_current_jank_operator()
+	SMODS.set_scoring_calculation(fuck)
+end
 local fuck = function (a, b)
     if type(a) ~= "number" then
         a = 1
@@ -200,4 +198,12 @@ function Game:start_run(args)
     local ret = start_run_ref(self, args)
     SMODS.set_scoring_calculation("med_jank")
     return ret
+end
+
+function set_current_jank_operator(operator)
+    SMODS.set_scoring_calculation(operator)
+    G.GAME.jankop = operator
+end
+function get_current_jank_operator()
+    return G.GAME.jankop
 end

@@ -31,3 +31,20 @@ if next(fucking_function("j_med_achts")) then -- If player has achts
 end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+    local bosses_used = {}
+    for k, v in pairs(G.P_BLINDS) do 
+        if v.boss then bosses_used[k] = 0 end
+    end
+    return {
+'''
+position = "after"
+payload = '''
+jankvalue = 0,
+jankop = "med_jank",
+'''
+match_indent = true

@@ -101,6 +101,8 @@ match_indent = true
 [patches.pattern]
 target = 'game.lua'
 pattern = '''
+    self.HUD:recalculate()
+
     G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         func = (function()
@@ -112,6 +114,12 @@ pattern = '''
 position = "after"
 payload = '''
 print("Hi!")
+if not self.GAME.jankvalue then
+self.GAME.jankvalue = 1
+end
+if not self.GAME.jankop then
+self.GAME.jankop = "med_jank"
+end
 generate_saj_for_curante()
 '''
 match_indent = true
