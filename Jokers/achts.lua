@@ -18,7 +18,7 @@ SMODS.Joker({
             currentroll = 0, -- 0: tails, 1: heads
             incrementval = 2,
             plusjankval = 15,
-            jokerdisplayval = "Tails"
+            jokerdisplayval = "Fuck"
 		},
 	},
 	pos = {x=0,y=1},
@@ -36,6 +36,9 @@ SMODS.Joker({
 	atlas = "medium_jokers",
 	calculate = function(self, card, context)
 		local hpt = card.ability.extra
+        if hpt.jokerdisplayval == "Fuck" then
+            hpt.jokerdisplayval = getdisplay(hpt.currentroll)
+        end
         if context.setting_blind then
             hpt.currentroll = math.floor(pseudorandom("fuck", 0, 2))
             if hpt.currentroll == 2 then
