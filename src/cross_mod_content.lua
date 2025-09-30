@@ -1,36 +1,45 @@
 -- Revo's Vault
-SMODS.Atlas{key = "medium_revo_crossmod", path = "revosvault_crossmod.png", px = 71, py = 95}
-
-local position = { x = 1, y = 0 }
-
-local calc = function (self, card, context)
-    
-end
-
-local localvars = function (self, info_queue, card)
-    
-end
-
-local localization = {
-    name = "Revo's Vault Crossmod Joker",
+function create_default_crossmod_joker(mod_name, key)
+SMODS.Joker({
+	key = key,
+	rarity = 1,
+    in_pool = function (self, args)
+        return false 
+    end,
+	pos = {x = 1, y = 0},
+	atlas = "medium_"..mod_name.."_crossmod",
+    loc_txt = {
+    name = mod_name.." Crossmod Joker",
     text = {
         "This joker will be available",
         "if you have",
-        "{C:attention}Revo's Vault{} enabled."
-    }
+        "{C:attention}"..mod_name.."{} enabled."
+    },
 }
+})
+end
+SMODS.Atlas{key = "medium_Revo's Vault_crossmod", path = "revosvault_crossmod.png", px = 71, py = 95}
 
 if next(SMODS.find_mod("RevosVault")) then
-    position.x = 0
-    localization = {
+SMODS.Joker({
+	key = "ae_printer",
+	rarity = 2,
+	config = {
+		extra = {
+			odds = 2
+		},
+	},
+	pos = {x = 0, y = 0},
+	atlas = "medium_Revo's Vault_crossmod",
+    loc_txt = {
         name = "AE Printer",
         text = {
             "{C:green} #1# in #2# {}chance to",
             "print a card with a {C:attention}fusion{} suit",
             "when {C:attention}first hand is drawn{}."
         }
-    }
-    localvars = function (self, info_queue, card)
+    },
+	loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = { set = "Other", key = "fusion_suits" } 
 		local hpt = card.ability.extra
         local numerator, denominator = SMODS.get_probability_vars(card, 1, hpt.odds, "med_revo_ae")
@@ -39,8 +48,8 @@ if next(SMODS.find_mod("RevosVault")) then
             denominator
 		}
 		return { vars = vars }
-    end
-    calc = function (self, card, context)
+    end,
+	calculate = function (self, card, context)
         local pool_of_fusions = {"med_spears"}
         if context.first_hand_drawn then
             if SMODS.pseudorandom_probability(card, "med_revo_ae", 1, card.ability.extra.odds) then
@@ -67,28 +76,7 @@ if next(SMODS.find_mod("RevosVault")) then
             end
         end
     end
-end
-SMODS.Joker({
-	key = "ae_printer",
-	rarity = 2,
-	config = {
-		extra = {
-			odds = 2
-		},
-	},
-    in_pool = function (self, args)
-        if next(SMODS.find_mod("RevosVault")) then
-            return true
-        end
-        return false 
-    end,
-	pos = position,
-	atlas = "medium_revo_crossmod",
-    loc_txt = localization,
-	loc_vars = function(self, info_queue, card)
-		return localvars(self, info_queue, card)
-	end,
-	calculate = function(self, card, context)
-        return calc(self, card, context)
-	end
 })
+else
+    create_default_crossmod_joker("Revo's Vault", "ae_printer")
+end

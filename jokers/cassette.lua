@@ -20,7 +20,7 @@ SMODS.Joker({
 	end,
 	calculate = function(self, card, context)
         if context.end_of_round and context.game_over and context.main_eval then
-			MEDIUM.cassettetimer = 100
+			MEDIUM.cassettetimer = 25
 			MEDIUM.cassetterevived = true
 		end
 	end

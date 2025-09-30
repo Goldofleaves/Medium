@@ -51,34 +51,16 @@ end
 local path = SMODS.current_mod.path
 
 load_files(path, false)
---#endregion
-
--- MISC
---#region Miscelaneous
---[[
--- Add optional features here
-Medium.optional_features = {
-	retrigger_joker = true,
-	post_trigger = true,
-}
 
 Medium.extra_tabs = function ()
 	return {
 		--nxclicker
 		{
-			label = "Kill Nxkoo",
-			tab_definition_function = G.UIDEF.nxclicker
-		},
-		-- Jukebox
-		{
-			label = "Jukebox",
-			tab_definition_function = JTJukebox.MusicTab
+			label = "Milestones",
+			tab_definition_function = G.UIDEF.milestones
 		},
 	}
 end
-]]
---#endregion
-
 if not MediumConfig then MediumConfig = {} end
 MediumConfig = SMODS.current_mod.config
 

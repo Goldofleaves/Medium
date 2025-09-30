@@ -158,7 +158,9 @@ if MEDIUM.cassetterevived then
 end
 if jank > 0 then
     MEDIUM.cassettetimer = MEDIUM.cassettetimer - 1
-    print(MEDIUM.cassettetimer)
+    if jank == 1 then
+    unlock_milestone("mile_med_cassette_death")
+    end
   end
   if MEDIUM.cassettetimer == 0 then
   MEDIUM.cassettetimer = nil

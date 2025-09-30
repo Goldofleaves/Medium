@@ -48,6 +48,12 @@ jd_def.j_med_muddywater = {
         end
 }
 
+jd_def.j_med_cassette = {
+        text = {
+            { text = "...?" },
+        },
+        text_config = { colour = G.C.GREY }
+}    
 jd_def.j_med_achts = {
         text = {
             { ref_table = "card.ability.extra", ref_value = "jokerdisplayval", colour = G.C.GREEN},

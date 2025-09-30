@@ -17,20 +17,22 @@ end
 MEDIUM.milestones = {}
 MEDIUM.Milestone = function (args)
     local table_jank = {
-        unlocked = false,
+        unlocked = G.PROFILES[G.SETTINGS.profile].milestones["mile_"..args.key] or false,
         atlas = args.atlas or "med_milestone_default",
         pos = args.pos or {x = 0, y = 0},
         key = "mile_"..args.key,
         name = localize_milestone(args.key).name,
         text = localize_milestone(args.key).text,
     }
-    table.insert(MEDIUM.milestones, table_jank)
-    G.PROFILES[G.SETTINGS.profile].milestones["mile_"..args.key] = false
+    MEDIUM.milestones["mile_"..args.key] = table_jank
+end
+forget_all_milestones = function ()
+    G.PROFILES[G.SETTINGS.profile].milestones = {}
 end
 trigger_milestone_ui = function(key)
     
         ease_background_colour{new_colour = G.C.ORANGE, special_colour = G.C.PURPLE, contrast = 1.5}
-        attention_text({text = "Completed Milestone with key "..key, hold = 12})
+        attention_text({text = "Milestone \""..localize_milestone(key).name.."\" Achieved!", hold = 12, scale = 0.5, emboss = true,})
         MEDIUM.milestonetimer = 400
         play_sound("med_sfx_milestone") 
     --[[G.SPLASH_BACK:define_draw_steps({
@@ -46,28 +48,18 @@ trigger_milestone_ui = function(key)
         })]]
 end
 unlock_milestone = function (key)
+    if not MEDIUM.milestones[key] then
+        return "There exists no milestone with passed key "..key.."."
+    else
+    if G.PROFILES[G.SETTINGS.profile].milestones[key] ~= true then
     MEDIUM.milestones[key].unlocked = true
     G.PROFILES[G.SETTINGS.profile].milestones[key] = true
-    trigger_milestone_ui()
+    trigger_milestone_ui(key)
+    else
+        return "Milestone with key "..key.." has already been achieved."
+    end
+end
 end
 MEDIUM.Milestone{
     key = "med_cassette_death"
 }
-
-SMODS.Achievement({
-    key = "cassette_death",
-    hidden_text = true,
-    unlock_condition = function(self, args)
-        return args.type == "badheadache"
-    end
-})
-
-SMODS.Achievement({
-    key = "test",
-    hidden_text = true,
-    unlock_condition = function(self, args)
-        print(args)
-        print(args.type == "test")
-        return args.type == "test"
-    end
-})
