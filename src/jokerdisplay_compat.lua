@@ -72,4 +72,57 @@ jd_def.j_med_achts = {
             card.joker_display_values.effect = ret
         end
 }
+
+jd_def.j_med_branching_tree = {
+        text = {
+            { ref_table = "G.GAME.pseudorandom", ref_value = "seed", colour = G.C.GREEN},
+        },
+        reminder_text = {
+            { ref_table = "card.joker_display_values", ref_value = "non_seeded", colour = G.C.GREY},
+            { ref_table = "card.joker_display_values", ref_value = "seeded", colour = G.C.RED},
+        },
+        calc_function = function(card)
+            local nonseeded = ""
+            local seeded = ""
+            if G.GAME.seeded then
+                seeded = localize("k_seeded")
+            else
+                nonseeded = localize("jdis_active")
+            end
+    card.joker_display_values.non_seeded = nonseeded
+    card.joker_display_values.seeded = seeded
+        end
+}    
+
+jd_def.j_med_rigor = {
+        text = {
+            { ref_table = "card.ability.extra", ref_value = "jdisplay", colour = G.C.IMPORTANT},
+        },
+        reminder_text = {
+            { ref_table = "card.joker_display_values", ref_value = "reward_1", colour = G.C.GOLD},
+            { ref_table = "card.joker_display_values", ref_value = "reward_3", colour = G.C.CHIPS},
+            { ref_table = "card.joker_display_values", ref_value = "reward_4", colour = G.C.RED},
+            { ref_table = "card.joker_display_values", ref_value = "reward_2_sharp", colour = G.C.RED },
+            { ref_table = "card.joker_display_values", ref_value = "reward_2", colour = G.C.RED}
+        },
+        calc_function = function(card)
+            local j = card.ability.extra.currentconjecture
+            local reward1,reward2,reward2sharp,reward3,reward4 = "", "", "", "", ""
+            if j == 1 then
+                reward1 = "+$"..card.ability.extra.money
+            elseif j == 2 then
+                reward2sharp = "X"
+                reward2 = ""..card.ability.extra.xmult
+            elseif j==3 then
+                reward3 = "+"..card.ability.extra.chips
+            else
+                reward4 = "+"..card.ability.extra.mult
+            end
+            card.joker_display_values.reward_1 = reward1
+            card.joker_display_values.reward_2_sharp = reward2sharp
+            card.joker_display_values.reward_2 = reward2
+            card.joker_display_values.reward_3 = reward3
+            card.joker_display_values.reward_4 = reward4
+        end
+}    
 end

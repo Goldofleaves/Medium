@@ -17,7 +17,8 @@ SMODS.Joker({
             money = 25,
             xmult = 4,
             chips = 100,
-            mult = 25
+            mult = 25,
+            jdisplay = "sqrt(n) < n"
 		},
 	},
 	pos = {x=0,y=0},
@@ -35,8 +36,13 @@ SMODS.Joker({
 		return { key = key, vars = vars }
 	end,
 	calculate = function(self, card, context)
-        print(G.GAME.current_sajevent)
 		local hpt = card.ability.extra
+        local jdisplay_list = {
+            "sqrt(n) < n",
+            "a - b > 0",
+            "a^b ~= ab",
+            "n^1/2mod1~=0",
+        }
         local list_of_rewards = {
             function() return { dollars = hpt.money} end,
             function() return { xmult = hpt.xmult } end,
@@ -65,7 +71,7 @@ SMODS.Joker({
                 if bool then
                     solved = true
                 end
-            elseif hpt.currentconjecture == 3 then
+            elseif hpt.currentconjecture == 3 then -- a ^ b ~= ab
                 local bool = false
                 if #context.full_hand == 2 then
                     if (context.full_hand[1]:get_id() ^ context.full_hand[2]:get_id() == context.full_hand[1]:get_id() * context.full_hand[2]:get_id()) or context.full_hand[2]:get_id() == 14 then
@@ -77,7 +83,7 @@ SMODS.Joker({
                 end
             else
                 local bool = false
-                if #context.full_hand == 1 then
+                if #context.full_hand == 1 then -- sqrt(n) mod 1 ~= 0
                     if (context.full_hand[1]:get_id() == 14) or (context.full_hand[1]:get_id() == 4) or (context.full_hand[1]:get_id() == 9) then
                         bool = true
                     end
@@ -93,6 +99,7 @@ SMODS.Joker({
             local g = hpt.currentconjecture
             hpt.currentconjecture = uniquerandom(hpt.currentconjecture)
 		    card.children.center:set_sprite_pos { x = hpt.currentconjecture - 1, y = 0 }
+            hpt.jdisplay = jdisplay_list[hpt.currentconjecture]
             solved = false
             return list_of_rewards[g]()
         end

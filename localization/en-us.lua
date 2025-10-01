@@ -61,6 +61,14 @@ return {
             },
         },
         Joker = {
+            j_med_branching_tree = {
+                name = "Commit Tree",
+                text = {
+                    "If this run is not {C:attention}Seeded{},",
+                    "Return {C:attention}1 10^#1#ths{} of the seed of the run",
+                    "in {C:attention}Base 36{} as {V:1}Jank"
+                    }
+                },
             j_med_achts = {
                 name = "A Coin Has Two Sides",
                 text = {
@@ -194,6 +202,7 @@ return {
     },
     misc = {
         dictionary={
+            k_seeded = "Seeded!",
 			k_incremented = "Incremented!",
 			k_coins_heads = "Heads!",
 			k_coins_tails = "Tails!",
