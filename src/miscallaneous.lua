@@ -12,6 +12,9 @@ SMODS.Suit{
     pos = {y = 0},
     ui_pos = { x = 0, y = 0},
     in_pool = function (self, args)
+		if G.GAME.modifiers.fusion_suits_spawn then
+            return true
+        end
         return false
     end
 }

@@ -1,5 +1,25 @@
 return {
     descriptions = {
+        Voucher = {
+            v_med_fashion = {
+                name = 'Fashion',
+                text = {
+                    "Cards with",
+                    "{C:attention}fusion suits{} are",
+                    "allowed to be spawned",
+                    "naturally"
+                }
+            },
+            v_med_vogue = {
+                name = 'Vogue',
+                text = {
+                    "Cards with",
+                    "{C:attention}fusion enhancments{} are",
+                    "allowed to be spawned",
+                    "naturally"
+                }
+            },
+        },
         Milestones = {
             undiscovered = {
                 name = "Locked Milestone",
@@ -29,6 +49,14 @@ return {
             },
         },
         Other = {
+            fusion_enhancements = {
+                name = "Fusion Enhancements",
+                text = {
+                    "{C:attention}Enhancements {}created",
+                    "by {C:attention}merging{}",
+                    "2 or more enhancements."
+                }
+            },
             fusion_suits = {
                 name = "Fusion Suits",
                 text = {

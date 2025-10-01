@@ -18,6 +18,12 @@ SMODS.Enhancement {
             return {message = localize("k_drawn")}
         end
     end,
+    in_pool = function (self, args)
+        if G.GAME.modifiers.fusion_enhancements_spawn then
+            return true
+        end
+        return false
+    end
 }
 
 local card_is_suit_ref = Card.is_suit
