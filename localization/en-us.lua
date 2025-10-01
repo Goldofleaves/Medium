@@ -14,7 +14,7 @@ return {
                 name = 'Vogue',
                 text = {
                     "Cards with",
-                    "{C:attention}fusion enhancments{} are",
+                    "{C:attention}fusion enhancements{} are",
                     "allowed to be spawned",
                     "naturally"
                 }
