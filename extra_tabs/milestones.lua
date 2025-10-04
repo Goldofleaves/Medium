@@ -1,17 +1,17 @@
 function G.UIDEF.milestones()
-   local janknk = function (a)
+   local janknk = function (a) -- returns a node with all of the localized texts as a column
       local tablet = {}
       for k, v in ipairs(a) do
          table.insert(tablet,{n = G.UIT.R, nodes = SMODS.localize_box(v, {})})
       end
-      return {n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR, padding = 0.02}, nodes = tablet}
+      return {n = G.UIT.C, config = {align = "tm", colour = G.C.CLEAR, padding = 0.02}, nodes = tablet}
    end
    local shitfuck = {}
    local jank = function (key, unlocked, milestone)
       table.insert(shitfuck, {n = G.UIT.R, nodes = {{n = G.UIT.C, config = {r = 0.05,minw = 1,align = "cm", padding = 0.1, colour = G.C.WHITE}, nodes = {{n = G.UIT.O,
             config = {
                object = unlocked and Sprite(0, 0, 0.95, 0.95, G.ASSET_ATLAS[milestone.atlas], { x = 1, y = 0 }) or Sprite(0, 0, 0.95, 0.95, G.ASSET_ATLAS["med_milestones"], { x = 0, y = 0 })
-            }},{n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR, padding = 0.02}, nodes = {
+            }},{n = G.UIT.C, config = {align = "tm", colour = G.C.CLEAR, padding = 0.02}, nodes = {
                {n = G.UIT.R, nodes = {{n=G.UIT.T, config={text = unlocked and localize_milestone(key).name or localize_milestone("undiscovered").name, scale = 0.37, colour = G.C.UI.TEXT_DARK, shadow = true}}}},
                janknk(unlocked and localize_milestone(key).text_parsed or localize_milestone("undiscovered").text_parsed),
             }}}

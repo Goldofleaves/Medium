@@ -255,6 +255,7 @@ return {
             med_reflective = "Reflective",
         },
         dictionary={
+            k_list_of_milestones = "List of Milestones:",
             k_seeded = "Seeded!",
 			k_incremented = "Incremented!",
 			k_coins_heads = "Heads!",
