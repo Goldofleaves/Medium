@@ -18,9 +18,8 @@ MEDIUM.milestones = {}
 MEDIUM.Milestone = function (args)
     local table_jank = {
         unlocked = G.PROFILES[G.SETTINGS.profile].milestones["mile_"..args.key] or false,
-        atlas = args.atlas or "med_milestone_default",
+        atlas = args.atlas or "med_milestones",
         pos = args.pos or {x = 0, y = 0},
-        key = "mile_"..args.key,
     }
     MEDIUM.milestones["mile_"..args.key] = table_jank
 end
@@ -63,4 +62,16 @@ end
 end
 MEDIUM.Milestone{
     key = "med_cassette_death"
+}
+
+SMODS.Atlas({
+    key = 'test_mile', -- internally as med_milestones. How unfortunate!
+    path = 'temp_milestone.png',
+    px = 20,
+    py = 20,
+})
+
+MEDIUM.Milestone{
+    key = "med_test",
+    atlas = "med_test_mile"
 }

@@ -7,27 +7,23 @@ function G.UIDEF.milestones()
       return {n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR}, nodes = returnt}
    end
    local shitfuck = {}
-   local jank = function (key, unlocked)
-      table.insert(shitfuck, 
-            {n = G.UIT.O,
+   local jank = function (key, unlocked, milestone)
+      table.insert(shitfuck, {n = G.UIT.R, nodes = {{n = G.UIT.C, config = {r = 0.05,minw = 1,align = "cm", padding = 0.1, colour = G.C.WHITE}, nodes = {{n = G.UIT.O,
             config = {
-               object = unlocked and Sprite(0, 0, 0.7, 0.7, G.ASSET_ATLAS["med_milestones"], { x = 1, y = 0 }) or Sprite(0, 0, 0.7, 0.7, G.ASSET_ATLAS["med_milestones"], { x = 0, y = 0 })
-            }})      
-            table.insert(shitfuck, 
-            {n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR, padding = 0.02}, nodes = {
+               object = unlocked and Sprite(0, 0, 0.7, 0.7, G.ASSET_ATLAS[milestone.atlas], { x = 1, y = 0 }) or Sprite(0, 0, 0.7, 0.7, G.ASSET_ATLAS["med_milestones"], { x = 0, y = 0 })
+            }},{n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR, padding = 0.02}, nodes = {
                {n = G.UIT.R, nodes = {{n=G.UIT.T, config={text = unlocked and localize_milestone(key).name or localize_milestone("undiscovered").name, scale = 0.3, colour = G.C.BLACK, shadow = true}}}},
                multiline(unlocked and localize_milestone(key).text or localize_milestone("undiscovered").text),
-            }})
+            }}}
+         }}})
+      table.insert(shitfuck, {n = G.UIT.R, nodes = {{n=G.UIT.B, config = {h = 0.1, w = 0.1}}}})
    end
    for k, v in pairs(MEDIUM.milestones) do
-      jank(k, v.unlocked)
+      jank(k, v.unlocked, v)
    end
    local t =
    {n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes = {
-      {n = G.UIT.C, config = {r = 0.1, minw = 8, minh = 6, align = "cm", colour = G.C.CLEAR}, nodes = {
-         {n = G.UIT.R, config = {r = 0.05,minw = 1,align = "cm", padding = 0.1, colour = G.C.WHITE}, nodes = shitfuck
-         },
-      }}
+      {n = G.UIT.C, config = {r = 0.1, minw = 8, minh = 6, align = "cm", colour = G.C.CLEAR}, nodes = shitfuck}
 	}}
    return {n = G.UIT.ROOT, config = {
 					colour = G.C.CLEAR

@@ -43,6 +43,13 @@ return {
                     "{C:inactive}(End a run with Cassette in deck)"
                 }
             },
+            mile_med_test = {
+                name = "Test",
+                text = {
+                    "This Milestone Is For",
+                    "{C:attention}Testing{} Perposes."
+                }
+            },
         },
         Enhanced={
             m_med_plus_four={
