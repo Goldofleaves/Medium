@@ -1,5 +1,13 @@
 return {
     descriptions = {
+        Edition = {
+            e_med_reflective = {
+                name = "Reflective",
+                text = {
+                    "{X:attention,C:white}X#1#{} Jank"
+                }
+            },
+        },
         Voucher = {
             v_med_fashion = {
                 name = 'Fashion',
@@ -229,6 +237,9 @@ return {
         },
     },
     misc = {
+        labels = {
+            med_reflective = "Reflective",
+        },
         dictionary={
             k_seeded = "Seeded!",
 			k_incremented = "Incremented!",

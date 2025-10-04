@@ -1,0 +1,97 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+# prep
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+    G.SPLASH_LOGO = Sprite(0, 0,  
+'''
+payload = '''
+    G.MEDIUM_BACKDROP = Sprite(0, 0, 
+        16*SC_scale, 
+        10*SC_scale*(G.ASSET_ATLAS["med_backdrop"].py/G.ASSET_ATLAS["med_backdrop"].px),
+        G.ASSET_ATLAS["med_backdrop"], {x=0,y=0})
+
+    G.MEDIUM_BACKDROP:set_alignment({
+        major = G.title_top,
+        type = 'cm',
+        bond = 'Strong',
+        offset = {x=0,y=0}
+    })
+    G.MEDIUM_BACKDROP:define_draw_steps({{
+            shader = 'dissolve',
+        }})
+
+    G.MEDIUM_BACKDROP.dissolve_colours = {G.C.WHITE, G.C.WHITE}
+    G.MEDIUM_BACKDROP.dissolve = 0
+'''
+
+
+#drawing the thing
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+    if G.SPLASH_LOGO then
+        love.graphics.push()
+        G.SPLASH_LOGO:translate_container()
+        G.SPLASH_LOGO:draw()
+        love.graphics.pop()
+    end
+'''
+payload = '''
+    if G.MEDIUM_BACKDROP then
+        love.graphics.push()
+        G.MEDIUM_BACKDROP:translate_container()
+        G.MEDIUM_BACKDROP:draw()
+        love.graphics.pop()
+    end
+'''
+
+#making it die, i think
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+        if G.SPLASH_LOGO then 
+          G.SPLASH_LOGO.states.visible = true
+'''
+payload = '''
+    if G.MEDIUM_BACKDROP then G.MEDIUM_BACKDROP.states.visible = true end
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+      if G.SPLASH_LOGO then 
+        G.SPLASH_LOGO.states.visible = false
+'''
+payload = '''
+    if G.MEDIUM_BACKDROP then G.MEDIUM_BACKDROP.states.visible = false end
+'''
+
+#this is actually killing it
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+        if self.SPLASH_LOGO then self.SPLASH_LOGO:remove(); self.SPLASH_LOGO = nil end
+'''
+payload = '''
+        if self.MEDIUM_BACKDROP then self.MEDIUM_BACKDROP:remove(); self.MEDIUM_BACKDROP = nil end
+'''

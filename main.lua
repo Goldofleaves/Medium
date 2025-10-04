@@ -52,9 +52,16 @@ local path = SMODS.current_mod.path
 
 load_files(path, false)
 
+
+SMODS.Atlas({
+    key = 'backdrop', -- internally as med_backdrop. How unfortunate!
+    path = 'backdrop.png',
+    px = 613,
+    py = 346,
+})
+
 Medium.extra_tabs = function ()
 	return {
-		--nxclicker
 		{
 			label = "Milestones",
 			tab_definition_function = G.UIDEF.milestones
