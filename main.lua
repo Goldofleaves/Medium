@@ -60,6 +60,13 @@ SMODS.Atlas({
     py = 346,
 })
 
+SMODS.Atlas({
+    key = 'milestones', -- internally as med_milestones. How unfortunate!
+    path = 'milestones.png',
+    px = 20,
+    py = 20,
+})
+
 Medium.extra_tabs = function ()
 	return {
 		{
@@ -84,3 +91,16 @@ SMODS.Atlas {
   px = 113,py = 57,
   frames = 4, atlas_table = 'ANIMATION_ATLAS'
 }
+
+Medium.ui_config = {
+    colour = HEX("4c2177"),
+    bg_colour = adjust_alpha(HEX("b609f1"), 0.3),
+    back_colour = HEX("b609f1"),
+    tab_button_colour = HEX("b609f1"),
+    collection_option_cycle_colour = HEX("b609f1"),
+    author_colour = HEX("b609f1")
+}
+
+Medium.description_loc_vars = function()
+    return { background_colour = G.C.CLEAR, text_colour = G.C.WHITE, scale = 1.2 }
+end

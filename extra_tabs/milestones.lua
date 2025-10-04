@@ -1,16 +1,37 @@
-
 function G.UIDEF.milestones()
-    local text = "Shitfuck"
-    return {n = G.UIT.ROOT, config = {
+   local multiline = function (tab)
+      local returnt = {}
+      for k, v in ipairs(tab) do
+         table.insert(returnt, {n = G.UIT.R, nodes = {{n=G.UIT.T, config={text = v, scale = 0.25, colour = G.C.BLACK, shadow = false, padding = 0.02}}}})
+      end
+      return {n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR}, nodes = returnt}
+   end
+   local shitfuck = {}
+   local jank = function (key, unlocked)
+      table.insert(shitfuck, 
+            {n = G.UIT.O,
+            config = {
+               object = unlocked and Sprite(0, 0, 0.7, 0.7, G.ASSET_ATLAS["med_milestones"], { x = 1, y = 0 }) or Sprite(0, 0, 0.7, 0.7, G.ASSET_ATLAS["med_milestones"], { x = 0, y = 0 })
+            }})      
+            table.insert(shitfuck, 
+            {n = G.UIT.C, config = {align = "tl", colour = G.C.CLEAR, padding = 0.02}, nodes = {
+               {n = G.UIT.R, nodes = {{n=G.UIT.T, config={text = unlocked and localize_milestone(key).name or localize_milestone("undiscovered").name, scale = 0.3, colour = G.C.BLACK, shadow = true}}}},
+               multiline(unlocked and localize_milestone(key).text or localize_milestone("undiscovered").text),
+            }})
+   end
+   for k, v in pairs(MEDIUM.milestones) do
+      jank(k, v.unlocked)
+   end
+   local t =
+   {n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes = {
+      {n = G.UIT.C, config = {r = 0.1, minw = 8, minh = 6, align = "cm", colour = G.C.CLEAR}, nodes = {
+         {n = G.UIT.R, config = {r = 0.05,minw = 1,align = "cm", padding = 0.1, colour = G.C.WHITE}, nodes = shitfuck
+         },
+      }}
+	}}
+   return {n = G.UIT.ROOT, config = {
 					colour = G.C.CLEAR
 				}, nodes = {
-					{n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes = {
-                        {n = G.UIT.C, config = {r = 0.1, minw = 8, minh = 6, align = "cm", colour = G.C.CLEAR}, nodes = {
-                            {n = G.UIT.R, config = {r = 0.1,minw = 1,align = "cm", padding = 0.2, colour = G.C.CLEAR}, nodes = {
-                               {n=G.UIT.T, config={text = text, scale = 0.75, colour = G.C.WHITE, shadow = true}},
-                               {n=G.UIT.T, config={text = "Fuck Everyone", scale = 0.75, colour = G.C.WHITE, shadow = true}},
-                            }},
-                    }}
-				}}
+               t
             }}
 end

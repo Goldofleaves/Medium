@@ -12,7 +12,7 @@ localize_milestone = function (key)
                     "{C:attention}achieve{} this Milestone."
                 }
             },}
-    return jank["mile_"..key] or jank.undiscovered
+    return jank[key] or jank.undiscovered
 end
 MEDIUM.milestones = {}
 MEDIUM.Milestone = function (args)
@@ -21,13 +21,14 @@ MEDIUM.Milestone = function (args)
         atlas = args.atlas or "med_milestone_default",
         pos = args.pos or {x = 0, y = 0},
         key = "mile_"..args.key,
-        name = localize_milestone(args.key).name,
-        text = localize_milestone(args.key).text,
     }
     MEDIUM.milestones["mile_"..args.key] = table_jank
 end
 forget_all_milestones = function ()
     G.PROFILES[G.SETTINGS.profile].milestones = {}
+    for k, v in pairs(MEDIUM.milestones) do
+        v.unlocked = false
+    end
 end
 trigger_milestone_ui = function(key)
     

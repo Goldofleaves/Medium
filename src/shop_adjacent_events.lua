@@ -28,9 +28,10 @@ end
 
 local ref = SMODS.calculate_context
 SMODS.calculate_context = function(context, return_table, no_resolve)
-  if (not context.ending_shop) or G.GAME.current_sajevent == "Shop" then -- ensuring ending shop only works for shop
-    return ref(context, return_table, no_resolve)
+  if context.ending_shop and G.GAME.current_sajevent ~= "Shop" then
+    context.ending_shop = nil
   end
+    return ref(context, return_table, no_resolve)
 end
 
 function G.UIDEF.lab()
