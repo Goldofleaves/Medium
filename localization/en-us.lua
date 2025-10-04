@@ -50,6 +50,13 @@ return {
                     "{C:attention}Testing{} Perposes."
                 }
             },
+            mile_med_test_other = {
+                name = "Test 2",
+                text = {
+                    "This Milestone Is For",
+                    "{C:attention}Testing{} Perposes."
+                }
+            },
         },
         Enhanced={
             m_med_plus_four={

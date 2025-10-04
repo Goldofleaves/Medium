@@ -60,12 +60,18 @@ unlock_milestone = function (key)
     end
 end
 end
+
+MEDIUM.Milestone{
+    key = "med_test_other"
+}
+
+
 MEDIUM.Milestone{
     key = "med_cassette_death"
 }
 
 SMODS.Atlas({
-    key = 'test_mile', -- internally as med_milestones. How unfortunate!
+    key = 'test_mile',
     path = 'temp_milestone.png',
     px = 20,
     py = 20,
