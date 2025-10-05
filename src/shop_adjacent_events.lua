@@ -91,6 +91,7 @@ function G.UIDEF.lab()
     local t = {n=G.UIT.ROOT, config = {align = 'cl', colour = G.C.CLEAR}, nodes={
             UIBox_dyn_container({
                 {n=G.UIT.C, config={align = "cm", padding = 0.1, emboss = 0.05, r = 0.1, colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
+                  MEDIUM.help_button("medium_lab"),
                     {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes={
                       {n=G.UIT.C, config={align = "cm", padding = 0.1}, nodes={
                         {n=G.UIT.R,config={id = 'next_round_button', align = "cm", minw = 2.8, minh = 1.5, r=0.15,colour = G.C.RED, one_press = true, button = 'toggle_shop', hover = true,shadow = true}, nodes = {

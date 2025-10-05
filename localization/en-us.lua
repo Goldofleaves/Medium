@@ -1,4 +1,32 @@
 return {
+    InfoMenu = {
+        medium_lab = {
+            name = "The Labratory",
+            text = {
+                {
+                    name = "Overview",
+                    text = {
+                        {
+                            "The {C:green}Lab{} is a new event type",
+                            "added by {C:purple}MEDIUM{}.",
+                            "It allows the fusion of certain",
+                            "{C:attention}Suits, Enhancements, Consumables, Seals{},",
+                            "with a small cost."
+                        },
+                        {
+                            "Merged things are usually {C:attention}stronger{}",
+                            "than both things being used for merging.",
+                            "Merging requires not only money,",
+                            "but also {C:green}science equipment{}.",
+                            "You can get these by {C:attention}fishing in the dock{},",
+                            "{C:attention}exchanging in the marketplace{},",
+                            "and more!"
+                        },
+                    }
+                },
+            },
+        },
+    },
     descriptions = {
         Edition = {
             e_med_reflective = {
