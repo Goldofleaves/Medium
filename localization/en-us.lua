@@ -68,7 +68,7 @@ return {
                 name = "Massive Headache",
                 text = {
                     "What was that?!",
-                    "{C:inactive}(End a run with Cassette in deck)"
+                    "{C:inactive}(End a run with {C:attention,T:j_med_cassette}Cassette{C:inactive} in deck)"
                 }
             },
             mile_med_test = {
