@@ -1,5 +1,5 @@
 return {
-    InfoMenu = {
+    Tutorials = {
         medium_lab = {
             name = "The Labratory",
             text = {
@@ -28,6 +28,25 @@ return {
         },
     },
     descriptions = {
+        Spectral = {
+            c_med_vscode = {
+                name = "VSCode",
+                text = {
+                    "Choose one of ",
+                    "{C:attention}any interface{}",
+                    "{C:attention}card to spawn.",
+                    "{C:inactive}(Must have room)"
+                }
+            },
+        },
+        Interface = {
+            c_med_chrome = {
+                name = "Chrome",
+                text = {
+                    "TBD."
+                }
+            },
+        },
         Edition = {
             e_med_reflective = {
                 name = "Reflective",
@@ -99,6 +118,15 @@ return {
             },
         },
         Other = {
+            undiscovered_interface = {
+                name = "Not Discovered",
+                text = {
+                    "Purchase or use this",
+                    "card in an",
+                    "unseeded run to",
+                    "learn what it does",
+                },
+            },
             fusion_enhancements = {
                 name = "Fusion Enhancements",
                 text = {
@@ -283,6 +311,8 @@ return {
             med_reflective = "Reflective",
         },
         dictionary={
+            b_interface_cards = 'Interface Cards',
+            k_interface = 'Interface',
             k_list_of_milestones = "List of Milestones:",
             k_seeded = "Seeded!",
 			k_incremented = "Incremented!",

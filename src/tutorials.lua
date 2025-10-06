@@ -1,4 +1,4 @@
--- EVERYTHING ID FROM HOT POTATO LMAO
+-- Taken from HotPotato's info menus, kudos to them
 
 function MEDIUM.manual_parse(text, args)
     if not text then return end
@@ -354,7 +354,7 @@ function medium_create_info_UI(args)
     local back_func = args.back_func or "exit_overlay_menu"
     local menu_type = args.menu_type
     local page = args.page or 1
-    local loc = G.localization.InfoMenu[menu_type]
+    local loc = G.localization.Tutorials[menu_type]
 
     local function create_text_box(args)
         local desc_node = {}
@@ -436,7 +436,7 @@ function medium_create_info_UI(args)
     }}
     if loc and loc.text and #loc.text > 1 then
         local pages = {
-            {n = G.UIT.C, config = {align = "cm", minw = 0.5, minh = 0.5, maxh = 0.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.BLACK, shadow = true, button = "hotpot_previous_info_page", menu_type = menu_type, page = page, max_page = (#(loc.text or {}) or 1)}, nodes = {
+            {n = G.UIT.C, config = {align = "cm", minw = 0.5, minh = 0.5, maxh = 0.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.BLACK, shadow = true, button = "medium_previous_info_page", menu_type = menu_type, page = page, max_page = (#(loc.text or {}) or 1)}, nodes = {
                 {n = G.UIT.R, config = {align = "cm", padding = 0.05}, nodes = {
                     {n = G.UIT.T, config = {text = "<", scale = 0.4, colour = G.C.UI.TEXT_LIGHT}}
                 }}
@@ -446,7 +446,7 @@ function medium_create_info_UI(args)
                     {n = G.UIT.T, config = {text = localize("k_page").." "..page.."/"..(#(loc.text or {}) or 1), scale = 0.4, colour = G.C.UI.TEXT_LIGHT}}
                 }}
             }}, 
-            {n = G.UIT.C, config = {align = "cm", minw = 0.5, minh = 0.5, maxh = 0.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.BLACK, shadow = true, button = "hotpot_next_info_page", menu_type = menu_type, page = page, max_page = (#(loc.text or {}) or 1)}, nodes = {
+            {n = G.UIT.C, config = {align = "cm", minw = 0.5, minh = 0.5, maxh = 0.5, padding = 0.1, r = 0.1, hover = true, colour = G.C.BLACK, shadow = true, button = "medium_next_info_page", menu_type = menu_type, page = page, max_page = (#(loc.text or {}) or 1)}, nodes = {
                 {n = G.UIT.R, config = {align = "cm", padding = 0.05}, nodes = {
                     {n = G.UIT.T, config = {text = ">", scale = 0.4, colour = G.C.UI.TEXT_LIGHT}}
                 }}
@@ -474,7 +474,7 @@ function medium_create_info(args)
 end
 
 G.FUNCS.medium_info = function(args)   
-    if not args or not args.menu_type or not G.localization.InfoMenu[args.menu_type] then return end
+    if not args or not args.menu_type or not G.localization.Tutorials[args.menu_type] then return end
     G.FUNCS.overlay_menu{
         definition = medium_create_info(args),
     }
@@ -483,7 +483,7 @@ end
 function open_medium_info(menu_type)
     G.PROFILES[G.SETTINGS.profile].first_time_disable = G.PROFILES[G.SETTINGS.profile].first_time_disable or {}
     if not G.PROFILES[G.SETTINGS.profile].first_time_disable[menu_type] then
-        G.FUNCS.hotpot_info{menu_type = menu_type}
+        G.FUNCS.medium_info{menu_type = menu_type}
     end
 end
 
