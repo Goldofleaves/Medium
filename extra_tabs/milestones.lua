@@ -25,9 +25,5 @@ function G.UIDEF.milestones()
    {n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes = {
       {n = G.UIT.C, config = {r = 0.1, minw = 8, minh = 6, align = "cm", colour = G.C.CLEAR}, nodes = shitfuck}
 	}}
-   return {n = G.UIT.ROOT, config = {
-					colour = G.C.CLEAR
-				}, nodes = {
-               t
-            }}
+   return {n = G.UIT.ROOT, config = { colour = G.C.CLEAR }, nodes = {t}}
 end
