@@ -329,6 +329,7 @@ return {
             ui_labtext = "Merge your items!",
             ui_lab_indication_temp = "This is the lab but i havent made anything yet so this is used as an indication",
             ui_lab_merge = "Merge",
+            ui_lab_recipes = "Recipes",
         },
         suits_plural = {
             med_spears = "Spears"

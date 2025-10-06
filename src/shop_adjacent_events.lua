@@ -42,25 +42,26 @@ function G.UIDEF.lab()
       local stake_spritebb = get_stake_sprite(G.GAME.stake or 1, 0.5)
       local stake_spritebbb = get_stake_sprite(G.GAME.stake or 1, 0.5)
 
+      local m = 0.87
     G.merge_1 = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W,
-      G.CARD_H, 
+      G.CARD_W * m,
+      G.CARD_H * m, 
       {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
 
     G.merge_2 = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W,
-      G.CARD_H, 
+      G.CARD_W * m,
+      G.CARD_H * m, 
       {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
 
     G.result = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W,
-      G.CARD_H, 
+      G.CARD_W * m,
+      G.CARD_H * m, 
       {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
 
 
@@ -95,13 +96,15 @@ function G.UIDEF.lab()
           return true
       end)
     }))
+    local n = 1.9
+    local k = 0.46
     local t = {n=G.UIT.ROOT, config = {align = 'cl', colour = G.C.CLEAR}, nodes={
             UIBox_dyn_container({
                 {n=G.UIT.C, config={align = "cm", padding = 0.1, emboss = 0.05, r = 0.1, colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                   MEDIUM.help_button("medium_lab"),
                     {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes={
                       {n=G.UIT.C, config={align = "cm", padding = 0.1}, nodes={
-                        {n=G.UIT.R,config={id = 'next_round_button', align = "cm", minw = 2.8, minh = 1.5, r=0.15,colour = G.C.RED, one_press = true, button = 'toggle_shop', hover = true,shadow = true}, nodes = {
+                        {n=G.UIT.R,config={id = 'next_round_button', align = "cm", minw = 2.3, minh = 1.5, r=0.15,colour = G.C.RED, one_press = true, button = 'toggle_shop', hover = true,shadow = true}, nodes = {
                           {n=G.UIT.R, config={align = "cm", padding = 0.07, focus_args = {button = 'y', orientation = 'cr'}, func = 'set_button_pip'}, nodes={
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3}, nodes={
                               {n=G.UIT.T, config={text = localize('b_next_round_1'), scale = 0.4, colour = G.C.WHITE, shadow = true}}
@@ -111,7 +114,7 @@ function G.UIDEF.lab()
                             }}   
                           }},              
                         }},
-                        {n=G.UIT.R, config={align = "cm", minw = 2.8, minh = 1.6, r=0.15,colour = G.C.GREEN, button = 'reroll_shop', func = 'can_reroll', hover = true,shadow = true}, nodes = {
+                        {n=G.UIT.R, config={align = "cm", minw = 2.3, minh = 1.6, r=0.15,colour = G.C.GREEN, button = 'reroll_shop', func = 'can_reroll', hover = true,shadow = true}, nodes = {
                           {n=G.UIT.R, config={align = "cm", padding = 0.07, focus_args = {button = 'x', orientation = 'cr'}, func = 'set_button_pip'}, nodes={
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3}, nodes={
                               {n=G.UIT.T, config={text = localize('ui_lab_merge'), scale = 0.4, colour = G.C.WHITE, shadow = true}},
@@ -123,7 +126,7 @@ function G.UIDEF.lab()
                           }}
                         }},
                       }},
-                      {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 8.2}, nodes={
+                      {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 8.2}, nodes={
 
                         {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2, colour = G.C.L_BLACK}, nodes={
@@ -131,7 +134,7 @@ function G.UIDEF.lab()
                           }},
                         }},
 
-                          {n=G.UIT.O, config={w=0.2,h=0.2, colour = G.C.BLUE, object = stake_sprite2, hover = true, can_collide = false}},
+                          {n=G.UIT.O, config={w=k,h=k, colour = G.C.BLUE, object = stake_sprite2, hover = true, can_collide = false}},
 
                         {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2, colour =  G.C.L_BLACK}, nodes={
@@ -139,7 +142,7 @@ function G.UIDEF.lab()
                           }},
                         }},
 
-                        {n=G.UIT.O, config={ w=0.2,h=0.2, colour = G.C.BLUE, object = stake_sprite, hover = true, can_collide = false}},
+                        {n=G.UIT.O, config={ w=k,h=k, colour = G.C.BLUE, object = stake_sprite, hover = true, can_collide = false}},
 
                         {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.L_BLACK}, nodes={
@@ -148,19 +151,18 @@ function G.UIDEF.lab()
                         }},
                       }},
                     }},
-                    {n=G.UIT.R, config={align = "cm", minh = 0.2}, nodes={}},
                     {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
                       {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                        {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = 1.05*G.CARD_H+0.4}, nodes={
-                          {n=G.UIT.R,config={align = "cm",padding = 0.2, minh =  1.05*G.CARD_H, minw = 2.1*G.CARD_W, r=0.15,colour = G.C.MONEY, button = 'reroll_shop', hover = true,shadow = true}, nodes = {
-                            {n=G.UIT.T, config={text = "RECIPES", scale = 0.5, colour = G.C.WHITE,}},
+                        {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.BLACK, maxh = 1.05*G.CARD_H+0.4}, nodes={
+                          {n=G.UIT.R,config={align = "cm",padding = 0.1, minh =  1.05*G.CARD_H, minw = 1.12*G.CARD_W, r=0.15,colour = G.C.MONEY, button = 'reroll_shop', hover = true,shadow = true}, nodes = {
+                            {n=G.UIT.T, config={text = localize("ui_lab_recipes"), scale = 0.5, colour = G.C.WHITE,}},
 		                      }},
                         }},
                       }},
-                      {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                        {n=G.UIT.O, config={padding = 0.7,w=1.5,h=1.5, colour = G.C.BLUE, object = stake_spriteb, hover = true, can_collide = false}},
-                        {n=G.UIT.O, config={padding = 0.7,w=1.5,h=1.5, colour = G.C.BLUE, object = stake_spritebb, hover = true, can_collide = false}},
-                        {n=G.UIT.O, config={padding = 0.7,w=1.5,h=1.5, colour = G.C.BLUE, object = stake_spritebbb, hover = true, can_collide = false}},
+                      {n=G.UIT.C, config={align = "cm", padding = 0.6, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+                        {n=G.UIT.O, config={padding = 0.6,w=n,h=n, colour = G.C.BLUE, object = stake_spriteb, hover = true, can_collide = false}},
+                        {n=G.UIT.O, config={padding = 0.6,w=n,h=n, colour = G.C.BLUE, object = stake_spritebb, hover = true, can_collide = false}},
+                        {n=G.UIT.O, config={padding = 0.6,w=n,h=n, colour = G.C.BLUE, object = stake_spritebbb, hover = true, can_collide = false}},
                       }},
                     }}
                 }
