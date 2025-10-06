@@ -26,6 +26,12 @@ function get_color_from_saj_event(thing)
 end
 -- ui
 
+SMODS.Atlas{
+	key = "lab_ui_stuff",
+	path = "lab_ui_stuff.png",
+	px = 20,
+	py = 20
+}
 local ref = SMODS.calculate_context
 SMODS.calculate_context = function(context, return_table, no_resolve)
   if context.ending_shop and G.GAME.current_sajevent ~= "Shop" then
@@ -35,8 +41,8 @@ SMODS.calculate_context = function(context, return_table, no_resolve)
 end
 
 function G.UIDEF.lab()
-      local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.5)
-      local stake_sprite2 = get_stake_sprite(G.GAME.stake or 1, 0.5)
+      local stake_sprite = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 1, y = 0 }) --get_stake_sprite(G.GAME.stake or 1, 0.5)
+      local stake_sprite2 = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 0, y = 0 }) -- get_stake_sprite(G.GAME.stake or 1, 0.5) 
       
       local stake_spriteb = get_stake_sprite(G.GAME.stake or 1, 0.5)
       local stake_spritebb = get_stake_sprite(G.GAME.stake or 1, 0.5)
