@@ -35,27 +35,34 @@ SMODS.calculate_context = function(context, return_table, no_resolve)
 end
 
 function G.UIDEF.lab()
-    G.shop_jokers = CardArea(
+      local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.5)
+      local stake_sprite2 = get_stake_sprite(G.GAME.stake or 1, 0.5)
+      
+      local stake_spriteb = get_stake_sprite(G.GAME.stake or 1, 0.5)
+      local stake_spritebb = get_stake_sprite(G.GAME.stake or 1, 0.5)
+      local stake_spritebbb = get_stake_sprite(G.GAME.stake or 1, 0.5)
+
+    G.merge_1 = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      G.GAME.shop.joker_max*1.02*G.CARD_W,
-      1.05*G.CARD_H, 
+      G.CARD_W,
+      G.CARD_H, 
       {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
 
-
-    G.shop_vouchers = CardArea(
+    G.merge_2 = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      2.1*G.CARD_W,
-      1.05*G.CARD_H, 
-      {card_limit = 1, type = 'shop', highlight_limit = 1})
+      G.CARD_W,
+      G.CARD_H, 
+      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
 
-    G.shop_booster = CardArea(
+    G.result = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      2.4*G.CARD_W,
-      1.15*G.CARD_H, 
-      {card_limit = 2, type = 'shop', highlight_limit = 1, card_w = 1.27*G.CARD_W})
+      G.CARD_W,
+      G.CARD_H, 
+      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
+
 
     local shop_sign = AnimatedSprite(0,0, 4.4, 2.2, G.ANIMATION_ATLAS['med_lab_sign'])
     shop_sign:define_draw_steps({
@@ -107,7 +114,7 @@ function G.UIDEF.lab()
                         {n=G.UIT.R, config={align = "cm", minw = 2.8, minh = 1.6, r=0.15,colour = G.C.GREEN, button = 'reroll_shop', func = 'can_reroll', hover = true,shadow = true}, nodes = {
                           {n=G.UIT.R, config={align = "cm", padding = 0.07, focus_args = {button = 'x', orientation = 'cr'}, func = 'set_button_pip'}, nodes={
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3}, nodes={
-                              {n=G.UIT.T, config={text = localize('ui_lab_indication_temp'), scale = 0.4, colour = G.C.WHITE, shadow = true}},
+                              {n=G.UIT.T, config={text = localize('ui_lab_merge'), scale = 0.4, colour = G.C.WHITE, shadow = true}},
                             }},
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3, minw = 1}, nodes={
                               {n=G.UIT.T, config={text = localize('$'), scale = 0.7, colour = G.C.WHITE, shadow = true}},
@@ -117,19 +124,43 @@ function G.UIDEF.lab()
                         }},
                       }},
                       {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = 8.2}, nodes={
-                          {n=G.UIT.O, config={object = G.shop_jokers}},
+
+                        {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
+                          {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2, colour = G.C.L_BLACK}, nodes={
+                            {n=G.UIT.O, config = {padding = 0,object = G.merge_1, align = "cm", id = "merge_area_1" }},
+                          }},
+                        }},
+
+                          {n=G.UIT.O, config={w=0.2,h=0.2, colour = G.C.BLUE, object = stake_sprite2, hover = true, can_collide = false}},
+
+                        {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
+                          {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2, colour =  G.C.L_BLACK}, nodes={
+                            {n=G.UIT.O, config = {padding = 0,object = G.merge_2, align = "cl", id = "merge_area_2" }},
+                          }},
+                        }},
+
+                        {n=G.UIT.O, config={ w=0.2,h=0.2, colour = G.C.BLUE, object = stake_sprite, hover = true, can_collide = false}},
+
+                        {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
+                          {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.L_BLACK}, nodes={
+                            {n=G.UIT.O, config = {padding = 0,object = G.result, align = "cl", id = "merge_area_3" }},
+                          }},
+                        }},
                       }},
                     }},
                     {n=G.UIT.R, config={align = "cm", minh = 0.2}, nodes={}},
                     {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
                       {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                        {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = G.shop_vouchers.T.h+0.4}, nodes={
-                          {n=G.UIT.T, config={text = localize{type = 'variable', key = 'ante_x_voucher', vars = {G.GAME.round_resets.ante}}, scale = 0.45, colour = G.C.L_BLACK, vert = true}},
-                          {n=G.UIT.O, config={object = G.shop_vouchers}},
+                        {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.BLACK, maxh = 1.05*G.CARD_H+0.4}, nodes={
+                          {n=G.UIT.R,config={align = "cm",padding = 0.2, minh =  1.05*G.CARD_H, minw = 2.1*G.CARD_W, r=0.15,colour = G.C.MONEY, button = 'reroll_shop', hover = true,shadow = true}, nodes = {
+                            {n=G.UIT.T, config={text = "RECIPES", scale = 0.5, colour = G.C.WHITE,}},
+		                      }},
                         }},
                       }},
                       {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
-                        {n=G.UIT.O, config={object = G.shop_booster}},
+                        {n=G.UIT.O, config={padding = 0.7,w=1.5,h=1.5, colour = G.C.BLUE, object = stake_spriteb, hover = true, can_collide = false}},
+                        {n=G.UIT.O, config={padding = 0.7,w=1.5,h=1.5, colour = G.C.BLUE, object = stake_spritebb, hover = true, can_collide = false}},
+                        {n=G.UIT.O, config={padding = 0.7,w=1.5,h=1.5, colour = G.C.BLUE, object = stake_spritebbb, hover = true, can_collide = false}},
                       }},
                     }}
                 }
@@ -166,9 +197,10 @@ function Game:update_lab(dt)
                                 local nosave_shop = nil
                                 if not shop_exists then
                                 
-                                    if G.load_shop_jokers then 
+                                  --[[  if G.load_merge then 
                                         nosave_shop = true
-                                        G.shop_jokers:load(G.load_shop_jokers)
+                                        G.merge_1:load(G.load_shop_jokers)
+                                        G.merge_2:load(G.load_shop_jokers_2)
                                         for k, v in ipairs(G.shop_jokers.cards) do
                                             create_shop_card_ui(v)
                                             if v.ability.consumeable then v:start_materialize() end
@@ -176,14 +208,15 @@ function Game:update_lab(dt)
                                                 if vvv:apply_to_run({type = 'store_joker_modify', card = v}) then break end
                                             end
                                         end
-                                        G.load_shop_jokers = nil
+                                        G.load_merge = nil
                                     else
-                                        for i = 1, G.GAME.shop.joker_max - #G.shop_jokers.cards do
-                                            G.shop_jokers:emplace(create_card_for_shop(G.shop_jokers))
+                                        for i = 1, G.GAME.shop.joker_max - #G.merge_1.cards do
+                                            G.merge_1:emplace(create_card_for_shop(G.merge_1))
+
                                         end
-                                    end
+                                    end]]
                                     
-                                    if G.load_shop_vouchers then 
+                     --[[               if G.load_shop_vouchers then 
                                         nosave_shop = true
                                         G.shop_vouchers:load(G.load_shop_vouchers)
                                         for k, v in ipairs(G.shop_vouchers.cards) do
@@ -219,9 +252,9 @@ function Game:update_lab(dt)
                                             end
 
                                             if G.GAME.current_round.used_packs[i] ~= 'USED' then 
-                                                local card = Card(G.shop_booster.T.x + G.shop_booster.T.w/2,
-                                                G.shop_booster.T.y, G.CARD_W*1.27, G.CARD_H*1.27, G.P_CARDS.empty, G.P_CENTERS[G.GAME.current_round.used_packs[i]], {bypass_discovery_center = true, bypass_discovery_ui = true})
-                                                create_shop_card_ui(card, 'Booster', G.shop_booster)
+                                                local card = Card(G.shop_booster.T.x + G.shop_booster.T.w/2,]]
+                                          --      G.shop_booster.T.y, G.CARD_W*1.27, G.CARD_H*1.27, G.P_CARDS.empty, G.P_CENTERS[G.GAME.current_round.used_packs[i]], {bypass_discovery_center = true, bypass_discovery_ui = true})
+                                            --[[    create_shop_card_ui(card, 'Booster', G.shop_booster)
                                                 card.ability.booster_pos = i
                                                 card:start_materialize()
                                                 G.shop_booster:emplace(card)
@@ -234,7 +267,7 @@ function Game:update_lab(dt)
                                         for i = 1, #G.GAME.tags do
                                             G.GAME.tags[i]:apply_to_run({type = 'shop_final_pass'})
                                         end
-                                    end
+                                    end ]]
                                 end
 
                                 G.CONTROLLER:snap_to({node = G.shop:get_UIE_by_ID('next_round_button')})
