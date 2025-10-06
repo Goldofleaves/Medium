@@ -1,4 +1,20 @@
 MEDIUM.sajeventpool = {Shop = 1, Lab = 1} -- weights, must be integers
+
+--TODO: Make in_lab be set automatically,
+--TODO: Make merge cost reset by patching new_round()
+--TODO: Put buttons behind cards
+--TODO: Make a function to check if a fusion exists to enable the merge button in the first place, or make it so the order doesnt Majority of the {C:attention}art
+--TODO: Make playing cards fusable
+-- i hope this is all
+-- some functions are in misc.lua
+LAB = {
+    merge_cost = 5,
+    merge_cost_increase = 2,
+    merge_cost_reset = 5,
+    in_lab = false,
+}
+
+
 function generate_shop_adjacent_event()
     local table = {}
     for k, v in pairs(MEDIUM.sajeventpool) do
@@ -120,14 +136,14 @@ function G.UIDEF.lab()
                             }}   
                           }},              
                         }},
-                        {n=G.UIT.R, config={align = "cm", minw = 2.3, minh = 1.6, r=0.15,colour = G.C.GREEN, button = 'reroll_shop', func = 'can_reroll', hover = true,shadow = true}, nodes = {
+                        {n=G.UIT.R, config={align = "cm", minw = 2.3, minh = 1.6, r=0.15,colour = G.C.GREEN, button = 'med_lab_merge', func = 'med_can_merge', hover = true,shadow = true}, nodes = {
                           {n=G.UIT.R, config={align = "cm", padding = 0.07, focus_args = {button = 'x', orientation = 'cr'}, func = 'set_button_pip'}, nodes={
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3}, nodes={
                               {n=G.UIT.T, config={text = localize('ui_lab_merge'), scale = 0.4, colour = G.C.WHITE, shadow = true}},
                             }},
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3, minw = 1}, nodes={
                               {n=G.UIT.T, config={text = localize('$'), scale = 0.7, colour = G.C.WHITE, shadow = true}},
-                              {n=G.UIT.T, config={ref_table = G.GAME.current_round, ref_value = 'reroll_cost', scale = 0.75, colour = G.C.WHITE, shadow = true}},
+                              {n=G.UIT.T, config={ref_table = LAB, ref_value = 'merge_cost', scale = 0.75, colour = G.C.WHITE, shadow = true}},
                             }}
                           }}
                         }},
@@ -160,7 +176,7 @@ function G.UIDEF.lab()
                     {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
                       {n=G.UIT.C, config={align = "cm", padding = 0.15, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
                         {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.BLACK, maxh = 1.05*G.CARD_H+0.4}, nodes={
-                          {n=G.UIT.R,config={align = "cm",padding = 0.1, minh =  1.05*G.CARD_H, minw = 1.12*G.CARD_W, r=0.15,colour = G.C.MONEY, button = 'reroll_shop', hover = true,shadow = true}, nodes = {
+                          {n=G.UIT.R,config={align = "cm",padding = 0.1, minh =  1.05*G.CARD_H, minw = 1.12*G.CARD_W, r=0.15,colour = G.C.MONEY, button = 'med_lab_merge', hover = true,shadow = true}, nodes = {
                             {n=G.UIT.T, config={text = localize("ui_lab_recipes"), scale = 0.5, colour = G.C.WHITE,}},
 		                      }},
                         }},
