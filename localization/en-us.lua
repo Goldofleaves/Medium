@@ -171,8 +171,17 @@ return {
                 name = "Commit Tree",
                 text = {
                     "If this run is not {C:attention}Seeded{},",
-                    "Return {C:attention}1 10^#1#ths{} of the seed of the run",
+                    "Return {C:attention}1 10^#1#ths{} of",
+                    "the seed of the run",
                     "in {C:attention}Base 36{} as {V:1}Jank"
+                    }
+                },
+            j_med_sunrise = {
+                name = "Sunrise",
+                text = {
+                    "On the {C:attention}first #1# hands{}",
+                    "of round, {C:attention}upgrade{}",
+                    "those played hands",
                     }
                 },
             j_med_achts = {
