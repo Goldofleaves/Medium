@@ -21,6 +21,7 @@ SMODS.Voucher {
 	},
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = { set = "Other", key = "fusion_enhancements" } 
+        info_queue[#info_queue+1] = { set = "Other", key = "fusion_seals" } 
 	end,
 	redeem = function(self, voucher)
 		G.GAME.modifiers.fusion_enhancements_spawn = true

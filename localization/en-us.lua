@@ -69,7 +69,8 @@ return {
                 name = 'Vogue',
                 text = {
                     "Cards with",
-                    "{C:attention}fusion enhancements{} are",
+                    "{C:attention}fusion enhancements{} and",
+                    "{C:attention}fusion seals{} are",
                     "allowed to be spawned",
                     "naturally"
                 }
@@ -118,6 +119,14 @@ return {
             },
         },
         Other = {
+            -- seals
+            med_orange_seal = {
+                name = "Orange Seal",
+                text = {
+                    "+{C:attention}#1#{} Jank",
+                    "while held in hand",
+                },
+            },
             undiscovered_interface = {
                 name = "Not Discovered",
                 text = {
@@ -133,6 +142,14 @@ return {
                     "{C:attention}Enhancements {}created",
                     "by {C:attention}merging{}",
                     "2 or more enhancements."
+                }
+            },
+            fusion_seals = {
+                name = "Fusion Seals",
+                text = {
+                    "{C:attention}Seals {}created",
+                    "by {C:attention}merging{}",
+                    "2 or more seals."
                 }
             },
             fusion_suits = {
@@ -181,7 +198,7 @@ return {
                 text = {
                     "On the {C:attention}first #1# hands{}",
                     "of round, {C:attention}upgrade{}",
-                    "those played hands",
+                    "played hands",
                     }
                 },
             j_med_achts = {
@@ -317,6 +334,7 @@ return {
     },
     misc = {
         labels = {
+            med_orange_seal = "Orange Seal",
             med_reflective = "Reflective",
         },
         dictionary={
