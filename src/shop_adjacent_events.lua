@@ -1,7 +1,7 @@
 MEDIUM.sajeventpool = {Shop = 1, Lab = 1} -- weights, must be integers
 
 --TODO: Make in_lab be set automatically,
---TODO: Make merge cost reset by patching new_round()
+--TODO: Make merge cost reset by patching new_round() // done
 --TODO: Put buttons behind cards
 --TODO: Make a function to check if a fusion exists to enable the merge button in the first place, or make it so the order doesnt Majority of the {C:attention}art
 --TODO: Make playing cards fusable
@@ -198,6 +198,7 @@ function Game:update_lab(dt)
     if not G.STATE_COMPLETE then
         stop_use()
         ease_background_colour_blind(G.STATES.LAB)
+        LAB.in_lab = true
         local shop_exists = not not G.shop
         G.shop = G.shop or UIBox{
             definition = G.UIDEF.lab(),

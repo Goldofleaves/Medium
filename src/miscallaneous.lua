@@ -78,7 +78,7 @@ function MEDIUM.merge_emplace(card)
             r = 0.08,
             padding = 0.1,
             align = "bm",
-            minh = 0.4 * card.T.h,
+            minh = 0.2 * card.T.h,
             hover = true,
             shadow = true,
             colour = G.C.RED,
@@ -115,7 +115,7 @@ function G.FUNCS.merge_retrieve_emplace(e)
             e.config.button = 'merge_emplace'
         end
     else
-        e.children[1].children[1].config.text = "RETURN"
+        e.children[1].children[1].config.text = "TAKE"
             e.config.colour = G.C.RED
             e.config.button = 'merge_retireve'
     end
@@ -149,7 +149,7 @@ MEDIUM.lab_create_merge_pattern("j_dusk", "j_burnt", "j_med_sunrise")
 MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
 MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
 
-function MEDIUM.merge(result_area, area1, area2)
+function MEDIUM.merge(result_area, area1, area2, check)
     if not area1 then
         area1 = G.merge_1
     end
@@ -159,28 +159,38 @@ function MEDIUM.merge(result_area, area1, area2)
     local card1, card2 = area1.cards[1], area2.cards[1]
     local destroy_cards = {area1.cards[1], area2.cards[1]}
     for k, v in pairs(MEDIUM.merge_table) do
-        if k == card1.config.center.key then
+        if card1 and k == card1.config.center.key then
             for kk, vv in pairs(v) do
-                if kk == card2.config.center.key then
+                if card2 and kk == card2.config.center.key then
+                    if not check then
                     SMODS.destroy_cards(destroy_cards)
                     SMODS.add_card({
                         key = vv,
                         area = result_area
                     })
+                else
+                    return true
+                end
                 end
             end
-        elseif k == card2.config.center.key then
+        elseif card2 and k == card2.config.center.key then
             for kk, vv in pairs(v) do
-                if kk == card1.config.center.key then
+                if card1 and kk == card1.config.center.key then
+                if not check then
                     SMODS.destroy_cards(destroy_cards)
                     SMODS.add_card({
                         key = vv,
                         area = result_area
                     })
+                else
+                    return true
+                end
+
                 end
             end
         end
     end
+    return nil
 end
 
 function MEDIUM.move_card(card, _area)
@@ -197,8 +207,8 @@ end
 
 
     G.FUNCS.med_can_merge = function(e)
-        if ((G.GAME.dollars - G.GAME.bankrupt_at) - G.GAME.current_round.reroll_cost < 0) and
-            G.GAME.current_round.reroll_cost ~= 0 and (#G.merge_1.cards == 0 or #G.merge_2.cards == 0) then
+        if ((G.GAME.dollars - G.GAME.bankrupt_at) - LAB.merge_cost < 0) or not MEDIUM.merge(G.result, nil, nil, true) or
+            (#G.merge_1.cards == 0 or #G.merge_2.cards == 0) then
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
             e.config.button = nil
         else

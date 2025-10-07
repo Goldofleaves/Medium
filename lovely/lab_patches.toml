@@ -14,4 +14,29 @@ payload = '''
  (self.config.type == 'hand' and ({[G.STATES.SHOP]=1, [G.STATES.LAB] =1,[G.STATES.TAROT_PACK]=1, [G.STATES.SPECTRAL_PACK]=1, [G.STATES.STANDARD_PACK]=1,[G.STATES.BUFFOON_PACK]=1,[G.STATES.PLANET_PACK]=1, [G.STATES.ROUND_EVAL]=1, [G.STATES.BLIND_SELECT]=1})[state]) or
 '''
 match_indent = true 
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = '''
+ G.GAME.current_round.used_packs = {}
+'''
+position = "after"
+payload = '''
+ LAB.merge_cost = LAB.merge_cost_reset
+'''
+match_indent = true 
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''
+ G.CONTROLLER.locks.toggle_shop = true
+'''
+position = "after"
+payload = '''
+ LAB.in_lab = false
+'''
+match_indent = true 
+ 
  
