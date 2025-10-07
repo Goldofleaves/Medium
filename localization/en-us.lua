@@ -127,6 +127,15 @@ return {
                     "while held in hand",
                 },
             },
+            med_taupe_seal = {
+                name = "Taupe Seal",
+                text = {
+                    "If this is the only",
+                    "played card,",
+                    "{C:attention}create{} an",
+                    "{C:attention}Interface{} card."
+                },
+            },
             undiscovered_interface = {
                 name = "Not Discovered",
                 text = {
@@ -335,6 +344,7 @@ return {
     misc = {
         labels = {
             med_orange_seal = "Orange Seal",
+            med_taupe_seal = "Taupe Seal",
             med_reflective = "Reflective",
         },
         dictionary={

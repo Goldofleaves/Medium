@@ -1,6 +1,6 @@
 SMODS.Atlas{key = "medium_enhancements", path = "enhancements.png", px = 71, py = 95}
 
-SMODS.Enhancement {
+SMODS.Enhancement { -- wild ^ 2
     key = 'plus_four',
     atlas = "medium_enhancements",
     pos = { x = 0, y = 0 },

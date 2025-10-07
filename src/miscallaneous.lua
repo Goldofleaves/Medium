@@ -10,7 +10,7 @@ SMODS.Atlas {
     px = 18,
     py = 18
 }
-SMODS.Suit {
+SMODS.Suit { -- diamonds + spades
     key = "spears",
     card_key = "SPEARS",
     lc_atlas = "medium_fusionsuits",
