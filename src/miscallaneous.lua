@@ -131,12 +131,23 @@ MEDIUM.animated_sprites = {
     }
 }
 
-MEDIUM.merge_table = {
-    ["j_joker"] = {
-        ["j_joker"] = "j_caino",
-        ["j_caino"] = "j_joker"
-    }
-}
+MEDIUM.merge_table = {}
+
+MEDIUM.lab_create_merge_pattern = function(key1, key2, resultkey)
+    if not MEDIUM.merge_table[key1] then
+        MEDIUM.merge_table[key1] = {
+            [key2] = resultkey
+        }
+    else
+        MEDIUM.merge_table[key1][key2] = resultkey
+    end
+    -- making this a function so we can probably also do ui jank here when recipes comes out
+end
+
+MEDIUM.lab_create_merge_pattern("j_joker", "j_joker", "j_caino")
+MEDIUM.lab_create_merge_pattern("j_dusk", "j_burnt", "j_med_sunset")
+MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
+MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
 
 function MEDIUM.merge(result_area, area1, area2)
     if not area1 then
@@ -151,6 +162,16 @@ function MEDIUM.merge(result_area, area1, area2)
         if k == card1.config.center.key then
             for kk, vv in pairs(v) do
                 if kk == card2.config.center.key then
+                    SMODS.destroy_cards(destroy_cards)
+                    SMODS.add_card({
+                        key = vv,
+                        area = result_area
+                    })
+                end
+            end
+        elseif k == card2.config.center.key then
+            for kk, vv in pairs(v) do
+                if kk == card1.config.center.key then
                     SMODS.destroy_cards(destroy_cards)
                     SMODS.add_card({
                         key = vv,
