@@ -123,7 +123,7 @@ return {
             med_orange_seal = {
                 name = "Orange Seal",
                 text = {
-                    "+{C:attention}#1#{} Jank",
+                    "{C:attention}+#1#{} Jank",
                     "while held in hand",
                 },
             },
