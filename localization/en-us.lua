@@ -202,6 +202,17 @@ return {
                     "in {C:attention}Base 36{} as {V:1}Jank"
                     }
                 },
+            j_med_milestone = {
+                name = "Milestone",
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult,",
+                    "lose {X:mult,C:white}X#2#{} Mult times",
+                    "the total amount of",
+                    "{C:attention}milestones not unlocked{},",
+                    "divided by the total",
+                    "amount of milestones {C:inactive}(#3#/#4#)",
+                    }
+                },
             j_med_sunrise = {
                 name = "Sunrise",
                 text = {

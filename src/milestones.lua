@@ -30,11 +30,10 @@ forget_all_milestones = function ()
     end
 end
 trigger_milestone_ui = function(key)
-    
-        ease_background_colour{new_colour = G.C.ORANGE, special_colour = G.C.PURPLE, contrast = 1.5}
-        attention_text({text = "Milestone \""..localize_milestone(key).name.."\" Achieved!", hold = 12, scale = 0.5, emboss = true,})
-        MEDIUM.milestonetimer = 400
-        play_sound("med_sfx_milestone") 
+    ease_background_colour{new_colour = G.C.ORANGE, special_colour = G.C.PURPLE, contrast = 1.5}
+    attention_text({text = "Milestone \""..localize_milestone(key).name.."\" Achieved!", hold = 12, scale = 0.5, emboss = true,})
+    MEDIUM.milestonetimer = 400
+    play_sound("med_sfx_milestone") 
     --[[G.SPLASH_BACK:define_draw_steps({
             {
                 shader = "splash",
@@ -49,16 +48,17 @@ trigger_milestone_ui = function(key)
 end
 unlock_milestone = function (key)
     if not MEDIUM.milestones[key] then
-        return "There exists no milestone with passed key "..key.."."
+        print("There exists no milestone with passed key "..key..".")
     else
-    if G.PROFILES[G.SETTINGS.profile].milestones[key] ~= true then
-    MEDIUM.milestones[key].unlocked = true
-    G.PROFILES[G.SETTINGS.profile].milestones[key] = true
-    trigger_milestone_ui(key)
-    else
-        return "Milestone with key "..key.." has already been achieved."
+        if G.PROFILES[G.SETTINGS.profile].milestones[key] ~= true then
+            MEDIUM.milestones[key].unlocked = true
+            G.PROFILES[G.SETTINGS.profile].milestones[key] = true
+            trigger_milestone_ui(key)
+            G:save_progress()
+        else
+            print("Milestone with key "..key.." has already been achieved.")
+        end
     end
-end
 end
 
 MEDIUM.Milestone{
