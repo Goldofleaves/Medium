@@ -7,13 +7,14 @@ priority = -1
 [patches.pattern]
 target = 'cardarea.lua'
 pattern = '''
- (self.config.type == 'hand' and ({[G.STATES.SHOP]=1, [G.STATES.TAROT_PACK]=1, [G.STATES.SPECTRAL_PACK]=1, [G.STATES.STANDARD_PACK]=1,[G.STATES.BUFFOON_PACK]=1,[G.STATES.PLANET_PACK]=1, [G.STATES.ROUND_EVAL]=1, [G.STATES.BLIND_SELECT]=1})[state]) or
+(self.config.type == 'hand' and ({[G.STATES.SHOP]=1, [G.STATES.TAROT_PACK]=1, [G.STATES.SPECTRAL_PACK]=1, [G.STATES.STANDARD_PACK]=1,[G.STATES.BUFFOON_PACK]=1,[G.STATES.PLANET_PACK]=1, [G.STATES.ROUND_EVAL]=1, [G.STATES.BLIND_SELECT]=1})[state]) or
 '''
 position = "at"
 payload = '''
  (self.config.type == 'hand' and ({[G.STATES.SHOP]=1, [G.STATES.LAB] =1,[G.STATES.TAROT_PACK]=1, [G.STATES.SPECTRAL_PACK]=1, [G.STATES.STANDARD_PACK]=1,[G.STATES.BUFFOON_PACK]=1,[G.STATES.PLANET_PACK]=1, [G.STATES.ROUND_EVAL]=1, [G.STATES.BLIND_SELECT]=1})[state]) or
 '''
 match_indent = true 
+
 
 [[patches]]
 [patches.pattern]
@@ -36,7 +37,10 @@ pattern = '''
 position = "after"
 payload = '''
  LAB.in_lab = false
+ reset_deck()
 '''
 match_indent = true 
  
+ 
+
  

@@ -268,3 +268,24 @@ end
         end
     end
 
+function move_deck()
+    
+    LAB.old_deck_pos = G.deck.T.y
+
+    G.deck.T.y = 25
+    
+    G.deck:align_cards()
+
+end
+
+function reset_deck()
+
+    if LAB.old_deck_pos then
+        G.deck.T.y = LAB.old_deck_pos
+
+        LAB.old_deck_pos = nil
+
+        G.deck:align_cards()
+    end
+
+end

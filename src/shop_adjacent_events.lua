@@ -199,6 +199,7 @@ function Game:update_lab(dt)
         stop_use()
         ease_background_colour_blind(G.STATES.LAB)
         LAB.in_lab = true
+        move_deck()
         local shop_exists = not not G.shop
         G.shop = G.shop or UIBox{
             definition = G.UIDEF.lab(),
