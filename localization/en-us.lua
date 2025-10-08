@@ -211,6 +211,7 @@ return {
                     "{C:attention}milestones not unlocked{},",
                     "divided by the total",
                     "amount of milestones {C:inactive}(#3#/#4#)",
+                    "{C:attention}at the end of round{}."
                     }
                 },
             j_med_sunrise = {

@@ -16,8 +16,8 @@ SMODS.Joker({
 	config = {
 		extra = {
             currentroll = 0, -- 0: tails, 1: heads
-            incrementval = 2,
-            plusjankval = 15,
+            incrementval = 1,
+            plusjankval = 12,
             jokerdisplayval = "Fuck"
 		},
 	},

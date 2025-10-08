@@ -115,11 +115,12 @@ position = "after"
 payload = '''
 print("Hi!")
 if not self.GAME.jankvalue then
-self.GAME.jankvalue = 1
+self.GAME.jankvalue = 0
 end
 if not self.GAME.jankop then
 self.GAME.jankop = "med_jank"
 end
+set_jank_default_value(0)
 generate_saj_for_curante()
 '''
 match_indent = true
