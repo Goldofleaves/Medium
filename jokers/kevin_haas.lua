@@ -28,7 +28,7 @@ SMODS.Joker({
 				G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hand_amount
 				ease_hands_played(card.ability.extra.hand_amount)
                 return {
-                    message = "+"..card.ability.extra.hand_amount..localize("k_hand")..(card.ability.extra.hand_amount > 1 and localize("k_plural") or "")
+                    message = "+"..card.ability.extra.hand_amount.." "..localize("k_hand")..(card.ability.extra.hand_amount > 1 and localize("k_plural") or "")
                 }
             end
         end
