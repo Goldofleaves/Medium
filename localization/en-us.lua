@@ -193,6 +193,15 @@ return {
             },
         },
         Joker = {
+            j_med_kevin_haas = {
+                name = "Kevin Haas",
+                text = {
+                    "{C:green}#1# in #2#{} Chance to",
+                    "permanantly {C:blue}+#3# Hand#4#{} ",
+                    "at the {C:attention}start of round",
+                    "{C:inactive}Having Fun?",
+                    }
+                },
             j_med_branching_tree = {
                 name = "Commit Tree",
                 text = {
@@ -360,6 +369,8 @@ return {
             med_reflective = "Reflective",
         },
         dictionary={
+            k_hand = "Hand",
+            k_plural = "s",
             b_interface_cards = 'Interface Cards',
             k_interface = 'Interface',
             k_list_of_milestones = "List of Milestones:",
