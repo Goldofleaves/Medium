@@ -36,11 +36,10 @@ pattern = '''
 '''
 position = "after"
 payload = '''
- LAB.in_lab = false
- reset_deck()
+if LAB.in_lab then
+    reset_merge()
+    LAB.in_lab = false
+end
 '''
 match_indent = true 
- 
- 
-
  

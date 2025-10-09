@@ -55,7 +55,7 @@ function Card:highlight(highlighted)
         end
     end
 
-    if self.highlighted and LAB.in_lab and self.ability.set == 'Joker' then
+    if self.highlighted and LAB.in_lab and (self.ability.set == 'Joker' or self:is_playing_card()) then
         self.children.med_merge_button = UIBox {
             definition = MEDIUM.merge_emplace(self),
             config = {
@@ -68,6 +68,23 @@ function Card:highlight(highlighted)
             }
         }
     end
+end
+
+function Card:is_playing_card()
+    if self.ability.set == "Default" or self.ability.set == "Enhanced" then
+        return true
+    end
+    return false
+end
+
+local click_old = Card.click
+function Card:click()
+    local ret = click_old(self)
+
+    if self and self.ability.set == "med_not_for_public" then
+       G.FUNCS.med_deck_info()
+    end
+    return ret
 end
 
 function MEDIUM.merge_emplace(card)
@@ -105,7 +122,7 @@ function MEDIUM.merge_emplace(card)
 end
 
 function G.FUNCS.merge_retrieve_emplace(e)
-    if e.config.ref_table.area == G.jokers then
+    if e.config.ref_table.area == G.jokers or e.config.ref_table.area == MEDIUM.SUITS_AREA then
         e.children[1].children[1].config.text = "MERGE"
         if G.merge_1 and G.merge_1.cards and(#G.merge_1.cards > 0 and #G.merge_2.cards > 0) then
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
@@ -194,15 +211,25 @@ function MEDIUM.merge(result_area, area1, area2, check)
 end
 
 function MEDIUM.move_card(card, _area)
+    if _area then
+G.E_MANAGER:add_event(Event({
+    trigger = "after",
+    delay = 0.2,
+    func = function()
     local area = card.area
     card:remove_from_deck()
 
     if not card.getting_sliced then
         area:remove_card(card)
         card:add_to_deck()
+        play_sound("card1")
         _area:emplace(card)
 
     end
+        return true
+    end
+}))
+end
 end
 
 
@@ -248,6 +275,9 @@ end
 
     G.FUNCS.merge_retireve = function(e)
         local card = e.config.ref_table
+        if card:is_playing_card() then
+            MEDIUM.move_card(card, MEDIUM.SUITS_AREA)
+        else
         if card.old_area and card.old_area.config.card_limit > #card.old_area.cards then
             MEDIUM.move_card(card, card.old_area or G.jokers)
             card.old_area = nil
@@ -255,37 +285,88 @@ end
             MEDIUM.move_card(card, card.old_area or G.jokers)
             card.old_area = nil
         end
+        end
     end
 
     G.FUNCS.merge_can_retireve = function(e)
         local card = e.config.ref_table
         if card.old_area.cards.card_limit > #card.old_area.cards then
             e.config.colour = G.C.GREEN
-            e.config.button = 'mmerge_retireve'
+            e.config.button = 'merge_retireve'
         else
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
             e.config.button = nil
         end
     end
 
-function move_deck()
-    
-    LAB.old_deck_pos = G.deck.T.y
 
-    G.deck.T.y = 25
-    
-    G.deck:align_cards()
-
+function ez_move(card, reverse, area)
+    if not area then area = G.deck end
+    if not reverse then
+        draw_card(area, MEDIUM.SUITS_AREA, 100, 'up', true, card)
+    else
+        draw_card(MEDIUM.SUITS_AREA, area, 100, 'up', true, card)
+    end
 end
 
-function reset_deck()
 
-    if LAB.old_deck_pos then
-        G.deck.T.y = LAB.old_deck_pos
+function next_suit()
 
-        LAB.old_deck_pos = nil
+    suit_check_merge()
 
-        G.deck:align_cards()
+    if not LAB.current_suit then LAB.current_suit = 0 end
+
+    if LAB.current_suit == #LAB.SUITS then
+        LAB.current_suit = 1
+    else
+        LAB.current_suit = LAB.current_suit + 1
     end
 
+    if MEDIUM.SUITS_AREA and MEDIUM.SUITS_AREA.cards and #MEDIUM.SUITS_AREA.cards > 0 then
+        for k, v in pairs(MEDIUM.SUITS_AREA.cards) do
+            MEDIUM.move_card(v, G.deck)
+        end
+    end
+
+    for k, v in pairs(G.deck.cards) do
+        if v.base.suit == LAB.SUITS[LAB.current_suit] then
+            MEDIUM.move_card(v, MEDIUM.SUITS_AREA)
+        end
+    end
 end
+
+function reset_merge()
+    if G.merge_1.cards[1] then
+        if G.merge_1.cards[1]:is_playing_card() then
+            MEDIUM.move_card(G.merge_1.cards[1], G.deck)
+        else
+            MEDIUM.move_card(G.merge_1.cards[1], G.jokers)
+        end
+    end
+    if G.merge_2.cards[1] then
+        if G.merge_2.cards[1]:is_playing_card() then
+            MEDIUM.move_card(G.merge_2.cards[1], G.deck)
+        else
+            MEDIUM.move_card(G.merge_2.cards[1], G.jokers)
+        end
+    end
+
+    for k, v in pairs(MEDIUM.SUITS_AREA.cards) do
+        MEDIUM.move_card(v, G.deck)
+    end
+end
+
+function suit_check_merge()
+    LAB.SUITS = {}
+        for k, v in pairs(SMODS.Suits) do
+          for kk, vv in pairs(G.deck.cards) do
+            if vv.base.suit == k then
+                LAB.SUITS[#LAB.SUITS+1] = k
+                break
+            end
+        end
+      end
+end
+
+
+
