@@ -26,7 +26,7 @@ function generate_shop_adjacent_event()
           end
         end
     end
-    return pseudorandom_element(table, "shitfuck")
+    return pseudorandom_element(thunk, "shitfuck")
 end
 function generate_saj_for_curante()
     G.GAME.sajevents = {}
