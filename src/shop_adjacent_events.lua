@@ -13,7 +13,7 @@ LAB = {
     merge_cost_reset = 5,
     in_lab = false,
 
-    old_pos = {}
+    old_pos = {},
 }
 
 
@@ -192,7 +192,9 @@ function G.UIDEF.lab()
 		                      }},
                         }},
                       }},
-                      {n=G.UIT.C, config={align = "cm", padding = 0.6, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+
+                      {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
+
 
                         {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.L_BLACK}, nodes={
@@ -216,11 +218,10 @@ function Game:update_lab(dt)
     if not G.STATE_COMPLETE then
         stop_use()
         ease_background_colour_blind(G.STATES.LAB)
+
         LAB.in_lab = true
       
-        next_suit()
-
-        local shop_exists = not not G.merge_1
+        
         G.shop = G.shop or UIBox{
             definition = G.UIDEF.lab(),
             config = {align='tmi', offset = {x=0,y=G.ROOM.T.y+11},major = G.hand, bond = 'Weak'}
@@ -241,11 +242,37 @@ function Game:update_lab(dt)
                                     G.GAME.tags[i]:apply_to_run({type = 'shop_start'})
                                 end
 
-                                local nosave_shop = nil
-                                if not shop_exists then
-                                  
-                                    
+                                if not LAB.save_suits_area then
+                                    if G.deck and G.deck.cards then
+                                        next_suit()
+                                        LAB.save_suits_area = MEDIUM.SUITS_AREA:save()
+                                    end
                                 end
+
+                                -- could've looped these
+
+                                if LAB.save_result then
+                                    G.result:load(LAB.save_result)
+                                    LAB.save_result = nil
+                                end
+
+                                if LAB.save_suits_area then
+
+                                    MEDIUM.SUITS_AREA:load(LAB.save_suits_area)
+                                    LAB.save_suits_area = nil
+                                end
+
+                                if LAB.save_merge_1 then
+                                    G.merge_1:load(LAB.save_merge_1)
+                                    LAB.save_merge_1 = nil
+                                end
+
+                                if LAB.save_merge_2 then
+                                    G.merge_2:load(LAB.save_merge_2)
+                                    LAB.save_merge_2 = nil
+                                end
+
+                                
 
                                 G.CONTROLLER:snap_to({node = G.shop:get_UIE_by_ID('next_round_button')})
                                 if not nosave_shop then G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end})) end
@@ -256,8 +283,8 @@ function Game:update_lab(dt)
                 end
             }))
             
-          
-              next_suit()
+
+
             
             
           G.STATE_COMPLETE = true

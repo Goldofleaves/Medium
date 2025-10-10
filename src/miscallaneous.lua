@@ -211,7 +211,7 @@ function MEDIUM.merge(result_area, area1, area2, check)
 end
 
 function MEDIUM.move_card(card, _area)
-    if _area then
+    if _area and _area.cards then
 G.E_MANAGER:add_event(Event({
     trigger = "after",
     delay = 0.2,
@@ -220,11 +220,13 @@ G.E_MANAGER:add_event(Event({
     card:remove_from_deck()
 
     if not card.getting_sliced then
+        if _area.cards then
         area:remove_card(card)
         card:add_to_deck()
         play_sound("card1")
+        
         _area:emplace(card)
-
+        end
     end
         return true
     end
@@ -250,6 +252,8 @@ end
         MEDIUM.merge(G.result)
 
         G.result.cards[1].old_area = G.merge_1.cards[1].old_area or G.jokers
+
+        LAB.save_result = G.result:save()
     end
 
     G.FUNCS.merge_emplace = function(e)
@@ -257,9 +261,11 @@ end
         if #G.merge_1.cards == 0 then
             card.old_area = card.area
             MEDIUM.move_card(card, G.merge_1)
+            LAB.save_merge_1 = G.merge_1:save()
         else
             card.old_area = card.area
             MEDIUM.move_card(card, G.merge_2)
+            LAB.save_merge_2 = G.merge_2:save()
         end
     end
 
@@ -275,17 +281,25 @@ end
 
     G.FUNCS.merge_retireve = function(e)
         local card = e.config.ref_table
+        local carda = card.area
         if card:is_playing_card() then
             MEDIUM.move_card(card, MEDIUM.SUITS_AREA)
+            merge_save_nil(carda)
         else
         if card.old_area and card.old_area.config.card_limit > #card.old_area.cards then
             MEDIUM.move_card(card, card.old_area or G.jokers)
+            merge_save_nil(carda)
             card.old_area = nil
+            
         else
             MEDIUM.move_card(card, card.old_area or G.jokers)
+            merge_save_nil(carda)
             card.old_area = nil
+            
         end
         end
+
+        G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end}))
     end
 
     G.FUNCS.merge_can_retireve = function(e)
@@ -312,6 +326,8 @@ end
 
 function next_suit()
 
+    LAB.suit_lock = true
+
     suit_check_merge()
 
     if not LAB.current_suit then LAB.current_suit = 0 end
@@ -333,6 +349,13 @@ function next_suit()
             MEDIUM.move_card(v, MEDIUM.SUITS_AREA)
         end
     end
+
+    LAB.save_suits_area = MEDIUM.SUITS_AREA:save()
+    
+    LAB.suit_lock = false
+
+    G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end}))
+
 end
 
 function reset_merge()
@@ -351,9 +374,23 @@ function reset_merge()
         end
     end
 
+    if G.result.cards[1] then
+        if G.result.cards[1]:is_playing_card() then
+            MEDIUM.move_card(G.result.cards[1], G.deck)
+        else
+            MEDIUM.move_card(G.result.cards[1], G.jokers)
+        end
+    end
+
     for k, v in pairs(MEDIUM.SUITS_AREA.cards) do
         MEDIUM.move_card(v, G.deck)
     end
+
+    LAB.save_merge_1 = nil
+    LAB.save_merge_2 = nil
+    LAB.save_suits_area = nil
+    LAB.save_result = nil
+
 end
 
 function suit_check_merge()
@@ -368,5 +405,31 @@ function suit_check_merge()
       end
 end
 
+function merge_save_nil(args)
+    if args == G.merge_1 then
+        LAB.save_merge_1 = nil
+        LAB.save_merge_1 = G.merge_1:save()
+    else
+        LAB.save_merge_2 = nil
+        LAB.save_merge_2 = G.merge_2:save()
+    end
+end
 
 
+local old = G.FUNCS.go_to_menu
+function G.FUNCS.go_to_menu(e)
+    if G.result then
+        LAB.save_result = G.result:save()
+    end
+    if G.merge_1 then
+        LAB.save_merge_1 = G.merge_1:save()
+    end
+    if G.merge_2 then
+        LAB.save_merge_2 = G.merge_2:save()
+    end
+    if MEDIUM.SUITS_AREA then
+        
+       LAB.save_suits_area = MEDIUM.SUITS_AREA:save()
+    end
+    old(e)
+end

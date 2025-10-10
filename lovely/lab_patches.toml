@@ -43,3 +43,22 @@ end
 '''
 match_indent = true 
  
+ [[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''
+ if G.SETTINGS.current_setup == 'New Run' then 
+'''
+position = "after"
+payload = '''
+if LAB then
+    print("LAB RESET!")
+    LAB.save_merge_1 = nil
+    LAB.save_merge_2 = nil
+    LAB.save_suits_area = nil
+    LAB.save_result = nil
+
+    LAB.in_lab = false
+end
+'''
+match_indent = true
