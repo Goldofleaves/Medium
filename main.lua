@@ -35,7 +35,7 @@ local blacklist = {
 local function load_files(path, dirs_only)
 	local info = nativefs.getDirectoryItemsInfo(path)
 	for i, v in pairs(info) do
-		if v.name ~= "main.lua" then
+		if v.name ~= "main.lua" and v.name ~= "config.lua" then
 		if v.type == "directory" and not blacklist[v.name] then	
 			load_files(path.."/"..v.name)
 		elseif not dirs_only then
@@ -103,4 +103,59 @@ Medium.ui_config = {
 
 Medium.description_loc_vars = function()
     return { background_colour = G.C.CLEAR, text_colour = G.C.WHITE, scale = 1.2 }
+end
+
+-- config
+MEDIUM.config = SMODS.current_mod.config
+
+Medium.config_tab = function()
+	local nodes = {}
+	local funk = {{n=G.UIT.C, config = {minw = 0.05}}}
+	for k, v in pairs(MEDIUM.config.shop_adjecent_events) do
+	funk[#funk + 1] = create_toggle({
+		label = localize("k_config_"..string.lower(k)),
+		active_colour = HEX("b609f1"),
+		ref_table = MEDIUM.config.shop_adjecent_events,
+		ref_value = k,
+		callback = function()
+		end
+	})
+	end
+	nodes[#nodes + 1] = {n = G.UIT.R, nodes = {
+                    {n=G.UIT.C, config = { align = "tm", colour = G.C.L_BLACK, padding = 0.2, maxh = 2.7, minw = 2.3, minh = 1.9, r = 0.2 }, nodes = {
+                        {n=G.UIT.R, config = { align = "cm", minw = G.CARD_W }, nodes = {
+                            {n=G.UIT.T, config = { text = localize('k_config_shop_adjacent_events'), scale = 0.5, colour = G.C.BLACK } },
+                        }},
+                        {n=G.UIT.R, config = { align = "cm", colour = G.C.BLACK, minh = G.CARD_H - 0.4, r = 0.2}, nodes = funk}
+                    }},
+                }}
+	nodes[#nodes + 1] = {n=G.UIT.R, config = {minw = 0.05, minh = 0.1}}
+	nodes[#nodes + 1] = {n = G.UIT.R, nodes = {
+                    {n=G.UIT.C, config = { align = "tm", colour = G.C.L_BLACK, padding = 0.2, maxh = 2.7, minw = 2.3, minh = 1.9, r = 0.2 }, nodes = {
+                        {n=G.UIT.R, config = { align = "cm", minw = G.CARD_W }, nodes = {
+                            {n=G.UIT.T, config = { text = localize('k_config_general'), scale = 0.5, colour = G.C.BLACK } },
+                        }},
+                        {n=G.UIT.R, config = { align = "cm", colour = G.C.BLACK, minh = G.CARD_H - 0.4, r = 0.2}, nodes = {create_toggle({
+                        	label = localize("k_config_custom_music"),
+                        	active_colour = HEX("b609f1"),
+                        	ref_table = MEDIUM.config,
+                        	ref_value = "custom_music",
+                        	callback = function()
+                        	end,
+                        })}}
+                    }},
+                }}
+	return {
+		n = G.UIT.ROOT,
+		config = {
+			emboss = 0.05,
+			minh = 6,
+			r = 0.1,
+			minw = 10,
+			align = "cm",
+			padding = 0.2,
+			colour = G.C.BLACK,
+		},
+		nodes = {{n = G.UIT.C, nodes = nodes}},
+	}
 end

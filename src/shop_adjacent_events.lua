@@ -18,10 +18,12 @@ LAB = {
 
 
 function generate_shop_adjacent_event()
-    local table = {}
+    local thunk = {}
     for k, v in pairs(MEDIUM.sajeventpool) do
         for i = 1, v do
-            table[#table+1] = k
+          if MEDIUM.config.shop_adjecent_events[k] or k == "Shop" then
+            thunk[#thunk+1] = k
+          end
         end
     end
     return pseudorandom_element(table, "shitfuck")

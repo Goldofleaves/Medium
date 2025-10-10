@@ -369,6 +369,13 @@ return {
             med_reflective = "Reflective",
         },
         dictionary={
+            --config
+            k_config_lab = "Lab",
+            k_config_test = "Test",
+            k_config_test2 = "Test2",
+            k_config_custom_music = "Enable custom music",
+            k_config_shop_adjacent_events = "Shop Adjacent Events:",
+            k_config_general = "General:",
             k_hand = "Hand",
             k_plural = "s",
             b_interface_cards = 'Interface Cards',
