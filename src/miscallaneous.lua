@@ -436,11 +436,11 @@ end
 
 --- Adds a custom return value to calculate funtions
 ---@param key_table table|string  The keys/indexes you want to return in a calculate's function 
----@param funct function  The function you want to execute when this is returned in a calculate function, taking in the passed value for the index as the first and only arguement. 
----@param localization_key string The localization key of the message displayed below the card, in misc.dictionary of the localization files.
+---@param funct function The function you want to execute when this is returned in a calculate function, taking in the passed value for the index as the first and only arguement. 
+---@param display_message_func function A function that returns a string as its display message, taking in the passed value for the index as the first and only arguement. 
 ---@param color table|Color The color that you want the display message background to be.
 ---@param eval_card boolean Whether you want to display an message at all. Ignores previous 2 arguements if set to false specifically. Defaults to true.
-function add_calc_effect(key_table, funct, localization_key, color, eval_card)
+function add_calc_effect(key_table, funct, display_message_func, color, eval_card)
     eval_card = eval_card == nil and true or eval_card
     if type(key_table) ~= "table" then
         key_table = tostring(key_table)
@@ -465,7 +465,7 @@ function add_calc_effect(key_table, funct, localization_key, color, eval_card)
         if bool then 
             funct(amount)
             update_hand_text({delay = 0}, {mult = mult, chips = hand_chips})
-    		if eval_card then card_eval_status_text(effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus, 'extra', nil, percent, nil, {message = localize(localization_key), colour = copy_table(color)}) end
+    		if eval_card then card_eval_status_text(effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus, 'extra', nil, percent, nil, {message = tostring(display_message_func(amount)), colour = copy_table(color)}) end
             return true
         end
     end
