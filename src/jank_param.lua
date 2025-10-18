@@ -22,12 +22,14 @@ SMODS.Scoring_Parameter({
     end
 })
 function increment_jank_default_value(num)
+    SMODS.calculate_context({ jank_default_value_incremented = true, jank_default_increment_val = num})
 	G.GAME.jankvalue = G.GAME.jankvalue + num
 	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
 	local fuck = get_current_jank_operator()
 	SMODS.set_scoring_calculation(fuck)
 end
 function set_jank_default_value(num)
+    SMODS.calculate_context({ jank_default_value_set = true, jank_default_set_val = num})
 	G.GAME.jankvalue =num
 	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
 	local fuck = get_current_jank_operator()
@@ -201,6 +203,7 @@ function Game:start_run(args)
 end
 
 function set_current_jank_operator(operator)
+    SMODS.calculate_context({ jank_operator_set = true, jank_operator_key = operator})
     SMODS.set_scoring_calculation(operator)
     G.GAME.jankop = operator
 end

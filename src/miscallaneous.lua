@@ -434,6 +434,26 @@ function G.FUNCS.go_to_menu(e)
     old(e)
 end
 
+jank = jank or 0
+
+function mod_jank(_jank)
+  SMODS.calculate_context({ jank_modified = true, jank_value = _jank})
+  SMODS.Scoring_Parameters.med_jank:modify(nil, _jank - (_jank or 0))
+  return _jank
+end
+
+local mod_mult_ref = mod_mult
+function mod_mult(_mult, ...)
+  SMODS.calculate_context({ mult_modified = true, mult_value = _mult})
+  return mod_mult_ref(_mult, ...)
+end
+
+local mod_chips_ref = mod_chips
+function mod_chips(_chips, ...)
+  SMODS.calculate_context({ chips_modified = true, chips_value = _chips})
+  return mod_chips_ref(_chips, ...)
+end
+
 --- Adds a custom return value to calculate funtions
 ---@param key_table table|string  The keys/indexes you want to return in a calculate's function 
 ---@param funct function The function you want to execute when this is returned in a calculate function, taking in the passed value for the index as the first and only arguement. 
