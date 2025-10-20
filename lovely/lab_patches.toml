@@ -42,23 +42,82 @@ if LAB.in_lab then
 end
 '''
 match_indent = true 
- 
- [[patches]]
-[patches.pattern]
-target = 'functions/button_callbacks.lua'
-pattern = '''
- if G.SETTINGS.current_setup == 'New Run' then 
-'''
-position = "after"
-payload = '''
-if LAB then
-    print("LAB RESET!")
-    LAB.save_merge_1 = nil
-    LAB.save_merge_2 = nil
-    LAB.save_suits_area = nil
-    LAB.save_result = nil
 
-    LAB.in_lab = false
+#TODO: Remove these and fix the actual fucking bug cuz this is so fucked up omfg
+# YAY MORE PATCHES I SHOULDNT DO AND FIX THE ACTUAL ISSUE WOHOO
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''
+if self.config.type == 'play' or self.config.type == 'shop' then
+        for k, card in ipairs(self.cards) do
+            if not card.states.drag.is then 
+                card.T.r = 0
+                local max_cards = math.max(#self.cards, self.config.temp_limit)
+                card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w) + (self.config.card_limit == 1 and 0.5*(self.T.w - card.T.w) or 0)
+                local highlight_height = G.HIGHLIGHT_H
+                if not card.highlighted then highlight_height = 0 end
+                card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height
+                card.T.x = card.T.x + card.shadow_parrallax.x/30
+            end
+        end
+        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
+    end 
+'''
+position = "at"
+payload = '''
+if self.config.type == 'play' or self.config.type == 'shop' then
+    if self and self.cards then
+        for k, card in ipairs(self.cards) do
+            if not card.states.drag.is then 
+                card.T.r = 0
+                local max_cards = math.max(#self.cards, self.config.temp_limit)
+                card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w) + (self.config.card_limit == 1 and 0.5*(self.T.w - card.T.w) or 0)
+                local highlight_height = G.HIGHLIGHT_H
+                if not card.highlighted then highlight_height = 0 end
+                card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height
+                card.T.x = card.T.x + card.shadow_parrallax.x/30
+            end
+        end
+        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
+    end
+end 
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''
+    for k, card in ipairs(self.cards) do
+        card.rank = k
+    end
+'''
+position = "at"
+payload = '''
+if self and self.cards then
+    for k, card in ipairs(self.cards) do
+        card.rank = k
+    end
+end
+'''
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''
+    if self.children.view_deck then
+        self.children.view_deck:set_role{major = self.cards[1] or self}
+    end
+'''
+position = "at"
+payload = '''
+if self and self.children then
+    if self.children.view_deck then
+        self.children.view_deck:set_role{major = self.cards[1] or self}
+    end
 end
 '''
 match_indent = true

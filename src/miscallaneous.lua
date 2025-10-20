@@ -121,8 +121,42 @@ function MEDIUM.merge_emplace(card)
     }
 end
 
+function MEDIUM.nxt_st(card)
+    return {
+        n = G.UIT.R,
+        config = {
+            ref_table = card,
+            r = 0.08,
+            padding = 0.1,
+            align = "bm",
+            minh = 0.2 * card.T.h,
+            hover = true,
+            shadow = true,
+            colour = G.C.RED,
+            one_press = true,
+            button = 'next_suiting',
+            func = 'suit_my_next'
+        },
+        nodes = {{
+            n = G.UIT.R,
+            config = {
+                align = 'cm'
+            },
+            nodes = {{
+                n = G.UIT.T,
+                config = {
+                    text = "NEXT",
+                    colour = G.C.UI.TEXT_LIGHT,
+                    scale = 0.4,
+                    shadow = true
+                }
+            }}
+        }}
+    }
+end
+
 function G.FUNCS.merge_retrieve_emplace(e)
-    if e.config.ref_table.area == G.jokers or e.config.ref_table.area == MEDIUM.SUITS_AREA then
+    if e.config.ref_table.area == G.jokers or e.config.ref_table.area == G.SUITS_AREA then
         e.children[1].children[1].config.text = "MERGE"
         if G.merge_1 and G.merge_1.cards and(#G.merge_1.cards > 0 and #G.merge_2.cards > 0) then
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
@@ -137,6 +171,7 @@ function G.FUNCS.merge_retrieve_emplace(e)
             e.config.button = 'merge_retireve'
     end
 end
+
 
 -- animated sprites support
 MEDIUM.animated_sprites = {
@@ -235,6 +270,20 @@ end
 end
 
 
+    G.FUNCS.suit_my_next = function(e)
+        if LAB.suit_lock then
+            e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+            e.config.button = nil
+        else
+            e.config.colour = G.C.GREEN
+            e.config.button = 'next_suiting'
+        end
+    end
+
+    G.FUNCS.next_suiting = function(e)
+       next_suit()
+    end
+
     G.FUNCS.med_can_merge = function(e)
         if ((G.GAME.dollars - G.GAME.bankrupt_at) - LAB.merge_cost < 0) or not MEDIUM.merge(G.result, nil, nil, true) or
             (#G.merge_1.cards == 0 or #G.merge_2.cards == 0) then
@@ -253,7 +302,6 @@ end
 
         G.result.cards[1].old_area = G.merge_1.cards[1].old_area or G.jokers
 
-        LAB.save_result = G.result:save()
     end
 
     G.FUNCS.merge_emplace = function(e)
@@ -261,11 +309,9 @@ end
         if #G.merge_1.cards == 0 then
             card.old_area = card.area
             MEDIUM.move_card(card, G.merge_1)
-            LAB.save_merge_1 = G.merge_1:save()
         else
             card.old_area = card.area
             MEDIUM.move_card(card, G.merge_2)
-            LAB.save_merge_2 = G.merge_2:save()
         end
     end
 
@@ -283,7 +329,7 @@ end
         local card = e.config.ref_table
         local carda = card.area
         if card:is_playing_card() then
-            MEDIUM.move_card(card, MEDIUM.SUITS_AREA)
+            MEDIUM.move_card(card, G.SUITS_AREA)
             merge_save_nil(carda)
         else
         if card.old_area and card.old_area.config.card_limit > #card.old_area.cards then
@@ -317,46 +363,71 @@ end
 function ez_move(card, reverse, area)
     if not area then area = G.deck end
     if not reverse then
-        draw_card(area, MEDIUM.SUITS_AREA, 100, 'up', true, card)
+        draw_card(area, G.SUITS_AREA, 100, 'up', true, card)
     else
-        draw_card(MEDIUM.SUITS_AREA, area, 100, 'up', true, card)
+        draw_card(G.SUITS_AREA, area, 100, 'up', true, card)
     end
 end
+
 
 
 function next_suit()
 
     LAB.suit_lock = true
 
+    for k, v in pairs(G.SUITS_AREA.cards) do
+        if v and v.children.switch_suits then
+            v.children.switch_suits = nil
+        end
+    end
+
     suit_check_merge()
 
-    if not LAB.current_suit then LAB.current_suit = 0 end
+    if not LAB.current_suit then
+        LAB.current_suit = 0
+    end
 
-    if LAB.current_suit == #LAB.SUITS then
+    if LAB.current_suit >= #LAB.SUITS then
         LAB.current_suit = 1
     else
         LAB.current_suit = LAB.current_suit + 1
     end
 
-    if MEDIUM.SUITS_AREA and MEDIUM.SUITS_AREA.cards and #MEDIUM.SUITS_AREA.cards > 0 then
-        for k, v in pairs(MEDIUM.SUITS_AREA.cards) do
+    if G.SUITS_AREA and G.SUITS_AREA.cards and #G.SUITS_AREA.cards > 0 then
+        for k, v in pairs(G.SUITS_AREA.cards) do
             MEDIUM.move_card(v, G.deck)
         end
     end
 
     for k, v in pairs(G.deck.cards) do
         if v.base.suit == LAB.SUITS[LAB.current_suit] then
-            MEDIUM.move_card(v, MEDIUM.SUITS_AREA)
+            MEDIUM.move_card(v, G.SUITS_AREA)
+            v.children.switch_suits = UIBox {
+                definition = MEDIUM.nxt_st(v),
+                config = {
+                    align = "bmi",
+                    offset = {
+                        x = 0,
+                        y = 0.5
+                    },
+                    parent = G.SUITS_AREA
+                }
+            }
         end
     end
 
-    LAB.save_suits_area = MEDIUM.SUITS_AREA:save()
-    
-    LAB.suit_lock = false
-
-    G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end}))
+    G.E_MANAGER:add_event(Event({
+        trigger = "after",
+        func = function()
+            save_run();
+            LAB.suit_lock = false;
+            return true
+        end
+    }))
 
 end
+
+
 
 function reset_merge()
     if G.merge_1.cards[1] then
@@ -382,14 +453,14 @@ function reset_merge()
         end
     end
 
-    for k, v in pairs(MEDIUM.SUITS_AREA.cards) do
+    for k, v in pairs(G.SUITS_AREA.cards) do
         MEDIUM.move_card(v, G.deck)
     end
 
-    LAB.save_merge_1 = nil
-    LAB.save_merge_2 = nil
-    LAB.save_suits_area = nil
-    LAB.save_result = nil
+    LAB.load_merge_1 = nil
+    LAB.load_merge_2 = nil
+    LAB.load_SUITS_AREA = nil
+    LAB.load_result = nil
 
 end
 
@@ -407,32 +478,12 @@ end
 
 function merge_save_nil(args)
     if args == G.merge_1 then
-        LAB.save_merge_1 = nil
-        LAB.save_merge_1 = G.merge_1:save()
+        LAB.load_merge_1 = nil
     else
-        LAB.save_merge_2 = nil
-        LAB.save_merge_2 = G.merge_2:save()
+        LAB.load_merge_2 = nil
     end
 end
 
-
-local old = G.FUNCS.go_to_menu
-function G.FUNCS.go_to_menu(e)
-    if G.result then
-        LAB.save_result = G.result:save()
-    end
-    if G.merge_1 then
-        LAB.save_merge_1 = G.merge_1:save()
-    end
-    if G.merge_2 then
-        LAB.save_merge_2 = G.merge_2:save()
-    end
-    if MEDIUM.SUITS_AREA then
-        
-       LAB.save_suits_area = MEDIUM.SUITS_AREA:save()
-    end
-    old(e)
-end
 
 jank = jank or 0
 

@@ -1,12 +1,5 @@
 MEDIUM.sajeventpool = {Shop = 1, Lab = 1} -- weights, must be integers
 
---TODO: Make in_lab be set automatically,
---TODO: Make merge cost reset by patching new_round() // done
---TODO: Put buttons behind cards
---TODO: Make a function to check if a fusion exists to enable the merge button in the first place, or make it so the order doesnt Majority of the {C:attention}art
---TODO: Make playing cards fusable
--- i hope this is all
--- some functions are in misc.lua
 LAB = {
     merge_cost = 5,
     merge_cost_increase = 2,
@@ -90,7 +83,7 @@ function G.UIDEF.lab()
       G.CARD_H * m, 
       {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
 
-    MEDIUM.SUITS_AREA = CardArea(
+    G.SUITS_AREA = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
       G.CARD_W * 2,
@@ -193,16 +186,28 @@ function G.UIDEF.lab()
                         }},
                       }},
 
+                      
+
+
                       {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
 
+                    
 
                         {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.L_BLACK}, nodes={
-                            {n=G.UIT.O, config = {padding = 0,object = MEDIUM.SUITS_AREA, align = "cl", id = "merge_area_m1" }},
+
+                            {n=G.UIT.O, config = {padding = 0,object = G.SUITS_AREA, align = "cl", id = "merge_area_m1" }},
+
                           }},
                         }},
+              
                         
-                        {n=G.UIT.O, config={padding = 0.4,w=n,h=n, colour = G.C.BLUE, object = stake_spritebbb, hover = true, can_collide = false}},
+                        {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.DYN_UI.BOSS_MAIN, emboss = 0.05}, nodes={  
+
+                        {n=G.UIT.O, config={padding = 0.2,w=n,h=n, colour = G.C.BLUE, object = stake_spritebbb, hover = true, can_collide = true}},
+                                 
+                        }},
+                        
                       }},
                     }}
                 }
@@ -242,40 +247,60 @@ function Game:update_lab(dt)
                                     G.GAME.tags[i]:apply_to_run({type = 'shop_start'})
                                 end
 
-                                if not LAB.save_suits_area then
+                                if not LAB.load_SUITS_AREA then
                                     if G.deck and G.deck.cards then
                                         next_suit()
-                                        LAB.save_suits_area = MEDIUM.SUITS_AREA:save()
                                     end
                                 end
 
                                 -- could've looped these
 
-                                if LAB.save_result then
-                                    G.result:load(LAB.save_result)
-                                    LAB.save_result = nil
+                                if LAB.load_result then
+                                    G.result:load(LAB.load_result)
+                                    LAB.load_result = nil
                                 end
 
-                                if LAB.save_suits_area then
+                                if LAB.load_SUITS_AREA then
 
-                                    MEDIUM.SUITS_AREA:load(LAB.save_suits_area)
-                                    LAB.save_suits_area = nil
+                                    G.SUITS_AREA:load(LAB.load_SUITS_AREA)
+                                    LAB.load_SUITS_AREA = nil
+                                    
+                                    for k, v in pairs(G.SUITS_AREA.cards) do
+                                    if v then
+
+                                        G.playing_card = (G.playing_card and G.playing_card + 1) or 1 -- i am %100 certain that this will not cause any issues whatsoever
+                                        v.playing_card = G.playing_card
+                                        table.insert(G.playing_cards, v)
+
+                                        v.children.switch_suits = UIBox {
+                                            definition = MEDIUM.nxt_st(v),
+                                            config = {
+                                                align = "bmi",
+                                                offset = {
+                                                    x = 0,
+                                                    y = 0.5
+                                                },
+                                                parent = G.SUITS_AREA
+                                            }
+                                        }
+                                    end
+                                end
                                 end
 
-                                if LAB.save_merge_1 then
-                                    G.merge_1:load(LAB.save_merge_1)
-                                    LAB.save_merge_1 = nil
+                                if LAB.load_merge_1 then
+                                    G.merge_1:load(LAB.load_merge_1)
+                                    LAB.load_merge_1 = nil
                                 end
 
-                                if LAB.save_merge_2 then
-                                    G.merge_2:load(LAB.save_merge_2)
-                                    LAB.save_merge_2 = nil
+                                if LAB.load_merge_2 then
+                                    G.merge_2:load(LAB.load_merge_2)
+                                    LAB.load_merge_2 = nil
                                 end
 
                                 
 
                                 G.CONTROLLER:snap_to({node = G.shop:get_UIE_by_ID('next_round_button')})
-                                if not nosave_shop then G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end})) end
+                                G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end}))
                                 return true
                             end
                         end}))
@@ -286,8 +311,31 @@ function Game:update_lab(dt)
 
 
             
-            
+          
+
           G.STATE_COMPLETE = true
     end  
     if self.buttons then self.buttons:remove(); self.buttons = nil end          
 end
+
+
+local sav_old = save_run
+function save_run()
+  local loc = {
+    "merge_1",
+    "merge_2",
+    "result",
+    "SUITS_AREA"
+  }
+    for _, key in pairs(loc) do
+      if G[key] and G[key].cards then LAB['load_'..key] = G[key]:save() end
+    end
+    sav_old()
+    G.culled_table = G.culled_table or {}
+    G.culled_table.medium_areas = {}
+    for _, key in pairs(loc) do
+        G.culled_table.medium_areas[key] = LAB['load_'..key] and recursive_table_cull(LAB['load_'..key])
+    end
+end
+
+local start_old = Game.start_run
