@@ -111,7 +111,7 @@ function MEDIUM.merge_emplace(card)
             nodes = {{
                 n = G.UIT.T,
                 config = {
-                    text = "MERGE",
+                    text = localize("ui_lab_button_merge"),
                     colour = G.C.UI.TEXT_LIGHT,
                     scale = 0.4,
                     shadow = true
@@ -145,7 +145,7 @@ function MEDIUM.nxt_st(card)
             nodes = {{
                 n = G.UIT.T,
                 config = {
-                    text = "NEXT",
+                    text = localize("ui_lab_button_next"),
                     colour = G.C.UI.TEXT_LIGHT,
                     scale = 0.4,
                     shadow = true
@@ -157,7 +157,7 @@ end
 
 function G.FUNCS.merge_retrieve_emplace(e)
     if e.config.ref_table.area == G.jokers or e.config.ref_table.area == G.SUITS_AREA then
-        e.children[1].children[1].config.text = "MERGE"
+        e.children[1].children[1].config.text = localize("ui_lab_button_merge")
         if G.merge_1 and G.merge_1.cards and(#G.merge_1.cards > 0 and #G.merge_2.cards > 0) then
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
             e.config.button = nil
@@ -166,7 +166,7 @@ function G.FUNCS.merge_retrieve_emplace(e)
             e.config.button = 'merge_emplace'
         end
     else
-        e.children[1].children[1].config.text = "TAKE"
+        e.children[1].children[1].config.text = localize("ui_lab_button_take")
             e.config.colour = G.C.RED
             e.config.button = 'merge_retireve'
     end

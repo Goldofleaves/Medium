@@ -398,6 +398,7 @@ return {
             ui_lab_merge = "Merge",
             ui_lab_recipes = "Recipes",
             ui_lab_button_merge = "MERGE",
+            ui_lab_button_next = "NEXT",
             ui_lab_button_take = "TAKE",
         },
         suits_plural = {
