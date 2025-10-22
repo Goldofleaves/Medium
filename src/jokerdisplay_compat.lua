@@ -22,6 +22,17 @@ jd_def.j_med_chiptunetracker = {
         },
         text_config = { colour = G.C.ORANGE }
 }    
+jd_def.j_med_blue = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "xchips", retrigger_type = 'exp'},
+            },
+            border_colour = G.C.CHIPS
+        }
+    },
+}    
 jd_def.j_med_muddywater = {
         text = {
             { ref_table = "card.joker_display_values", ref_value = "suit", colour = G.C.IMPORTANT},
@@ -59,17 +70,32 @@ jd_def.j_med_achts = {
             { ref_table = "card.ability.extra", ref_value = "jokerdisplayval", colour = G.C.GREEN},
         },
         reminder_text = {
-            { ref_table = "card.joker_display_values", ref_value = "effect", colour = G.C.IMPORTANT},
+            { ref_table = "card.joker_display_values", ref_value = "fuck", colour = G.C.IMPORTANT},
+            { ref_table = "card.joker_display_values", ref_value = "number", colour = G.C.IMPORTANT, retrigger_type = "mult" },
+            { ref_table = "card.joker_display_values", ref_value = "ending", colour = G.C.IMPORTANT},
         },
         calc_function = function(card)
             local fuck = card.ability.extra
             local ret = ""
             if fuck.currentroll == 0 then
-                ret = "Inc. Def. Jank by "..fuck.incrementval
+                ret = localize("k_jdisplay_incdefjank")..fuck.incrementval
             else
-                ret = "+"..fuck.plusjankval.." Jank"
+                ret = "+"..fuck.plusjankval.." "..localize("k_jdisplay_jank")
+            end
+            local num
+            if fuck.currentroll == 0 then
+                num = fuck.incrementval
+            else
+                num = fuck.plusjankval
+            end
+            local endig = ""
+            if fuck.currentroll == 0 then
+            else
+                endig = localize("k_jdisplay_jank")
             end
             card.joker_display_values.effect = ret
+            card.joker_display_values.number = num
+            card.joker_display_values.ending = endig
         end
 }
 
@@ -94,35 +120,117 @@ jd_def.j_med_branching_tree = {
         end
 }    
 
-jd_def.j_med_rigor = {
+jd_def.j_med_ionization = {
         text = {
-            { ref_table = "card.ability.extra", ref_value = "jdisplay", colour = G.C.IMPORTANT},
+            { ref_table = "card.ability.extra", ref_value = "rank", colour = G.C.IMPORTANT},
         },
         reminder_text = {
-            { ref_table = "card.joker_display_values", ref_value = "reward_1", colour = G.C.GOLD},
-            { ref_table = "card.joker_display_values", ref_value = "reward_3", colour = G.C.CHIPS},
-            { ref_table = "card.joker_display_values", ref_value = "reward_4", colour = G.C.RED},
-            { ref_table = "card.joker_display_values", ref_value = "reward_2_sharp", colour = G.C.RED },
-            { ref_table = "card.joker_display_values", ref_value = "reward_2", colour = G.C.RED}
+            { ref_table = "card.joker_display_values", ref_value = "rank1", colour = G.C.GREY},
+            { text = ", ", colour = G.C.GREY},
+            { ref_table = "card.joker_display_values", ref_value = "rank2", colour = G.C.GREY},
+            { text = ", ", colour = G.C.GREY},
+            { ref_table = "card.joker_display_values", ref_value = "enhancement", colour = G.C.GREY},
         },
         calc_function = function(card)
-            local j = card.ability.extra.currentconjecture
-            local reward1,reward2,reward2sharp,reward3,reward4 = "", "", "", "", ""
-            if j == 1 then
-                reward1 = "+$"..card.ability.extra.money
-            elseif j == 2 then
-                reward2sharp = "X"
-                reward2 = ""..card.ability.extra.xmult
-            elseif j==3 then
-                reward3 = "+"..card.ability.extra.chips
-            else
-                reward4 = "+"..card.ability.extra.mult
-            end
-            card.joker_display_values.reward_1 = reward1
-            card.joker_display_values.reward_2_sharp = reward2sharp
-            card.joker_display_values.reward_2 = reward2
-            card.joker_display_values.reward_3 = reward3
-            card.joker_display_values.reward_4 = reward4
+            local rank1, rank2, enhancement
+            rank1 = card.ability.extra.rank - card.ability.extra.difference
+            rank2 = card.ability.extra.rank + card.ability.extra.difference
+            enhancement = G.P_CENTERS[card.ability.extra.enhancement].label
+    card.joker_display_values.rank1 = rank1
+    card.joker_display_values.rank2 = rank2
+    card.joker_display_values.enhancement = enhancement
         end
+}    
+
+jd_def.j_med_rigor = {
+    text = {
+        {
+            border_nodes = {
+                { ref_table = "card.ability.extra", ref_value = "jdisplay", color = G.C.IMPORTANT},
+            },
+        }
+    },
+    reminder_text = {
+        {
+            border_nodes = {
+                { ref_table = "card.joker_display_values", ref_value = "text1", color = G.C.IMPORTANT},
+                { ref_table = "card.joker_display_values", ref_value = "text2", color = G.C.IMPORTANT}
+            },
+        }
+    },
+    calc_function = function(card)
+            local j = card.ability.extra.currentconjecture
+            local reward = ""
+            local rewardk = 0
+            if j == 1 then
+                reward = "+$"
+                rewardk = card.ability.extra.money
+            elseif j == 2 then
+                reward = "X"
+                rewardk = card.ability.extra.xmult
+            elseif j==3 then
+                reward = "+"
+                rewardk = card.ability.extra.chips
+            else
+                reward = "+"
+                rewardk = card.ability.extra.mult
+            end
+            card.joker_display_values.text1 = reward
+            card.joker_display_values.text2 = rewardk
+    end,
+    style_function = function(card, text, reminder_text, extra)
+        if text and text.children[1] and text.children[1].children[1] then
+            local border_config = text.children[1].config
+            local text_config = text.children[1].children[1].config
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.UI.TEXT_LIGHT
+        end
+        if reminder_text and reminder_text.children[1] and reminder_text.children[1].children[1] then
+            local border_config = reminder_text.children[1].config
+            local text_config = reminder_text.children[1].children[1].config
+
+            local j = card.ability.extra.currentconjecture
+            if j == 1 then
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.GOLD
+            end
+            if j == 2 then
+                border_config.colour = G.C.MULT
+                text_config.colour = G.C.UI.TEXT_LIGHT
+            end
+            if j == 3 then
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.CHIPS
+            end
+            if j == 4 then
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.MULT
+            end
+        end
+        if reminder_text and reminder_text.children[1] and reminder_text.children[1].children[2] then
+            local border_config = reminder_text.children[1].config
+            local text_config = reminder_text.children[1].children[2].config
+
+            local j = card.ability.extra.currentconjecture
+            if j == 1 then
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.GOLD
+            end
+            if j == 2 then
+                border_config.colour = G.C.MULT
+                text_config.colour = G.C.UI.TEXT_LIGHT
+            end
+            if j == 3 then
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.CHIPS
+            end
+            if j == 4 then
+                border_config.colour = G.C.CLEAR
+                text_config.colour = G.C.MULT
+            end
+            return true
+        end
+        return false
+    end
 }    
 end

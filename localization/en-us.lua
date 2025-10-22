@@ -394,6 +394,8 @@ return {
         },
         dictionary={
             --config
+            k_blue1 = "X",
+            k_blue2 = " Chips",
             k_config_lab = "Lab",
             k_config_test = "Test",
             k_config_test2 = "Test2",
@@ -415,6 +417,8 @@ return {
 			k_coins_tails_display = "Tails",
 			k_solved = "Solved!",
 			k_event = "Blind event: ",
+            k_jdisplay_incdefjank = "Inc. Def. Jank by ",
+            k_jdisplay_jank = "Jank",
             k_improved = "Improved!",
             k_decapitated = "Decapitated...",
             k_averaged = "Averaged!",
