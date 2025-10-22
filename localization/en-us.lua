@@ -193,6 +193,14 @@ return {
             },
         },
         Joker = {
+            j_med_blue = {
+                name = "Blue",
+                text = {
+                    "{X:chips,C:white}X#1#{} Chips",
+                    "{C:inactive}The worst joker",
+                    "{C:inactive}in this mod",
+                    }
+                },
             j_med_kevin_haas = {
                 name = "Kevin Haas",
                 text = {
