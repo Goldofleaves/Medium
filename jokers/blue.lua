@@ -1,6 +1,6 @@
 SMODS.Joker({
 	key = "blue",
-	rarity = 2,
+	rarity = 1,
 	pos = {x = 3, y = 2},
 	config = {
 		extra = {

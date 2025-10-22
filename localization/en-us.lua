@@ -193,6 +193,22 @@ return {
             },
         },
         Joker = {
+            j_med_ionization = {
+                name = "Ionization",
+                text = {
+                    {
+                        "Enhance the first {C:attention}#1#",
+                        "in played hand",
+                        "to a {C:attention}#3#"
+                    },
+                    {
+                        "{C:attention}Convert{} the first two",
+                        "played cards with a",
+                        "rank difference of {C:attention}#2#{}",
+                        "than {C:attention}#1#{} to {C:attention}#1#s{}"
+                    }
+                    }
+                },
             j_med_blue = {
                 name = "Blue",
                 text = {
@@ -391,6 +407,8 @@ return {
             k_list_of_milestones = "List of Milestones:",
             k_seeded = "Seeded!",
 			k_incremented = "Incremented!",
+			k_converted = "Converted!",
+			k_enhanced = "Enhanced!",
 			k_coins_heads = "Heads!",
 			k_coins_tails = "Tails!",
 			k_coins_heads_display = "Heads",
