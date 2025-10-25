@@ -200,6 +200,11 @@ MEDIUM.animated_sprites = {
 MEDIUM.merge_table = {}
 
 MEDIUM.lab_create_merge_pattern = function(key1, key2, resultkey)
+    local tab = {
+        key1,
+        key2,
+        resultkey
+    }
     if not MEDIUM.merge_table[key1] then
         MEDIUM.merge_table[key1] = {
             [key2] = resultkey
@@ -208,13 +213,22 @@ MEDIUM.lab_create_merge_pattern = function(key1, key2, resultkey)
         MEDIUM.merge_table[key1][key2] = resultkey
     end
     -- making this a function so we can probably also do ui jank here when recipes comes out
+
+    if not MEDIUM.MERGE_LIST then MEDIUM.MERGE_LIST = {} end
+
+    MEDIUM.MERGE_LIST[#MEDIUM.MERGE_LIST+1] = G.P_CENTERS[key1]
+
+    MEDIUM.MERGE_LIST[#MEDIUM.MERGE_LIST+1] = G.P_CENTERS[key2]
+
+    MEDIUM.MERGE_LIST[#MEDIUM.MERGE_LIST+1] = G.P_CENTERS[resultkey]
 end
 
-MEDIUM.lab_create_merge_pattern("j_joker", "j_joker", "j_caino")
-MEDIUM.lab_create_merge_pattern("j_dusk", "j_burnt", "j_med_sunrise")
-MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
-MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
-MEDIUM.lab_create_merge_pattern("j_splash", "j_erosion", "j_med_muddywater")
+
+SMODS.current_mod.reset_game_globals = function(run_start)
+	if run_start then
+    create_merge_list()
+	end
+end
 
 function MEDIUM.merge(result_area, area1, area2, check)
     if not area1 then
@@ -228,32 +242,38 @@ function MEDIUM.merge(result_area, area1, area2, check)
         if check then
             return true
         end
-        local crad = SMODS.add_card({
-            key = card2.config.center.key,
-            area = result_area
-        })
-        crad:set_edition(poll_edition("elixir", nil, false, true))
-        SMODS.destroy_cards({area1.cards[1], area2.cards[1]})
-        return nil
-    end
-    if card2 and card2.config.center.key == "j_med_elixir" then
-        if check then
-            return true
-        end
-        local crad = SMODS.add_card({
-            key = card1.config.center.key,
-            area = result_area
-        })
+        local crad = copy_card(card1)
+        crad:add_to_deck()
         local edition
         local editions = {}
         for k, v in pairs(G.P_CENTERS) do
             if v.set == "Edition" then
                 table.insert(editions, k)
             end
+        end  
+        edition = pseudorandom_element(editions, "elixir")
+        crad:set_edition(poll_edition("elixir", nil, false, true))
+        G.result:emplace(crad)
+        SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
+        return nil
+    end
+    if card2 and card2.config.center.key == "j_med_elixir" then
+        if check then
+            return true
         end
+        local crad = copy_card(card1)
+        crad:add_to_deck()
+        local edition
+        local editions = {}
+        for k, v in pairs(G.P_CENTERS) do
+            if v.set == "Edition" then
+                table.insert(editions, k)
+            end
+        end  
         edition = pseudorandom_element(editions, "elixir")
         crad:set_edition(edition)
-        SMODS.destroy_cards({area1.cards[1], area2.cards[1]})
+        G.result:emplace(crad)
+        SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
         return nil
     end
     local destroy_cards = {area1.cards[1], area2.cards[1]}
@@ -530,6 +550,110 @@ function merge_save_nil(args)
         LAB.load_merge_2 = nil
     end
 end
+
+function create_merge_list()
+        if not MEDIUM.MERGE_LIST then
+        MEDIUM.MERGE_LIST = {}
+
+        MEDIUM.lab_create_merge_pattern("j_joker", "j_joker", "j_caino")
+        MEDIUM.lab_create_merge_pattern("j_dusk", "j_burnt", "j_med_sunrise")
+        MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
+        MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
+        MEDIUM.lab_create_merge_pattern("j_splash", "j_erosion", "j_med_muddywater")
+    end
+end
+
+function MEDIUM.INIT_COLLECTION_CARD_ALERTS()
+  for j = 1, #G.merge_list do
+    for _, v in ipairs(G.merge_list[j].cards) do
+      v:update_alert()
+    end
+  end
+end
+
+G.FUNCS.aeaeae = function(e)
+create_merge_list()
+  G.SETTINGS.paused = true
+  G.FUNCS.overlay_menu{
+    definition = create_UI_merge_list(),
+  }
+end
+
+G.FUNCS.your_collecion_merge_list = function(args)
+  if not args or not args.cycle_config then return end
+  for j = 1, #G.merge_list do
+    for i = #G.merge_list[j].cards,1, -1 do
+      local c = G.merge_list[j]:remove_card(G.merge_list[j].cards[i])
+      c:remove()
+      c = nil
+    end
+  end
+  for i = 1, 3 do
+    for j = 1, #G.merge_list do
+      local center = MEDIUM.MERGE_LIST[i+(j-1)*3 + (3*#G.merge_list*(args.cycle_config.current_option - 1))]
+      if not center then break end
+      local card = Card(G.merge_list[j].T.x + G.merge_list[j].T.w/2, G.merge_list[j].T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, center)
+      
+      G.merge_list[j]:emplace(card)
+    end
+  end
+  MEDIUM.INIT_COLLECTION_CARD_ALERTS()
+end
+
+function create_UI_merge_list()
+  local deck_tables = {}
+
+  table.insert(deck_tables, 
+    {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
+      {n=G.UIT.T, config = { text = " ENTRY", colour = G.C.UI.TEXT_DARK, scale = 0.55}},
+      {n=G.UIT.T, config = { text = "     ENTRY    ", colour = G.C.UI.TEXT_DARK, scale = 0.55, padding =0.95}},  -- this is so stupid please change this im begging
+      {n=G.UIT.T, config = { text = "RESULT", colour = G.C.UI.TEXT_DARK, scale = 0.55}}
+    }}
+  )
+
+table.insert(deck_tables, 
+    {n=G.UIT.R, config={align = "cm", padding = 0.15, no_fill = true}, nodes={}}
+  )
+
+  G.merge_list = {}
+  for j = 1, 3 do
+    G.merge_list[j] = CardArea(
+      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+      3*G.CARD_W,
+      0.95*G.CARD_H, 
+      {card_limit = 3, type = 'title', highlight_limit = 0, collection = true})
+    table.insert(deck_tables, 
+    {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
+      {n=G.UIT.O, config={object = G.merge_list[j]}}
+    }}
+    )
+  end
+
+  local joker_options = {}
+  for i = 1, math.ceil(#MEDIUM.MERGE_LIST/(3*#G.merge_list)) do
+    table.insert(joker_options, localize('k_page')..' '..tostring(i)..'/'..tostring(math.ceil(#MEDIUM.MERGE_LIST/(3*#G.merge_list))))
+  end
+
+  for i = 1, 3 do
+    for j = 1, #G.merge_list do
+      local center = MEDIUM.MERGE_LIST[i+(j-1)*(3)]
+      local card = Card(G.merge_list[j].T.x + G.merge_list[j].T.w/2, G.merge_list[j].T.y, G.CARD_W, G.CARD_H, nil, center)
+      
+      G.merge_list[j]:emplace(card)
+    end
+  end
+
+   MEDIUM.INIT_COLLECTION_CARD_ALERTS()
+  
+  local t =  create_UIBox_generic_options({ back_func = 'your_collection', contents = {
+        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
+        {n=G.UIT.R, config={align = "cm"}, nodes={
+          create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'your_collecion_merge_list', current_option = 1, colour = G.C.RED, no_pips = true, focus_args = {snap_to = true, nav = 'wide'}})
+        }}
+    }})
+  return t
+end
+--
 
 
 jank = jank or 0
