@@ -232,15 +232,7 @@ function MEDIUM.merge(result_area, area1, area2, check)
             key = card2.config.center.key,
             area = result_area
         })
-        local edition
-        local editions = {}
-        for k, v in pairs(G.P_CENTERS) do
-            if v.set == "Edition" then
-                table.insert(editions, k)
-            end
-        end
-        edition = pseudorandom_element(editions, "elixir")
-        crad:set_edition(edition)
+        crad:set_edition(poll_edition("elixir", nil, false, true))
         SMODS.destroy_cards({area1.cards[1], area2.cards[1]})
         return nil
     end
@@ -304,7 +296,7 @@ function MEDIUM.move_card(card, _area)
     if _area and _area.cards then
 G.E_MANAGER:add_event(Event({
     trigger = "after",
-    delay = 0.2,
+    delay = 0.1,
     func = function()
     local area = card.area
     card:remove_from_deck()
