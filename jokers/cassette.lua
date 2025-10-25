@@ -14,7 +14,7 @@ SMODS.Joker({
                     G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then
                     save_run()
                 end
-                compress_and_save(G.SETTINGS.profile .. '/debugsave_fuck.jkr', G.ARGS.save_run)
+                compress_and_save(G.SETTINGS.profile .. '/cassette_save.jkr', G.ARGS.save_run)
 			end
 		end
 	end,

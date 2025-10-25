@@ -144,7 +144,7 @@ if jerk > 0 then
 jank = MEDIUM.cassettetimer or -1
 if MEDIUM.cassetterevived then
             G:delete_run()
-            G.SAVED_GAME = get_compressed(G.SETTINGS.profile .. '/debugsave_fuck.jkr')
+            G.SAVED_GAME = get_compressed(G.SETTINGS.profile .. '/cassette_save.jkr')
             if G.SAVED_GAME ~= nil then
                 G.SAVED_GAME = STR_UNPACK(G.SAVED_GAME)
             end

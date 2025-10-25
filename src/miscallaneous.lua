@@ -175,11 +175,25 @@ end
 
 -- animated sprites support
 MEDIUM.animated_sprites = {
-    achts = {
+    j_med_achts = {
         current_frame = 1,
         max_frames = 6,
-        current_cycle = 1,
-        cycle_time = 10
+        --current_cycle = 1,
+        --cycle_time = 10,
+        timeperframe = 1/20,
+        current_time = 0,
+        yvalue = 1,
+        originalpos = {x=2,y=0},
+    },
+    j_med_nofdix = {
+        current_frame = 1,
+        max_frames = 6,
+        --current_cycle = 1,
+        --cycle_time = 25,
+        timeperframe = 1/6,
+        current_time = 0,
+        yvalue = 3,
+        originalpos = {x=5,y=2},
     }
 }
 
@@ -200,6 +214,7 @@ MEDIUM.lab_create_merge_pattern("j_joker", "j_joker", "j_caino")
 MEDIUM.lab_create_merge_pattern("j_dusk", "j_burnt", "j_med_sunrise")
 MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
 MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
+MEDIUM.lab_create_merge_pattern("j_splash", "j_erosion", "j_med_muddywater")
 
 function MEDIUM.merge(result_area, area1, area2, check)
     if not area1 then
@@ -209,6 +224,46 @@ function MEDIUM.merge(result_area, area1, area2, check)
         area2 = G.merge_2
     end
     local card1, card2 = area1.cards[1], area2.cards[1]
+    if card1 and card1.config.center.key == "j_med_elixir" then
+        if check then
+            return true
+        end
+        local crad = SMODS.add_card({
+            key = card2.config.center.key,
+            area = result_area
+        })
+        local edition
+        local editions = {}
+        for k, v in pairs(G.P_CENTERS) do
+            if v.set == "Edition" then
+                table.insert(editions, k)
+            end
+        end
+        edition = pseudorandom_element(editions, "elixir")
+        crad:set_edition(edition)
+        SMODS.destroy_cards({area1.cards[1], area2.cards[1]})
+        return nil
+    end
+    if card2 and card2.config.center.key == "j_med_elixir" then
+        if check then
+            return true
+        end
+        local crad = SMODS.add_card({
+            key = card1.config.center.key,
+            area = result_area
+        })
+        local edition
+        local editions = {}
+        for k, v in pairs(G.P_CENTERS) do
+            if v.set == "Edition" then
+                table.insert(editions, k)
+            end
+        end
+        edition = pseudorandom_element(editions, "elixir")
+        crad:set_edition(edition)
+        SMODS.destroy_cards({area1.cards[1], area2.cards[1]})
+        return nil
+    end
     local destroy_cards = {area1.cards[1], area2.cards[1]}
     for k, v in pairs(MEDIUM.merge_table) do
         if card1 and k == card1.config.center.key then
@@ -541,3 +596,4 @@ function add_calc_effect(key_table, funct, display_message_func, color, eval_car
         end
     end
 end
+-- animated sprite jank

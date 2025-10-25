@@ -44,6 +44,7 @@ SMODS.Joker({
             hpt.initmult = hpt.initmult - hpt.decmult * counter/amount
             if hpt.initmult <= 1 then
                 card:start_dissolve(nil, true)
+                return {message = localize("k_destroyed")}
             else
                 return {message = "-"..hpt.decmult * counter/amount}
             end

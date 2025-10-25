@@ -13,21 +13,24 @@ position = "after"
 payload = '''
 local fuck = MEDIUM.animated_sprites or {}
     for index, value in pairs(fuck) do
-        value.current_cycle = value.current_cycle + 1
-        if value.current_cycle > value.cycle_time then
+        value.current_time = value.current_time + dt
+        if value.current_time > value.timeperframe then
             value.current_frame = value.current_frame + 1
             if value.current_frame > value.max_frames then
                 value.current_frame = 1
             end
-            value.current_cycle = 1
+            value.current_time = 0
         end
     end
 -- animated jokers
-local fucking_function = SMODS.find_card or function() return {} end
-if next(fucking_function("j_med_achts")) then -- If player has achts
-    for _, achts in ipairs(SMODS.find_card("j_med_achts")) do -- For each copy of achts
-		achts.children.center:set_sprite_pos { x = fuck.achts.current_frame - 1, y = 1 }
-    end
+for k, v in pairs(fuck) do
+if MEDIUM.config.animjokers then
+G.P_CENTERS[k].pos.x = v.current_frame - 1
+G.P_CENTERS[k].pos.y = v.yvalue
+else
+G.P_CENTERS[k].pos.x = v.originalpos.x
+G.P_CENTERS[k].pos.y = v.originalpos.y
+end
 end
 '''
 match_indent = true

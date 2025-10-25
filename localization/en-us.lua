@@ -9,8 +9,7 @@ return {
                         {
                             "The {C:green}Lab{} is a new event type",
                             "added by {C:purple}MEDIUM{}.",
-                            "It allows the fusion of certain",
-                            "{C:attention}Suits, Enhancements, Consumables, Seals{},",
+                            "It allows the fusion of certain {C:attention}cards{}",
                             "with a small cost."
                         },
                         {
@@ -209,6 +208,21 @@ return {
                     }
                     }
                 },
+            j_med_nofdix = {
+                name = "Nof Dix",
+                text = {
+                    "{C:inactive}TBD.",
+                    }
+                },
+            j_med_elixir = {
+                name = "Elixir",
+                text = {
+                    "When {C:attention}merging{} in the {C:green}LAB{},",
+                    "{C:attention}merge this card{} with any",
+                    "other card to add",
+                    "an {C:dark_edition}edition{} to it"
+                    }
+                },
             j_med_blue = {
                 name = "Blue",
                 text = {
@@ -394,12 +408,14 @@ return {
         },
         dictionary={
             --config
+            k_destroyed = "Destroyed!",
             k_blue1 = "X",
             k_blue2 = " Chips",
             k_config_lab = "Lab",
             k_config_test = "Test",
             k_config_test2 = "Test2",
             k_config_custom_music = "Enable custom music",
+            k_config_animatedjokers = "Animate certain jokers",
             k_config_shop_adjacent_events = "Shop Adjacent Events:",
             k_config_general = "General:",
             k_hand = "Hand",

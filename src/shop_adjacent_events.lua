@@ -57,8 +57,6 @@ function G.UIDEF.lab()
       local stake_sprite = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 1, y = 0 }) --get_stake_sprite(G.GAME.stake or 1, 0.5)
       local stake_sprite2 = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 0, y = 0 }) -- get_stake_sprite(G.GAME.stake or 1, 0.5) 
       
-      local stake_spriteb = get_stake_sprite(G.GAME.stake or 1, 0.5)
-      local stake_spritebb = get_stake_sprite(G.GAME.stake or 1, 0.5)
       local stake_spritebbb = get_stake_sprite(G.GAME.stake or 1, 0.5)
 
       local m = 0.87
@@ -86,7 +84,7 @@ function G.UIDEF.lab()
     G.SUITS_AREA = CardArea(
       G.hand.T.x+0,
       G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W * 2,
+      G.CARD_W * 2.6,
       G.CARD_H * m, 
       {card_limit = 13, type = 'shop', highlight_limit = 1})
 

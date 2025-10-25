@@ -142,7 +142,16 @@ Medium.config_tab = function()
                         	ref_value = "custom_music",
                         	callback = function()
                         	end,
-                        })}}
+                        }),
+						create_toggle({
+                        	label = localize("k_config_animatedjokers"),
+                        	active_colour = HEX("b609f1"),
+                        	ref_table = MEDIUM.config,
+                        	ref_value = "animjokers",
+                        	callback = function()
+                        	end,
+                        })
+					}}
                     }},
                 }}
 	return {

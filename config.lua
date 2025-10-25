@@ -5,4 +5,5 @@ return{
         Test2 = true
     },
     custom_music = true,
+    animjokers = true
 }
