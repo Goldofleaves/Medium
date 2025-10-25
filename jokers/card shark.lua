@@ -1,6 +1,8 @@
 SMODS.Joker({
 	key = "cardshark",
 	rarity = 3,
+	pos = {x=6,y=2},
+	atlas = "medium_jokers",
 	loc_vars = function (self, info_queue, card)
 		return{vars = {G.GAME.max_injogged_cards or 4}}
 	end
@@ -21,7 +23,7 @@ function CardArea:shuffle(_seed)
             if not joker.debuff then
 				if joker.config.center.key == "j_med_cardshark" then
 					priorityqueue[#priorityqueue+1] = {#G.jokers.cards - d + 1, "injog", true}
-					print("ahhhh, injoggerer, the priority of the joker is "..(#G.jokers.cards - d + 1))
+					-- print("ahhhh, injoggerer, the priority of the joker is "..(#G.jokers.cards - d + 1))
 				end
                 --[[if (joker.ability.immutable.akyrs_priority_draw_suit) then
                     priorityqueue[#priorityqueue+1] = {#G.jokers.cards - d + 1, "suit",joker.ability.immutable.akyrs_priority_draw_suit}
