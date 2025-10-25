@@ -712,4 +712,48 @@ function add_calc_effect(key_table, funct, display_message_func, color, eval_car
         end
     end
 end
--- animated sprite jank
+-- injogging
+local lovepressed = love.mousepressed
+love.mousepressed = function (x, y, button, touch) -- mental reminder: this function isnt supposed to be called in code and you should never type love.mousepressed anywhere brcaise fuck you
+    local ret = lovepressed(x, y, button, touch)
+    -- think of it as a gamemaker event
+    -- print("Button: "..button)
+    if button == 3 then
+        -- print("x: "..x..", y: "..y)
+    end
+    local hoveredcard = G.CONTROLLER.hovering.target
+    if button == 2 and next(SMODS.find_card("j_med_cardshark", false)) and hoveredcard and hoveredcard.ability and (hoveredcard.ability.set == "Default" or hoveredcard.ability.set == "Enhanced") then
+        if not G.CONTROLLER.hovering.target.injoggen then
+            -- print("Attempted to Injog")
+            if G.GAME.injogged_cards < G.GAME.max_injogged_cards then
+                hoveredcard.injoggen = true
+                G.GAME.injogged_cards = G.GAME.injogged_cards + 1
+                SMODS.calculate_context({card_injogged = true, injogged_card = hoveredcard, injogged_result = true})
+                play_sound('cardSlide1')
+            else
+                -- print("Cannot injog! Over the injog limit!")
+            end
+        else
+            -- print("Attempted to Un-Injog")
+            hoveredcard.injoggen = nil
+            G.GAME.injogged_cards = G.GAME.injogged_cards - 1
+            SMODS.calculate_context({card_injogged = true, injogged_card = hoveredcard, injogged_result = false})
+            play_sound('cardSlide1')
+        end
+    end
+    return ret
+end
+
+local card_save = Card.save
+function Card:save()
+    local st = card_save(self)
+    st.injoggen = self.injoggen
+    return st
+end
+
+local card_load = Card.load
+function Card:load(cardTable, other_card)
+    local st = card_load(self, cardTable, other_card)
+    self.injoggen = cardTable.injoggen
+    return st
+end

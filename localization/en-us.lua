@@ -208,6 +208,15 @@ return {
                     }
                     }
                 },
+            j_med_cardshark = {
+                name = "Card Shark",
+                text = {
+                        "You can now {C:attention}injog",
+                        "up to {C:attention}#1#{} cards",
+                        "{C:inactive,s:0.7}(Injogged cards are drawn first)",
+                        "{C:inactive,s:0.7}(Right click to injog)",
+                    }
+                },
             j_med_nofdix = {
                 name = "Nof Dix",
                 text = {
