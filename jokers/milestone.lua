@@ -40,13 +40,17 @@ SMODS.Joker({
         if context.joker_main then
             return {xmult = hpt.initmult}
         end
-        if context.end_of_round then
+        if context.setting_blind then
+            hpt.fuck = true
+        end
+        if context.end_of_round and hpt.fuck then
+            hpt.fuck = nil
             hpt.initmult = hpt.initmult - hpt.decmult * counter/amount
             if hpt.initmult <= 1 then
                 card:start_dissolve(nil, true)
-                return {message = localize("k_destroyed")}
+                card_eval_status_text(card ,"extra", nil, nil, nil, {message = localize("k_destroyed")})
             else
-                return {message = "-"..hpt.decmult * counter/amount}
+                card_eval_status_text(card ,"extra", nil, nil, nil, {message = "-"..hpt.decmult * counter/amount})
             end
         end
 	end
