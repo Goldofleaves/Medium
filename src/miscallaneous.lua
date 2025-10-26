@@ -271,7 +271,7 @@ function MEDIUM.merge(result_area, area1, area2, check)
             end
         end  
         edition = pseudorandom_element(editions, "elixir")
-        crad:set_edition(edition)
+        crad:set_edition(poll_edition("elixir", nil, false, true))
         G.result:emplace(crad)
         SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
         return nil
