@@ -27,3 +27,26 @@ SMODS.Voucher {
 		G.GAME.modifiers.fusion_enhancements_spawn = true
 	end
 }
+
+SMODS.Voucher {
+	key = 'dillettante',
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { set = "Other", key = "injogged_cards" } 
+	end,
+	redeem = function(self, voucher)
+		G.GAME.max_injogged_cards = G.GAME.max_injogged_cards + 1
+	end
+}
+
+SMODS.Voucher {
+	key = 'gambler',
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { set = "Other", key = "injogged_cards" } 
+	end,
+	requires = {
+		'v_med_dillettante'
+	},
+	redeem = function(self, voucher)
+		G.GAME.max_injogged_cards = G.GAME.max_injogged_cards + 1
+	end
+}

@@ -50,7 +50,7 @@ payload = '''
 jankvalue = 0,
 jankop = "med_jank",
 injogged_cards = 0,
-max_injogged_cards = 4,
+max_injogged_cards = 0,
 '''
 match_indent = true
 
@@ -63,7 +63,7 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-local injoggen_height = (next(SMODS.find_card("j_med_cardshark", false)) and card.injoggen) and 0.5 * G.HIGHLIGHT_H or 0
+local injoggen_height = card.injoggen and 0.5 * G.HIGHLIGHT_H or 0
 '''
 match_indent = true
 

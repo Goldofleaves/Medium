@@ -74,6 +74,20 @@ return {
                     "naturally"
                 }
             },
+            v_med_dillettante = {
+                name = 'The Dillettante',
+                text = {
+                        "You can now {C:attention}injog",
+                        "{C:attention}1{} more card",
+                }
+            },
+            v_med_gambler = {
+                name = 'The Gambler',
+                text = {
+                        "You can now {C:attention}injog",
+                        "{C:attention}1{} more card",
+                }
+            },
         },
         Milestones = {
             undiscovered = {
@@ -190,6 +204,28 @@ return {
                     "Score = {C:mult}Mult{} x ({C:chips}Chips{} + {C:attention}Jank{})"
                 }
             },
+            injogged_cards = {
+                name = "Injogged Cards",
+                text = {
+                        "Injogged cards are",
+                        "{C:attention}drawn first{}",
+                        "{C:attention}Right click{} to injog",
+                }
+            },
+            high_valued_cards = {
+                name = "High-Valued Cards",
+                text = {
+                    "{C:attention}Aces{}, {C:attention}Kings{},",
+                    "{C:attention}Queens{} and {C:attention}Jacks{}."
+                }
+            },
+            low_valued_cards = {
+                name = "Low-Valued Cards",
+                text = {
+                    "{C:attention}2s{}, {C:attention}3s{},",
+                    "{C:attention}4s{} and {C:attention}5s{}."
+                }
+            },
         },
         Joker = {
             j_med_ionization = {
@@ -212,9 +248,7 @@ return {
                 name = "Card Shark",
                 text = {
                         "You can now {C:attention}injog",
-                        "up to {C:attention}#1#{} cards",
-                        "{C:inactive,s:0.7}(Injogged cards are drawn first)",
-                        "{C:inactive,s:0.7}(Right click to injog)",
+                        "{C:attention}#1#{} more cards",
                     }
                 },
             j_med_nofdix = {

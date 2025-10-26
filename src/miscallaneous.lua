@@ -722,14 +722,14 @@ love.mousepressed = function (x, y, button, touch) -- mental reminder: this func
         -- print("x: "..x..", y: "..y)
     end
     local hoveredcard = G.CONTROLLER.hovering.target
-    if button == 2 and next(SMODS.find_card("j_med_cardshark", false)) and hoveredcard and hoveredcard.ability and (hoveredcard.ability.set == "Default" or hoveredcard.ability.set == "Enhanced") then
+    if button == 2 and hoveredcard and hoveredcard.ability and (hoveredcard.ability.set == "Default" or hoveredcard.ability.set == "Enhanced") then
         if not G.CONTROLLER.hovering.target.injoggen then
             -- print("Attempted to Injog")
             if G.GAME.injogged_cards < G.GAME.max_injogged_cards then
                 hoveredcard.injoggen = true
                 G.GAME.injogged_cards = G.GAME.injogged_cards + 1
                 SMODS.calculate_context({card_injogged = true, injogged_card = hoveredcard, injogged_result = true})
-                play_sound('cardSlide1')
+                play_sound('cardSlide1', nil, 0.5)
             else
                 -- print("Cannot injog! Over the injog limit!")
             end
@@ -738,11 +738,69 @@ love.mousepressed = function (x, y, button, touch) -- mental reminder: this func
             hoveredcard.injoggen = nil
             G.GAME.injogged_cards = G.GAME.injogged_cards - 1
             SMODS.calculate_context({card_injogged = true, injogged_card = hoveredcard, injogged_result = false})
-            play_sound('cardSlide1')
+            play_sound('cardSlide1', nil, 0.5)
         end
     end
     return ret
 end
+
+local gupdate = Game.update
+function Game:update(...)
+    local ret = gupdate(self, ...)
+    local counter_of_injoggen_cards = 0
+    local injoggen_cards = {}
+    if G.playing_cards then
+        for _, v in ipairs(G.playing_cards) do
+            if v.injoggen then
+                counter_of_injoggen_cards = counter_of_injoggen_cards + 1
+                table.insert(injoggen_cards, v)
+            end
+        end
+        if G.GAME and counter_of_injoggen_cards > G.GAME.max_injogged_cards then
+            for index, value in ipairs(injoggen_cards) do
+                if index > G.GAME.max_injogged_cards then
+                    value.injoggen = nil
+                end
+            end
+            G.GAME.injogged_cards = G.GAME.max_injogged_cards
+        end
+    end
+    return ret
+end
+-- shuffling 
+
+-- shuffle hook, taken from aikoyori
+local function compareFirstElement(a,b)
+    return a[1] < b[1]
+end
+local shufflingEverydayHook = CardArea.shuffle
+function CardArea:shuffle(_seed)
+    local r = shufflingEverydayHook(self, _seed)
+    if self == G.deck then
+        local cardsPrioritised = {}
+        local cardsOther = {}
+        local cards = self.cards
+        for i, k in ipairs(cards) do
+            local priority = 0
+            if k.injoggen then
+                priority = priority + l[1]
+            end
+            if priority > 0 then
+                cardsPrioritised[#cardsPrioritised+1] = {priority,k}
+            else
+                cardsOther[#cardsOther+1] = k
+            end
+        end
+        table.sort(cardsPrioritised,compareFirstElement)
+        for _, card in ipairs(cardsPrioritised) do
+            table.insert(cardsOther, card[2])
+        end
+        self.cards = cardsOther
+        self:set_ranks()
+    end
+    return r
+end
+
 
 local card_save = Card.save
 function Card:save()
