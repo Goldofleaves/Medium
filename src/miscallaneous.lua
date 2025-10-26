@@ -242,7 +242,7 @@ function MEDIUM.merge(result_area, area1, area2, check)
         if check then
             return true
         end
-        local crad = copy_card(card1)
+        local crad = copy_card(card2)
         crad:add_to_deck()
         crad:set_edition(poll_edition("elixir", nil, false, true))
         G.result:emplace(crad)
