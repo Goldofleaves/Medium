@@ -244,14 +244,6 @@ function MEDIUM.merge(result_area, area1, area2, check)
         end
         local crad = copy_card(card1)
         crad:add_to_deck()
-        local edition
-        local editions = {}
-        for k, v in pairs(G.P_CENTERS) do
-            if v.set == "Edition" then
-                table.insert(editions, k)
-            end
-        end  
-        edition = pseudorandom_element(editions, "elixir")
         crad:set_edition(poll_edition("elixir", nil, false, true))
         G.result:emplace(crad)
         SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
@@ -263,14 +255,6 @@ function MEDIUM.merge(result_area, area1, area2, check)
         end
         local crad = copy_card(card1)
         crad:add_to_deck()
-        local edition
-        local editions = {}
-        for k, v in pairs(G.P_CENTERS) do
-            if v.set == "Edition" then
-                table.insert(editions, k)
-            end
-        end  
-        edition = pseudorandom_element(editions, "elixir")
         crad:set_edition(poll_edition("elixir", nil, false, true))
         G.result:emplace(crad)
         SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
