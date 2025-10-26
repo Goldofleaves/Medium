@@ -1,4 +1,4 @@
-MEDIUM.sajeventpool = {Shop = 1, Lab = 1} -- weights, must be integers
+MEDIUM.sajeventpool = {Shop = 3, Lab = 2} -- weights, must be integers
 
 LAB = {
     merge_cost = 5,
