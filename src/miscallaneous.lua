@@ -240,7 +240,7 @@ function MEDIUM.merge(result_area, area1, area2, check)
     local card1, card2 = area1.cards[1], area2.cards[1]
     if card1 and card1.config.center.key == "j_med_elixir" then
         if check then
-            return true
+            return card2 and not card2.edition or false
         end
         local crad = copy_card(card2)
         crad:add_to_deck()
@@ -251,7 +251,7 @@ function MEDIUM.merge(result_area, area1, area2, check)
     end
     if card2 and card2.config.center.key == "j_med_elixir" then
         if check then
-            return true
+            return card1 and not card1.edition or false
         end
         local crad = copy_card(card1)
         crad:add_to_deck()
