@@ -767,7 +767,7 @@ function CardArea:shuffle(_seed)
         for i, k in ipairs(cards) do
             local priority = 0
             if k.injoggen then
-                priority = priority + l[1]
+                priority = priority + 1
             end
             if priority > 0 then
                 cardsPrioritised[#cardsPrioritised+1] = {priority,k}
