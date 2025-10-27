@@ -729,7 +729,7 @@ love.mousepressed = function (x, y, button, touch) -- mental reminder: this func
 end
 
 local gupdate = Game.update
-function Game:update(...)
+function Game:update(...) -- making sure you never have more injogged cards than the limit
     local ret = gupdate(self, ...)
     local counter_of_injoggen_cards = 0
     local injoggen_cards = {}
@@ -761,11 +761,30 @@ local shufflingEverydayHook = CardArea.shuffle
 function CardArea:shuffle(_seed)
     local r = shufflingEverydayHook(self, _seed)
     if self == G.deck then
+        -- local priorQueue = {}
         local cardsPrioritised = {}
         local cardsOther = {}
         local cards = self.cards
+        --[[
+        for pos, joker in ipairs(G.jokers.cards) do
+            local priorOfJoker = #G.jokers.cards - d + 1
+            if not joker.debuff then
+				if joker.config.center.key == "j_med_cardshark" then
+					priorQueue[#priorQueue+1] = {priorOfJoker, "injog", true}
+				end
+            end
+        end
+        table.sort(priorQueue,compareFirstElement)
+        ]]
         for i, k in ipairs(cards) do
             local priority = 0
+            --[[
+            for _, entry in ipairs(priorQueue) do
+                if ((entry[2] == "injog" and k.injoggen)) then
+                    priority = priority + entry[1]
+                end
+            end
+            ]]
             if k.injoggen then
                 priority = priority + 1
             end
