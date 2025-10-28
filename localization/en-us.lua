@@ -252,9 +252,10 @@ return {
                     }
                 },
             j_med_nofdix = {
-                name = "Nof Dix",
+                name = "Nøf Dix",
                 text = {
-                    "{C:inactive}TBD.",
+                    "Each scored enhanced",
+                    "card gives {C:med_currency,f:med_currency}_2{}"
                     }
                 },
             j_med_elixir = {

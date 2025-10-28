@@ -168,3 +168,14 @@ Medium.config_tab = function()
 		nodes = {{n = G.UIT.C, nodes = nodes}},
 	}
 end
+
+SMODS.Font {
+  key = "currency", -- oh NO
+  path = "currency.ttf"
+}
+
+SMODS.Gradient {
+    key = 'currency',
+    colours = {G.C.RED, G.C.ORANGE, HEX("d5d645"), G.C.GREEN, G.C.BLUE, G.C.PURPLE, HEX("d64ac3")},
+    cycle = 5
+}
