@@ -74,8 +74,8 @@ return {
                     "naturally"
                 }
             },
-            v_med_dillettante = {
-                name = 'The Dillettante',
+            v_med_dilettante = {
+                name = 'The Dilettante',
                 text = {
                         "You can now {C:attention}injog",
                         "{C:attention}1{} more card",

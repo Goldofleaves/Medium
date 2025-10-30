@@ -29,7 +29,9 @@ SMODS.Voucher {
 }
 
 SMODS.Voucher {
-	key = 'dillettante',
+	key = 'dilettante',
+	atlas = "medium_vouchers",
+	pos = { x = 0, y = 1 },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = { set = "Other", key = "injogged_cards" } 
 	end,
@@ -40,6 +42,8 @@ SMODS.Voucher {
 
 SMODS.Voucher {
 	key = 'gambler',
+	atlas = "medium_vouchers",
+	pos = { x = 1, y = 1 },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = { set = "Other", key = "injogged_cards" } 
 	end,

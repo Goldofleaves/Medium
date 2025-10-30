@@ -697,6 +697,10 @@ function add_calc_effect(key_table, funct, display_message_func, color, eval_car
     end
 end
 -- injogging
+SMODS.Sound{
+    key = "sfx_injog",
+    path = "sfx_injog.ogg",
+}
 local lovepressed = love.mousepressed
 love.mousepressed = function (x, y, button, touch) -- mental reminder: this function isnt supposed to be called in code and you should never type love.mousepressed anywhere brcaise fuck you
     local ret = lovepressed(x, y, button, touch)
@@ -713,7 +717,7 @@ love.mousepressed = function (x, y, button, touch) -- mental reminder: this func
                 hoveredcard.injoggen = true
                 G.GAME.injogged_cards = G.GAME.injogged_cards + 1
                 SMODS.calculate_context({card_injogged = true, injogged_card = hoveredcard, injogged_result = true})
-                play_sound('cardSlide1', nil, 0.5)
+                play_sound("med_sfx_injog", 1.1 + pseudorandom("injog", -0.05, 0.05), 0.5)
             else
                 -- print("Cannot injog! Over the injog limit!")
             end
@@ -722,7 +726,7 @@ love.mousepressed = function (x, y, button, touch) -- mental reminder: this func
             hoveredcard.injoggen = nil
             G.GAME.injogged_cards = G.GAME.injogged_cards - 1
             SMODS.calculate_context({card_injogged = true, injogged_card = hoveredcard, injogged_result = false})
-            play_sound('cardSlide1', nil, 0.5)
+            play_sound("med_sfx_injog", 0.9 + pseudorandom("injog", -0.05, 0.05), 0.5)
         end
     end
     return ret
