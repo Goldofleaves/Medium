@@ -6,6 +6,8 @@ SMODS.Joker({
         info_queue[#info_queue+1] = { set = "Other", key = "average" } 
         
     end,
+	pos = {x=6,y=3},
+	atlas = "medium_jokers",
 	calculate = function(self, card, context)
         if context.before then
             if #context.full_hand == 2 then
