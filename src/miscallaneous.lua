@@ -539,7 +539,6 @@ function create_merge_list()
         if not MEDIUM.MERGE_LIST then
         MEDIUM.MERGE_LIST = {}
 
-        MEDIUM.lab_create_merge_pattern("j_joker", "j_joker", "j_caino")
         MEDIUM.lab_create_merge_pattern("j_dusk", "j_burnt", "j_med_sunrise")
         MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
         MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
