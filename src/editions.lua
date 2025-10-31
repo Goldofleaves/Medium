@@ -1,4 +1,4 @@
-SMODS.Shader {
+--[[SMODS.Shader {
     key = "reflective",
     path = "reflective.fs"
 }
@@ -18,3 +18,4 @@ SMODS.Edition {
         end
     end
 }
+]]

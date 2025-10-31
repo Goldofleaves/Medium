@@ -254,8 +254,9 @@ return {
             j_med_nofdix = {
                 name = "Nøf Dix",
                 text = {
-                    "Each scored enhanced",
-                    "card gives {C:med_currency,f:med_currency}_2{}"
+                    "Each scored {C:attention}enhanced",
+                    -- "card gives {C:med_currency,f:med_currency}_2{}"
+                    "card gives {C:gold}$#1#{}"
                     }
                 },
             j_med_elixir = {
