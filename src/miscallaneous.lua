@@ -198,6 +198,16 @@ MEDIUM.animated_sprites = {
 }
 
 MEDIUM.merge_table = {}
+MEDIUM.playing_card_merge_table = {
+    suits = {},
+    enhancements = {},
+    seals = {}
+}
+
+
+MEDIUM.lab_create_playing_card_merge_pattern = function(key1, key2, resultkey, type)
+    table.insert(MEDIUM.playing_card_merge_table[type], {key1, key2, resultkey})
+end
 
 MEDIUM.lab_create_merge_pattern = function(key1, key2, resultkey)
     local tab = {
@@ -246,6 +256,10 @@ function MEDIUM.merge(result_area, area1, area2, check)
         crad:add_to_deck()
         crad:set_edition(poll_edition("elixir", nil, false, true))
         G.result:emplace(crad)
+        if crad:is_playing_card() then
+            G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+            table.insert(G.playing_cards, crad)
+        end
         SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
         return nil
     end
@@ -258,8 +272,124 @@ function MEDIUM.merge(result_area, area1, area2, check)
         crad:set_edition(poll_edition("elixir", nil, false, true))
         G.result:emplace(crad)
         SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
+        if crad:is_playing_card() then
+            G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+            table.insert(G.playing_cards, crad)
+        end
         return nil
     end
+    local function average_rank(rank1, rank2)
+        return math.ceil(rank1/2 + rank2/2)
+    end
+    if card1 and card2 and card1:is_playing_card() and card2:is_playing_card() then
+        local resultrank = average_rank(card1:get_id(), card2:get_id())
+        for k, v in pairs(MEDIUM.playing_card_merge_table) do
+            for kk, vv in ipairs(v) do
+                if k == "suits" and card1.base.suit == vv[1] and card2.base.suit == vv[2] then
+                    if check then return true end
+                    local resultsuit = vv[3]
+                    local crrd
+                    if not check then
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", suit = resultsuit, rank = resultrank, area = result_area } 
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    table.insert(G.playing_cards, crrd) 
+                    G.result:emplace(crrd) else 
+                        crrd = result_area.cards[1] 
+                        assert(SMODS.change_base(crrd, resultsuit))
+                    end
+                    end
+                elseif k == "suits" and card1.base.suit == vv[2] and card2.base.suit == vv[1] then
+                    if check then return true end
+                    local resultsuit = vv[3]
+                    local crrd
+                    if not check then
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", suit = resultsuit, rank = resultrank, area = result_area } 
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    table.insert(G.playing_cards, crrd) 
+                    G.result:emplace(crrd) else 
+                        crrd = result_area.cards[1] 
+                        assert(SMODS.change_base(crrd, resultsuit))
+                    end
+                    end
+                end
+                
+                if k == "seals" and card1.seal == vv[1] and card2.seal == vv[2] then
+                    if check then return true end
+                    local resultseal = vv[3]
+                    local crrd
+                    if not check then
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", seal = resultseal, rank = resultrank, area = result_area } 
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    table.insert(G.playing_cards, crrd) 
+                    G.result:emplace(crrd) else 
+                        crrd = result_area.cards[1] 
+                        crrd:set_seal(resultseal, nil, true)
+                    end
+                    end
+                elseif k == "seals" and card1.seal == vv[2] and card2.seal == vv[1] then
+                    if check then return true end
+                    local resultseal = vv[3]
+                    local crrd
+                    if not check then
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", seal = resultseal, rank = resultrank, area = result_area } 
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    table.insert(G.playing_cards, crrd) 
+                    G.result:emplace(crrd) else 
+                        crrd = result_area.cards[1] 
+                        crrd:set_seal(resultseal, nil, true)
+                    end
+                    end
+                end
+
+                if k == "enhancements" and SMODS.get_enhancements(card1)[vv[1]] and SMODS.get_enhancements(card2)[vv[2]] then
+                    if check then return true end
+                    local resultenhancement = vv[3]
+                    local crrd
+                    if not check then
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", enhancement = resultenhancement, rank = resultrank, area = result_area } 
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    table.insert(G.playing_cards, crrd)  
+                    G.result:emplace(crrd) else 
+                        crrd = result_area.cards[1] 
+                        crrd:set_ability(G.P_CENTERS[resultenhancement])
+                    end
+                    end
+                elseif k == "enhancements" and SMODS.get_enhancements(card1)[vv[2]] and SMODS.get_enhancements(card2)[vv[1]] then
+                    if check then return true end
+                    local resultenhancement = vv[3]
+                    local crrd
+                    if not check then
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", enhancement = resultenhancement, rank = resultrank, area = result_area } 
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    table.insert(G.playing_cards, crrd) 
+                    G.result:emplace(crrd) else 
+                        crrd = result_area.cards[1] 
+                        crrd:set_ability(G.P_CENTERS[resultenhancement])
+                    end
+                    end
+                end
+            end
+        end
+        if not check then
+            local crad
+        if not G.result.cards[1] then
+            crad = SMODS.create_card { set = "Base", rank = resultrank, area = result_area }
+            G.result:emplace(crad)
+        else
+            crad = result_area.cards[1]
+        end
+        if card1.base.suit == card2.base.suit then
+            assert(SMODS.change_base(crad, card2.base.suit))
+        end
+        if card1.seal == card2.seal then
+            crad:set_seal(card2.seal, nil, true)
+        end
+        SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
+        else
+            return (card1.base.suit == card2.base.suit) or (card1.seal == card2.seal)
+        end
+    end
+
     local destroy_cards = {area1.cards[1], area2.cards[1]}
     for k, v in pairs(MEDIUM.merge_table) do
         if card1 and k == card1.config.center.key then
@@ -543,6 +673,10 @@ function create_merge_list()
         MEDIUM.lab_create_merge_pattern("j_scholar", "j_loyalty_card", "j_med_rigor")
         MEDIUM.lab_create_merge_pattern("j_scholar", "j_dna", "j_med_chemicalequation")
         MEDIUM.lab_create_merge_pattern("j_splash", "j_erosion", "j_med_muddywater")
+        MEDIUM.lab_create_playing_card_merge_pattern("m_wild", "m_wild", "m_med_plus_four", "enhancements")
+        MEDIUM.lab_create_playing_card_merge_pattern("Diamonds", "Spades", "med_spears", "suits")
+        MEDIUM.lab_create_playing_card_merge_pattern("Purple", "Gold", "med_taupe", "seals")
+        MEDIUM.lab_create_playing_card_merge_pattern("Red", "Gold", "med_orange", "seals")
     end
 end
 
