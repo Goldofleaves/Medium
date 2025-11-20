@@ -904,7 +904,7 @@ function CardArea:shuffle(_seed)
         local cards = self.cards
         --[[
         for pos, joker in ipairs(G.jokers.cards) do
-            local priorOfJoker = #G.jokers.cards - d + 1
+            local priorOfJoker = #G.jokers.cards - pos + 1
             if not joker.debuff then
 				if joker.config.center.key == "j_med_cardshark" then
 					priorQueue[#priorQueue+1] = {priorOfJoker, "injog", true}

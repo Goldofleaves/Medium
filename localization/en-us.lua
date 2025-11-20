@@ -104,7 +104,14 @@ return {
                     "{C:inactive}(End a run with {C:attention,T:j_med_cassette}Cassette{C:inactive} in deck)"
                 }
             },
-            mile_med_test = {
+            mile_med_cheat = {
+                name = "Cheat",
+                text = {
+                    "Did I see what I think I saw?",
+                    "{C:inactive}(Play an {C:attention}injogged{C:inactive} card)"
+                }
+            },
+            --[[mile_med_test = {
                 name = "Test",
                 text = {
                     "This Milestone Is For",
@@ -117,7 +124,7 @@ return {
                     "This Milestone Is For",
                     "{C:attention}Testing{} Perposes."
                 }
-            },
+            },]]
         },
         Enhanced={
             m_med_plus_four={

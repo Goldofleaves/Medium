@@ -22,6 +22,9 @@ SMODS.Joker({
 		return {vars = vars }
 	end,
 	calculate = function(self, card, context)
+        if context.after then
+            card.fucckkkkkk = nil
+        end
             local function isadjacentto(rank, difference, inputrank)
                 if (rank + difference) == inputrank then
                     return true
@@ -31,7 +34,8 @@ SMODS.Joker({
                 return false
             end
 		local hpt = card.ability.extra
-        if context.individual and context.cardarea == G.play then
+        if context.individual and context.cardarea == G.play and not card.fucckkkkkk then
+            card.fucckkkkkk = true
             local bool = true
             local counter = 2
             for index, carde in ipairs(context.full_hand) do
@@ -73,7 +77,7 @@ SMODS.Joker({
                     return true
                 end
             }))
-
+            
                     bool = false
                 end
                 if isadjacentto(hpt.rank, hpt.difference, carde:get_id()) and counter >= 1 then

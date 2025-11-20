@@ -66,7 +66,7 @@ end
 ---@param key string The key of the milestone.
 unlock_milestone = function (key)
     if not MEDIUM.milestones[key] then
-        print("There exists no milestone with passed key "..key..".")
+        -- print("There exists no milestone with passed key "..key..".")
     else
         if G.PROFILES[G.SETTINGS.profile].milestones[key] ~= true then
             MEDIUM.milestones[key].unlocked = true
@@ -74,21 +74,25 @@ unlock_milestone = function (key)
             trigger_milestone_ui(key)
             G:save_progress()
         else
-            print("Milestone with key "..key.." has already been achieved.")
+            -- print("Milestone with key "..key.." has already been achieved.")
         end
     end
 end
-
-MEDIUM.Milestone{
-    key = "med_test_other"
-}
 
 
 MEDIUM.Milestone{
     key = "med_cassette_death"
 }
 
-SMODS.Atlas({
+MEDIUM.Milestone{
+    key = "med_cheat"
+}
+Medium.calculate = function (self, context)
+    if context.card_injogged and context.injogged_result then
+        unlock_milestone("mile_med_cheat")
+    end
+end
+--[[SMODS.Atlas({
     key = 'test_mile',
     path = 'temp_milestone.png',
     px = 20,
@@ -99,3 +103,8 @@ MEDIUM.Milestone{
     key = "med_test",
     atlas = "med_test_mile"
 }
+
+MEDIUM.Milestone{
+    key = "med_test_other"
+}
+]]

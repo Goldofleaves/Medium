@@ -113,7 +113,7 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-print("Hi!")
+-- print("Hi!")
 if not self.GAME.jankvalue then
 self.GAME.jankvalue = 0
 end

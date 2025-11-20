@@ -12,7 +12,7 @@ SMODS.Joker({
         if context.before then
             if #context.full_hand == 2 then
                 local a = (context.full_hand[1]:is_suit("Diamonds") and context.full_hand[2]:is_suit("Spades")) or (context.full_hand[2]:is_suit("Diamonds") and context.full_hand[1]:is_suit("Spades")) and not (context.full_hand[2]:is_suit("med_spears") or context.full_hand[1]:is_suit("med_spears"))
-                print(a)
+                -- print(a)
                 if a then
                     for i = 1, 2 do
                     
