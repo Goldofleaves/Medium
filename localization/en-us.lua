@@ -235,6 +235,17 @@ return {
             },
         },
         Joker = {
+            j_med_penrose_triangle = {
+                name = "Penrose Triangle",
+                text = {
+                        "Treat all {C:attention}previous",
+                        "{C:mult}mult{} {C:attention}operations",
+                        "in {C:attention}scoring hand{}",
+                        "as a {C:attention}additive function{},",
+                        "then apply it to {C:chips}chips",
+                        "and divide it by {C:dark_edition}#1#"
+                    }
+                },
             j_med_ionization = {
                 name = "Ionization",
                 text = {
@@ -485,6 +496,7 @@ return {
 			k_coins_tails_display = "Tails",
 			k_solved = "Solved!",
 			k_event = "Blind event: ",
+            k_prf_applied = "Func Applied!",
             k_jdisplay_incdefjank = "Inc. Def. Jank by ",
             k_jdisplay_jank = "Jank",
             k_improved = "Improved!",

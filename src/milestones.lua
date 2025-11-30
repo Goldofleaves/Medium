@@ -87,10 +87,12 @@ MEDIUM.Milestone{
 MEDIUM.Milestone{
     key = "med_cheat"
 }
+local ref = Medium.calculate
 Medium.calculate = function (self, context)
     if context.card_injogged and context.injogged_result then
         unlock_milestone("mile_med_cheat")
     end
+    return ref(self, context)
 end
 --[[SMODS.Atlas({
     key = 'test_mile',

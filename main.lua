@@ -7,7 +7,9 @@ loc_colour()
 --#region Config
 
 Medium = SMODS.current_mod
+Medium.calculate = function (self, context)
 
+end
 --#endregion
 
 -- FILE LOADING
@@ -179,3 +181,6 @@ SMODS.Gradient {
     colours = {G.C.RED, G.C.ORANGE, HEX("d5d645"), G.C.GREEN, G.C.BLUE, G.C.PURPLE, HEX("d64ac3")},
     cycle = 5
 }
+MEDIUM.penrose_triangle_func = function (a)
+    return a
+end
