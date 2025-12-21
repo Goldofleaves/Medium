@@ -274,7 +274,7 @@ return {
                 text = {
                     "Each scored {C:attention}enhanced",
                     -- "card gives {C:med_currency,f:med_currency}_2{}"
-                    "card gives {C:gold}$#1#{}"
+                    "card gives {X:attention,C:white}X#1#{} Jank"
                     }
                 },
             j_med_elixir = {

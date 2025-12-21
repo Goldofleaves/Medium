@@ -105,3 +105,15 @@ payload = '''
         sound = not extra.sound and (extra.edition and 'foil2' or extra.mult_mod and 'multhit1' or extra.Xmult_mod and 'multhit2' or 'generic1') or extra.sound
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''
+                return base + G.GAME.hands[hand]['l_' .. parameter] * amount
+'''
+position = "at"
+payload = '''
+                return (base or 0) + (parameter ~= "med_jank" and (G.GAME.hands[hand]['l_' .. parameter] * amount) or 0)
+'''
+match_indent = true

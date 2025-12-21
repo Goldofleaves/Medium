@@ -799,7 +799,7 @@ end
 ---@param display_message_func function A function that returns a string as its display message, taking in the passed value for the index as the first and only arguement. 
 ---@param color table|Color The color that you want the display message background to be.
 ---@param eval_card boolean Whether you want to display an message at all. Ignores previous 2 arguements if set to false specifically. Defaults to true.
-function add_calc_effect(key_table, funct, display_message_func, color, eval_card)
+function add_calc_effect(key_table, funct, display_message_func, color, eval_card, sound)
     eval_card = eval_card == nil and true or eval_card
     if type(key_table) ~= "table" then
         key_table = tostring(key_table)
@@ -824,7 +824,7 @@ function add_calc_effect(key_table, funct, display_message_func, color, eval_car
         if bool then 
             funct(amount)
             update_hand_text({delay = 0}, {mult = mult, chips = hand_chips})
-    		if eval_card then card_eval_status_text(effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus, 'extra', nil, percent, nil, {message = tostring(display_message_func(amount)), colour = copy_table(color)}) end
+    		if eval_card then card_eval_status_text(effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus, 'extra', nil, percent, nil, {message = tostring(display_message_func(amount)), colour = copy_table(color), sound = sound}) end
             return true
         end
     end
@@ -955,3 +955,17 @@ function Card:load(cardTable, other_card)
     self.injoggen = cardTable.injoggen
     return st
 end
+
+add_calc_effect({"ijank"}, function (num)
+	G.GAME.jankvalue = G.GAME.jankvalue + num
+	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
+end, function (amt)
+    return "+In "..amt
+end, G.C.ORANGE, true, "med_sfx_ijank")
+
+add_calc_effect({"sjank"}, function (num)
+	G.GAME.jankvalue = num
+	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
+end, function (amt)
+    return "+Set "..amt
+end, G.C.ORANGE, true, "med_sfx_ijank")

@@ -49,8 +49,7 @@ SMODS.Joker({
         end
         local table = {
             [0] = function ()
-                increment_jank_default_value(hpt.incrementval)
-                return { message = localize("k_incremented")}
+                return {ijank = hpt.incrementval}
             end,
             [1] = function ()
                 return {jank = hpt.plusjankval}

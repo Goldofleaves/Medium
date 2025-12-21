@@ -6,6 +6,10 @@ SMODS.Sound{
     key = "sfx_xjank",
     path = "sfx_xjank.ogg",
 }
+SMODS.Sound{
+    key = "sfx_ijank",
+    path = "sfx_ijank.ogg",
+}
 SMODS.Scoring_Parameter({
   key = 'jank',
   default_value = G.GAME and G.GAME.jankvalue or 0,
