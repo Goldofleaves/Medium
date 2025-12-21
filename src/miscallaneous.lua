@@ -959,6 +959,7 @@ end
 add_calc_effect({"ijank"}, function (num)
 	G.GAME.jankvalue = G.GAME.jankvalue + num
 	SMODS.Scoring_Parameters.med_jank.default_value = G.GAME.jankvalue
+    SMODS.Scoring_Parameters.med_jank:modify(num)
 end, function (amt)
     return "+In "..amt
 end, G.C.ORANGE, true, "med_sfx_ijank")
