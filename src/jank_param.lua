@@ -1,3 +1,11 @@
+SMODS.Sound{
+    key = "sfx_pjank",
+    path = "sfx_pjank.ogg",
+}
+SMODS.Sound{
+    key = "sfx_xjank",
+    path = "sfx_xjank.ogg",
+}
 SMODS.Scoring_Parameter({
   key = 'jank',
   default_value = G.GAME and G.GAME.jankvalue or 0,
@@ -9,14 +17,14 @@ SMODS.Scoring_Parameter({
 	        if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
 	        self:modify(amount)
 	        card_eval_status_text(scored_card, 'extra', nil, percent, nil,
-	            {message = localize{type = 'variable', key = amount > 0 and 'a_chips' or 'a_chips_minus', vars = {amount}}, colour = self.colour})
+	            {sound = "med_sfx_pjank", message = localize{type = 'variable', key = amount > 0 and 'a_chips' or 'a_chips_minus', vars = {amount}}, colour = self.colour})
 	        return true
         end
         if key == 'xjank' and amount then
             if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
             self:modify(self.current * (amount - 1))
             card_eval_status_text(scored_card, 'extra', nil, percent, nil,
-                {message = localize{type = 'variable', key = amount > 0 and 'a_chips' or 'a_chips_minus', vars = {'X'..amount}}, colour = self.colour})
+                {sound = "med_sfx_xjank", message = localize{type = 'variable', key = amount > 0 and 'a_chips' or 'a_chips_minus', vars = {'X'..amount}}, colour = self.colour})
             return true
         end
     end

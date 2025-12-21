@@ -90,3 +90,18 @@ payload = '''
 card.T.y = self.T.y + self.T.h/2 + injoggen_height - card.T.h/2 - highlight_height + (G.SETTINGS.reduced_motion and 0 or 1)*0.03*math.sin(0.666*G.TIMERS.REAL+card.T.x) + math.abs(0.5*(-#self.cards/2 + k-0.5)/(#self.cards))-0.2
 '''
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''
+    elseif eval_type == 'extra' or eval_type == 'jokers' then 
+        sound = extra.edition and 'foil2' or extra.mult_mod and 'multhit1' or extra.Xmult_mod and 'multhit2' or 'generic1'
+'''
+position = "at"
+payload = '''
+    elseif eval_type == 'extra' or eval_type == 'jokers' then 
+        sound = not extra.sound and (extra.edition and 'foil2' or extra.mult_mod and 'multhit1' or extra.Xmult_mod and 'multhit2' or 'generic1') or extra.sound
+'''
+match_indent = true

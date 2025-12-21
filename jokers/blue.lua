@@ -18,7 +18,7 @@ SMODS.Joker({
 	calculate = function(self, card, context)
 		local hpt = card.ability.extra
         if context.joker_main then
-                return {xchips = hpt.xchips, message = localize("k_blue1")..hpt.xchips..localize("k_blue2"), colour = G.C.CHIPS, sound = "xchips"}
+            return {xchips = hpt.xchips, message = localize("k_blue1")..hpt.xchips..localize("k_blue2"), colour = G.C.CHIPS, sound = "xchips"}
         end
 	end
 })
