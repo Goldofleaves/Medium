@@ -970,3 +970,10 @@ add_calc_effect({"sjank"}, function (num)
 end, function (amt)
     return "+Set "..amt
 end, G.C.ORANGE, true, "med_sfx_ijank")
+
+local igo = Game.init_game_object
+Game.init_game_object = function(self)
+	local ret = igo(self)
+	ret.med_currency2 = 0
+	return ret
+end
