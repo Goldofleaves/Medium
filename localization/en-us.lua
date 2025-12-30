@@ -233,8 +233,44 @@ return {
                     "{C:attention}4s{} and {C:attention}5s{}."
                 }
             },
+            defect_none = {
+                name = "None",
+                text = {
+                    "Passive: No Effect",
+                    "On Evoke: No Effect"
+                }
+            },
+            defect_dark = {
+                name = "Dark",
+                text = {
+                    "Passive: On the {C:attention}last hand of blind{},",
+                    "{C:red}+ 6{} * {C:attention}The amount of hands played{} {C:red}mult{}.",
+                    "On Evoke: {C:red}+2 Discards{} for the round"
+                }
+            },
+            defect_lightning = {
+                name = "Lightning",
+                text = {
+                    "Passive: {C:red}+10 Mult",
+                    "On Evoke: {C:gold}+$10"
+                }
+            },
+            defect_plasma = {
+                name = "Plasma",
+                text = {
+                    "Passive: {C:blue}+1 Hand{} for the round",
+                    "On Evoke: {C:blue}+2 Hands{} for the round"
+                }
+            },
         },
         Joker = {
+            j_med_defect = {
+                name = "The Defect",
+                text = {
+                        "At the start of blind,",
+                        "{C:attention}Channel{} or {C:attention}Evoke{} an orb."
+                    }
+                },
             j_med_penrose_triangle = {
                 name = "Penrose Triangle",
                 text = {
@@ -471,6 +507,8 @@ return {
         },
         dictionary={
             --config
+            k_defect_evoked = "Evoked!",
+            k_defect_channeled = "Channeled!",
             k_destroyed = "Destroyed!",
             k_blue1 = "X",
             k_blue2 = " Chips",
