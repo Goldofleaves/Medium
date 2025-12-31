@@ -150,8 +150,6 @@ local r = 80
 local tau = math.pi * 2
 -- x += cos(theta) * r
 -- y += sin(theta) * r
-MEDIUM.defect_vars.defect_orbs = {
-}
 SMODS.DrawStep(
     {
         key = 'defect_orbs',
