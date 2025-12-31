@@ -20,9 +20,13 @@ SMODS.Joker({
         extra = {
             orbs = {
                 0, 0, 0
-            }
+            },
+            speed = 1
         }
 	},
+    add_to_deck = function (self, card, from_debuff)
+        card.ability.extra.speed = 0.5 + pseudorandom("defspeed") 
+    end,
 	pos = {x=2,y=4},
     soul_pos = {x=3,y=4},
 	loc_vars = function(self, info_queue, card)
@@ -157,8 +161,8 @@ SMODS.DrawStep(
         func = function(card, layer)
             if card.config.center.key == "j_med_defect" and (card.config.center.discovered or card.bypass_discovery_center) then
                 for i = 1, 3 do
-                    local _xOffset = 71 / 2 / 2 / 30 + math.cos((G.TIMERS.REAL + tau/3 * i)) * r/60 + 3/60
-                    local _yOffset = 95 / 2 / 2 / 30 + math.sin((G.TIMERS.REAL + tau/3 * i)) * r/60 + 10/60
+                    local _xOffset = 71 / 2 / 2 / 30 + math.cos((G.TIMERS.REAL * card.ability.extra.speed + tau/3 * i)) * r/60 + 3/60
+                    local _yOffset = 95 / 2 / 2 / 30 + math.sin((G.TIMERS.REAL * card.ability.extra.speed + tau/3 * i)) * r/60 + 10/60
                     MEDIUM.defect_vars["defect_orbs"..i] = MEDIUM.defect_vars["defect_orbs"..i] or
                     Sprite(card.T.x + 0, card.T.y + 0, 20, 20, G.ASSET_ATLAS["med_defect_orbs"], { x = card.ability.extra.orbs[i] or 0, y = 0 })
                     MEDIUM.defect_vars["defect_orbs"..i]:set_sprite_pos({ x = card.ability.extra.orbs[i] or 0, y = 0 })
