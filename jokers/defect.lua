@@ -30,6 +30,24 @@ SMODS.Joker({
 	pos = {x=2,y=4},
     soul_pos = {x=3,y=4},
 	loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = {
+                set = "Other",
+                key = "defect_channeling"
+            }
+        info_queue[#info_queue+1] = {
+                set = "Other",
+                key = "defect_evoking"
+            }
+        local registry_list = {}
+        for i = 1, 3 do
+            if not registry_list[get_orb_from_index(card.ability.extra.orbs[i])] then
+                info_queue[#info_queue+1] = {
+                    set = "Other",
+                    key = "defect_"..get_orb_from_index(card.ability.extra.orbs[i])
+                }
+                registry_list[get_orb_from_index(card.ability.extra.orbs[i])] = true
+            end
+        end
 	end,
 	atlas = "medium_jokers",
 	calculate = function(self, card, context)
@@ -103,19 +121,6 @@ SMODS.Joker({
 	end
 })
 
-local gcu = generate_card_ui
-function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
-    local ret = gcu(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
-    if card and card.config and card.config.center and card.config.center.key and card.config.center.key == "j_med_defect" then
-        for i = 1, 3 do
-            generate_card_ui({
-                set = "Other",
-                key = "defect_"..get_orb_from_index(card.ability.extra.orbs[i])
-            }, ret)
-        end
-    end
-    return ret
-end
 
 SMODS.Atlas({
     key = 'defect_orbs',

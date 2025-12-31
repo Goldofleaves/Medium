@@ -33,7 +33,7 @@ return {
                 text = {
                     "Choose one of ",
                     "{C:attention}any interface{}",
-                    "{C:attention}card to spawn.",
+                    "{C:attention}card to spawn",
                     "{C:inactive}(Must have room)"
                 }
             },
@@ -131,10 +131,10 @@ return {
                 name="Wild +4 Card",
                 text={
                     "This card counts as",
-                    "{C:attention}all suits{}.",
+                    "{C:attention}all suits{}",
                     "Draw {C:attention}#1#{} cards when",
-                    "This card is played.",
-                    "No rank, Always scored."
+                    "This card is played",
+                    "No rank, Always scored"
                 },
             },
         },
@@ -153,7 +153,7 @@ return {
                     "If this is the only",
                     "played card,",
                     "{C:attention}create{} an",
-                    "{C:attention}Interface{} card."
+                    "{C:attention}Interface{} card"
                 },
             },
             undiscovered_interface = {
@@ -170,7 +170,7 @@ return {
                 text = {
                     "{C:attention}Enhancements {}created",
                     "by {C:attention}merging{}",
-                    "2 or more enhancements."
+                    "2 or more enhancements"
                 }
             },
             fusion_seals = {
@@ -178,7 +178,7 @@ return {
                 text = {
                     "{C:attention}Seals {}created",
                     "by {C:attention}merging{}",
-                    "2 or more seals."
+                    "2 or more seals"
                 }
             },
             fusion_suits = {
@@ -186,7 +186,7 @@ return {
                 text = {
                     "{C:attention}Suits {}created",
                     "by {C:attention}merging{}",
-                    "2 or more suits."
+                    "2 or more suits"
                 }
             },
             average = {
@@ -196,7 +196,7 @@ return {
                     "of all cards ",
                     "being {C:attention}averaged{}",
                     "to the {C:attention}fusion{} of",
-                    "them."
+                    "them"
                 }
             },
             decapitated_jank = {
@@ -223,14 +223,14 @@ return {
                 name = "High-Valued Cards",
                 text = {
                     "{C:attention}Aces{}, {C:attention}Kings{},",
-                    "{C:attention}Queens{} and {C:attention}Jacks{}."
+                    "{C:attention}Queens{} and {C:attention}Jacks{}"
                 }
             },
             low_valued_cards = {
                 name = "Low-Valued Cards",
                 text = {
                     "{C:attention}2s{}, {C:attention}3s{},",
-                    "{C:attention}4s{} and {C:attention}5s{}."
+                    "{C:attention}4s{} and {C:attention}5s{}"
                 }
             },
             defect_none = {
@@ -243,9 +243,11 @@ return {
             defect_dark = {
                 name = "Dark",
                 text = {
-                    "Passive: On the {C:attention}last hand of blind{},",
-                    "{C:red}+ 6{} * {C:attention}The amount of hands played{} {C:red}mult{}.",
-                    "On Evoke: {C:red}+2 Discards{} for the round"
+                    "Passive: On the",
+                    "{C:attention}last hand of blind{},",
+                    "{C:red}+6(Amount of total hands) {C:red}mult{}",
+                    "On Evoke: {C:red}+2 Discards{}",
+                    "for the round"
                 }
             },
             defect_lightning = {
@@ -258,8 +260,29 @@ return {
             defect_plasma = {
                 name = "Plasma",
                 text = {
-                    "Passive: {C:blue}+1 Hand{} for the round",
-                    "On Evoke: {C:blue}+2 Hands{} for the round"
+                    "Passive: {C:blue}+1 Hand{}",
+                    "for the round",
+                    "On Evoke: {C:blue}+2 Hands{}",
+                    "for the round",
+                }
+            },
+            defect_channeling = {
+                name = "Channeling",
+                text = {
+                    "If there is a",
+                    "{C:attention}None{} orb,",
+                    "replace it with a ",
+                    "{C:attention}random orb{}"
+                }
+            },
+            defect_evoking = {
+                name = "Evoking",
+                text = {
+                    "If there aren't",
+                    "any {C:attention}None{} orbs,",
+                    "{C:attention}replace{} a random orb",
+                    "with another and",
+                    "trigger it's {C:attention}evoke{} effect"
                 }
             },
         },
@@ -268,7 +291,7 @@ return {
                 name = "The Defect",
                 text = {
                         "At the start of blind,",
-                        "{C:attention}Channel{} or {C:attention}Evoke{} an orb."
+                        "{C:attention}Channel{} or {C:attention}Evoke{} an orb"
                     }
                 },
             j_med_penrose_triangle = {
@@ -357,7 +380,7 @@ return {
                     "{C:attention}milestones not unlocked{},",
                     "divided by the total",
                     "amount of milestones {C:inactive}(#3#/#4#)",
-                    "{C:attention}at the end of round{}."
+                    "{C:attention}at the end of round{}"
                     }
                 },
             j_med_sunrise = {
@@ -376,7 +399,7 @@ return {
                     "{B:1,C:white}Increment{} the default value",
                     "of {V:1}Jank{} by {C:attention}#2#{} if landed on {C:attention}Tails,{}",
                     "{V:1}+#3# {}Jank if",
-                    "landed on {C:attention}Heads.{}",
+                    "landed on {C:attention}Heads{}",
                     "{C:inactive}(Currently: {C:attention}#1#{C:inactive})"
                     }
                 },
@@ -400,7 +423,7 @@ return {
                 text = {
                     "When {C:attention}entering a blind{},",
                     "{C:green}#1# in #2# {}Chance to",
-                    "{B:1,C:white}Decapitate{} the current jank operator.",
+                    "{B:1,C:white}Decapitate{} the current jank operator",
                     "Else, {B:1,C:white}Improve{} the current jank operator"
                     }
                 },
@@ -410,7 +433,7 @@ return {
                     "If {C:attention}played{} hand contains only 2 cards",
                     "and their {C:attention}suits{} are both",
                     "{C:attention}different{} and not {C:attention}fusion{} suits,",
-                    "{X:green,C:white}Average{} the 2 suits."
+                    "{X:green,C:white}Average{} the 2 suits"
                     }
                 },
             j_med_rigor_1 = {
@@ -420,14 +443,14 @@ return {
                         "{C:attention}Disprove{} the following",
                         "{C:attention}conjecture{} to win {C:attention}a reward!{}",
                         "{C:attention}Disprove{} the {C:attention}conjecture{} ",
-                        "by playing a counterexample.",
-                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
+                        "by playing a counterexample",
+                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved)"
                     },
                     {
                         "Current Conjecture:",
                         "The {C:attention}Square Root{} of",
                         "a natural number is always",
-                        "smaller than the original number."
+                        "smaller than the original number"
                     },
                     {
                         "Reward:{C:gold} +#1#$"
@@ -441,14 +464,14 @@ return {
                         "{C:attention}Disprove{} the following",
                         "{C:attention}conjecture{} to win {C:attention}a reward!{}",
                         "{C:attention}Disprove{} the {C:attention}conjecture{} ",
-                        "by playing a counterexample.",
-                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
+                        "by playing a counterexample",
+                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved)"
                     },
                     {
                         "Current Conjecture:",
                         "If a is a natural number,",
                         "and b is a natural number,",
-                        "then a - b is a natural number."
+                        "then a - b is a natural number"
                     },
                     {
                         "Reward: {X:mult,C:white}X#2#{} Mult"
@@ -462,14 +485,14 @@ return {
                         "{C:attention}Disprove{} the following",
                         "{C:attention}conjecture{} to win {C:attention}a reward!{}",
                         "{C:attention}Disprove{} the {C:attention}conjecture{} ",
-                        "by playing a counterexample.",
-                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
+                        "by playing a counterexample",
+                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved)"
                     },
                     {
                         "Current Conjecture:",
                         "For any natural number a and b,",
                         "a raised to the bth power is always",
-                        "different than the product of a and b."
+                        "different than the product of a and b"
                     },
                     {
                         "Reward: +{C:chips} #3# {}Chips"
@@ -483,14 +506,14 @@ return {
                         "{C:attention}Disprove{} the following",
                         "{C:attention}conjecture{} to win {C:attention}a reward!{}",
                         "{C:attention}Disprove{} the {C:attention}conjecture{} ",
-                        "by playing a counterexample.",
-                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved.)"
+                        "by playing a counterexample",
+                        "{C:inactive,s:0.7}(Changes conjecture when the current one is solved)"
                     },
                     {
                         "Current Conjecture:",
                         "If a is a natural number,",
                         "then the square root of a",
-                        "must not be a natural number."
+                        "must not be a natural number"
                     },
                     {
                         "Reward: + {C:mult}#4#{} Mult"
