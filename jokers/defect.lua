@@ -102,7 +102,7 @@ SMODS.Joker({
 local gcu = generate_card_ui
 function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
     local ret = gcu(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
-    if card and card.config.center.key == "j_med_defect" then
+    if card and card.config and card.config.center and card.config.center.key and card.config.center.key == "j_med_defect" then
         for i = 1, 3 do
             generate_card_ui({
                 set = "Other",
@@ -158,9 +158,10 @@ SMODS.DrawStep(
             if card.config.center.key == "j_med_defect" and (card.config.center.discovered or card.bypass_discovery_center) then
                 for i = 1, 3 do
                     local _xOffset = 71 / 2 / 2 / 30 + math.cos((G.TIMERS.REAL + tau/3 * i)) * r/60 + 3/60
-                    local _yOffset = 95 / 2 / 2 / 30 + math.sin((G.TIMERS.REAL + tau/3 * i)) * r/60 + 7/60
-                    MEDIUM.defect_vars["defect_orbs"..i] =
+                    local _yOffset = 95 / 2 / 2 / 30 + math.sin((G.TIMERS.REAL + tau/3 * i)) * r/60 + 10/60
+                    MEDIUM.defect_vars["defect_orbs"..i] = MEDIUM.defect_vars["defect_orbs"..i] or
                     Sprite(card.T.x + 0, card.T.y + 0, 20, 20, G.ASSET_ATLAS["med_defect_orbs"], { x = card.ability.extra.orbs[i] or 0, y = 0 })
+                    MEDIUM.defect_vars["defect_orbs"..i]:set_sprite_pos({ x = card.ability.extra.orbs[i] or 0, y = 0 })
                     MEDIUM.defect_vars["defect_orbs"..i].role.draw_major = card
                     MEDIUM.defect_vars["defect_orbs"..i]:draw_shader('dissolve', 0, nil, nil, card.children.center, 0,
                         0, _xOffset, 0.1 + 0.03 + _yOffset, nil, 0.6)
