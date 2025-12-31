@@ -506,7 +506,6 @@ return {
             med_reflective = "Reflective",
         },
         dictionary={
-            --config
             k_defect_evoked = "Evoked!",
             k_defect_channeled = "Channeled!",
             k_destroyed = "Destroyed!",
