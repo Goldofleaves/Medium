@@ -248,6 +248,17 @@ function MEDIUM.merge(result_area, area1, area2, check)
         area2 = G.merge_2
     end
     local card1, card2 = area1.cards[1], area2.cards[1]
+    if card1 and card2 and next(SMODS.find_card("j_med_poison")) then
+        if check then
+            return true
+        end
+        SMODS.destroy_cards({area1.cards[1], area2.cards[1]}, true, true, true)
+        for _, poison in pairs(SMODS.find_card("j_med_poison")) do
+            poison.ability.extra.xmult = poison.ability.extra.xmult + poison.ability.extra.gmult
+            card_eval_status_text(poison, "extra", nil, nil, nil, {message = "+X"..poison.ability.extra.gmult, colour = G.C.RED})
+        end
+        return nil
+    end
     if card1 and card1.config.center.key == "j_med_elixir" then
         if check then
             return card2 and not card2.edition or false
@@ -481,7 +492,7 @@ end
         LAB.merge_cost = LAB.merge_cost + LAB.merge_cost_increase
         MEDIUM.merge(G.result)
 
-        G.result.cards[1].old_area = G.merge_1.cards[1].old_area or G.jokers
+        if not next(SMODS.find_card("j_med_poison")) then G.result.cards[1].old_area = G.merge_1.cards[1].old_area or G.jokers end
 
     end
 
