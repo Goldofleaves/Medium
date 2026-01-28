@@ -805,9 +805,9 @@ function mod_chips(_chips, ...)
 end
 
 --- Adds a custom return value to calculate funtions
----@param key_table table|string  The keys/indexes you want to return in a calculate's function 
----@param funct function The function you want to execute when this is returned in a calculate function, taking in the passed value for the index as the first and only arguement. 
----@param display_message_func function A function that returns a string as its display message, taking in the passed value for the index as the first and only arguement. 
+---@param key_table table|string  The keys/indexes you want to return in a calculates function.
+---@param funct fun(x:any) The function you want to execute when this is returned in a calculate function, taking in the passed value for the index as the first and only arguement.
+---@param display_message_func fun(x:any) A function that returns a string as its display message, taking in the passed value for the index as the first and only arguement.
 ---@param color table|Color The color that you want the display message background to be.
 ---@param eval_card boolean Whether you want to display an message at all. Ignores previous 2 arguements if set to false specifically. Defaults to true.
 function add_calc_effect(key_table, funct, display_message_func, color, eval_card, sound)
