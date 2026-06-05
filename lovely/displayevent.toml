@@ -85,22 +85,6 @@ match_indent = false
 [patches.pattern]
 target = 'game.lua'
 pattern = '''
-    local bosses_used = {}
-    for k, v in pairs(G.P_BLINDS) do 
-        if v.boss then bosses_used[k] = 0 end
-    end
-    return {
-'''
-position = "after"
-payload = '''
-sajevents = {'Shop', 'Shop', 'Shop'},
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'game.lua'
-pattern = '''
     self.HUD:recalculate()
 
     G.E_MANAGER:add_event(Event({
@@ -166,7 +150,7 @@ if jank > 0 then
   if MEDIUM.cassettetimer == 0 then
   MEDIUM.cassettetimer = nil
   end
-  if G.GAME and G.GAME.round_resets and G.GAME.round_resets.loc_blind_states then
+  if G.GAME and G.GAME.round_resets and G.GAME.round_resets.loc_blind_states and type(G.GAME.sajevents) == "table" then
   local shitfuck = "Shop"
   local functgfyhjftyj = function(n)
     local array = {Small = 1, Big = 2, Boss = 3}

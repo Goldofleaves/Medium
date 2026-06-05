@@ -1,58 +1,7 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = -1
-
-[[patches]]
-[patches.pattern]
-target = 'game.lua'
-pattern = '''
-function Game:update(dt)
-'''
-position = "after"
-payload = '''
-local fuck = MEDIUM.animated_sprites or {}
-    for index, value in pairs(fuck) do
-        value.current_time = value.current_time + dt
-        if value.current_time > value.timeperframe then
-            value.current_frame = value.current_frame + 1
-            if value.current_frame > value.max_frames then
-                value.current_frame = 1
-            end
-            value.current_time = 0
-        end
-    end
--- animated jokers
-for k, v in pairs(fuck) do
-if MEDIUM.config.animjokers then
-G.P_CENTERS[k].pos.x = v.current_frame - 1
-G.P_CENTERS[k].pos.y = v.yvalue
-else
-G.P_CENTERS[k].pos.x = v.originalpos.x
-G.P_CENTERS[k].pos.y = v.originalpos.y
-end
-end
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'game.lua'
-pattern = '''
-    local bosses_used = {}
-    for k, v in pairs(G.P_BLINDS) do 
-        if v.boss then bosses_used[k] = 0 end
-    end
-    return {
-'''
-position = "after"
-payload = '''
-jankvalue = 0,
-jankop = "med_jank",
-injogged_cards = 0,
-max_injogged_cards = 0,
-'''
-match_indent = true
+priority = 2
 
 [[patches]]
 [patches.pattern]
@@ -66,7 +15,17 @@ payload = '''
 local injoggen_height = card.injoggen and 0.5 * G.HIGHLIGHT_H or 0
 '''
 match_indent = true
-
+[[patches]]
+[patches.pattern]
+target = 'main.lua'
+pattern = '''
+require "engine/object"
+'''
+position = "before"
+payload = '''
+MEDIUM = {}
+'''
+match_indent = true
 [[patches]]
 [patches.pattern]
 target = 'cardarea.lua'
@@ -115,5 +74,17 @@ pattern = '''
 position = "at"
 payload = '''
                 return (base or 0) + (parameter ~= "med_jank" and (G.GAME.hands[hand]['l_' .. parameter] * amount) or 0)
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''
+table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*((a.pinned and not a.ignore_pinned) and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*((b.pinned and not b.ignore_pinned) and b.sort_id or 0) end)
+'''
+position = "at"
+payload = '''
+        table.sort(self.cards, G.GAME and G.MODUSFUNCS[G.GAME.modus] or function (a, b) return a.T.x + a.T.w/2 - 100*((a.pinned and not a.ignore_pinned) and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*((b.pinned and not b.ignore_pinned) and b.sort_id or 0) end)
 '''
 match_indent = true

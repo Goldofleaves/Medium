@@ -1,4 +1,3 @@
-MEDIUM = {}
 --(idk if this has to go here, but i assume its better if this is done before any files are loaded so nothing crashes because of it not being called yet)
 --for adding custom loc_colours, dont touch this!
 loc_colour()
@@ -175,6 +174,25 @@ SMODS.Font {
   key = "currency", -- oh NO
   path = "currency.ttf"
 }
+function add_text_box(x, y, table_of_colors, update_interval, text, font --[[the l2d font object, i cba to check smods.fonts]],
+					  condition --[[a function that returns a bool]])
+	local drawRef = love.draw
+	local padding = 3 -- padding of 1 px
+	function love.draw(...)
+		local ret = drawRef(...)
+		if condition() then
+			local c = (math.floor(G.TIMERS.REAL / update_interval) % #table_of_colors) + 1
+			local w, h = font:getWidth(text), font:getHeight()
+			love.graphics.setColor(table_of_colors[c])
+			love.graphics.rectangle("fill", x - padding * 2, y - padding * 2, w + 4 * padding, h + 4 * padding)
+			love.graphics.setColor({ 0, 0, 0, 1 })
+			love.graphics.rectangle("fill", x - padding, y - padding, w + 2 * padding, h + 2 * padding)
+			love.graphics.setColor(table_of_colors[c])
+			love.graphics.printf(text, font, x, y, 999, 'left')
+		end
+		return ret -- does nothing but juuusttt inn caaaseee
+	end
+end
 
 SMODS.Gradient {
     key = 'currency',

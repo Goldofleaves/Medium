@@ -33,7 +33,44 @@ SMODS.Suit { -- diamonds + spades
         return false
     end
 }
+local old = Game.init_game_object
+function Game:init_game_object(...)
+    local ret = old(self, ...)
+    ret.jankvalue = 0
+    ret.jankop = "med_jank"
+    ret.injogged_cards = 0
+    ret.max_injogged_cards = 0
+    ret.modus = "array"
+    ret.slots = 5
+    ret.sajevents = {'Shop', 'Shop', 'Shop'}
+    return ret
+end
 
+local old = Game.update
+function Game:update(dt, ...)
+local fuck = MEDIUM.animated_sprites or {}
+    for _, value in pairs(fuck) do
+        value.current_time = value.current_time + dt
+        if value.current_time > value.timeperframe then
+            value.current_frame = value.current_frame + 1
+            if value.current_frame > value.max_frames then
+                value.current_frame = 1
+            end
+            value.current_time = 0
+        end
+    end
+    -- animated jokers
+    for k, v in pairs(fuck) do
+        if MEDIUM.config.animjokers then
+            G.P_CENTERS[k].pos.x = v.current_frame - 1
+            G.P_CENTERS[k].pos.y = v.yvalue
+        else
+            G.P_CENTERS[k].pos.x = v.originalpos.x
+            G.P_CENTERS[k].pos.y = v.originalpos.y
+        end
+    end
+    return old(self, dt, ...)
+end
 local card_is_suit_ref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
     local ret = card_is_suit_ref(self, suit, bypass_debuff, flush_calc)
@@ -988,3 +1025,28 @@ Game.init_game_object = function(self)
 	ret.med_currency2 = 0
 	return ret
 end
+
+local function tostr(a)
+    if type(a) == "table" then
+        local txt = ""
+        for k, v in ipairs(a) do
+            txt = txt..v.." "
+        end
+        txt = string.sub(txt, 1, #txt - 1)
+        return txt
+    end
+    return a
+end
+
+
+G.MODUSFUNCS = {
+    array = function(a, b) return a.T.x + a.T.w / 2 - 100 * ((a.pinned and not a.ignore_pinned) and a.sort_id or 0) <
+        b.T.x + b.T.w / 2 - 100 * ((b.pinned and not b.ignore_pinned) and b.sort_id or 0) end,
+    miracle = function(a, b) return a.T.x + a.T.w / 2 - 100 * ((a.pinned and not a.ignore_pinned) and a.sort_id or 0) <
+        b.T.x + b.T.w / 2 - 100 * ((b.pinned and not b.ignore_pinned) and b.sort_id or 0) end,
+    tree = function(a, b)
+        local na, nb = localize { type = 'name_text', set = "Joker", key = a.config.center_key },
+            localize { type = 'name_text', set = "Joker", key = b.config.center_key }
+        return na < nb
+    end,
+}
