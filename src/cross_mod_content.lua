@@ -20,7 +20,7 @@ SMODS.Joker({
 end
 SMODS.Atlas{key = "medium_Revo's Vault_crossmod", path = "revosvault_crossmod.png", px = 71, py = 95}
 
-if next(SMODS.find_mod("RevosVault")) then
+if next(SMODS.find_mod("RevosVault")) and SMODS.Rarities.crv_p then
 SMODS.Joker({
 	key = "ae_printer",
 	rarity = "crv_p",
@@ -64,7 +64,7 @@ else
     create_default_crossmod_joker("Revo's Vault", "ae_printer")
 end
 
-if next(SMODS.find_mod("RevosVault")) then
+if next(SMODS.find_mod("RevosVault")) and SMODS.Rarities.crv_va then
 SMODS.Joker({
 	key = "poison",
 	rarity = "crv_va",

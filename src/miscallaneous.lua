@@ -471,6 +471,8 @@ function MEDIUM.merge(result_area, area1, area2, check)
             end
         end
     end
+    G.result:save()
+    save_run()
     return nil
 end
 
@@ -530,6 +532,8 @@ end
         MEDIUM.merge(G.result)
 
         if not next(SMODS.find_card("j_med_poison")) then G.result.cards[1].old_area = G.merge_1.cards[1].old_area or G.jokers end
+
+        G.E_MANAGER:add_event(Event({ trigger = "after", delay = 1, func = function() save_run(); print("saved") return true end}))
 
     end
 
@@ -686,10 +690,10 @@ function reset_merge()
         MEDIUM.move_card(v, G.deck)
     end
 
-    LAB.load_merge_1 = nil
-    LAB.load_merge_2 = nil
-    LAB.load_SUITS_AREA = nil
-    LAB.load_result = nil
+    G.load_merge_1 = nil
+    G.load_merge_2 = nil
+    G.load_SUITS_AREA = nil
+    G.load_result = nil
 
 end
 
@@ -705,11 +709,11 @@ function suit_check_merge()
       end
 end
 
-function merge_save_nil(args)
+function merge_save_nil(args) --??
     if args == G.merge_1 then
-        LAB.load_merge_1 = nil
-    else
-        LAB.load_merge_2 = nil
+        G.load_merge_1 = nil
+    else 
+        G.load_merge_2 = nil
     end
 end
 

@@ -86,7 +86,7 @@ function G.UIDEF.lab()
       G.hand.T.y+G.ROOM.T.y + 9,
       G.CARD_W * 2.6,
       G.CARD_H * m, 
-      {card_limit = 13, type = 'shop', highlight_limit = 1})
+      {card_limit = 13, type = 'hand', highlight_limit = 1})
 
 
     local shop_sign = AnimatedSprite(0,0, 4.4, 2.2, G.ANIMATION_ATLAS['med_lab_sign'])
@@ -241,27 +241,24 @@ function Game:update_lab(dt)
                             if math.abs(G.shop.T.y - G.shop.VT.y) < 3 then
                                 G.ROOM.jiggle = G.ROOM.jiggle + 3
                                 play_sound('cardFan2')
-                                for i = 1, #G.GAME.tags do
-                                    G.GAME.tags[i]:apply_to_run({type = 'shop_start'})
-                                end
 
-                                if not LAB.load_SUITS_AREA then
+                                if not G.load_SUITS_AREA then
                                     if G.deck and G.deck.cards then
                                         next_suit()
                                     end
                                 end
 
                                 -- could've looped these
-
-                                if LAB.load_result then
-                                    G.result:load(LAB.load_result)
-                                    LAB.load_result = nil
+                                
+                                if G.load_result then
+                                  G.result:load(G.result)
+                                  G.load_result = nil
                                 end
 
-                                if LAB.load_SUITS_AREA then
+                                if G.load_SUITS_AREA then
 
-                                    G.SUITS_AREA:load(LAB.load_SUITS_AREA)
-                                    LAB.load_SUITS_AREA = nil
+                                    G.SUITS_AREA:load(G.load_SUITS_AREA)
+                                    G.load_SUITS_AREA = nil
                                     
                                     for k, v in pairs(G.SUITS_AREA.cards) do
                                     if v then
@@ -285,14 +282,14 @@ function Game:update_lab(dt)
                                 end
                                 end
 
-                                if LAB.load_merge_1 then
-                                    G.merge_1:load(LAB.load_merge_1)
-                                    LAB.load_merge_1 = nil
+                                if G.load_merge_1 then
+                                    G.merge_1:load(G.load_merge_1)
+                                    G.load_merge_1 = nil
                                 end
 
-                                if LAB.load_merge_2 then
-                                    G.merge_2:load(LAB.load_merge_2)
-                                    LAB.load_merge_2 = nil
+                                if G.load_merge_2 then
+                                    G.merge_2:load(G.load_merge_2)
+                                    G.load_merge_2 = nil
                                 end
 
                                 
@@ -315,25 +312,3 @@ function Game:update_lab(dt)
     end  
     if self.buttons then self.buttons:remove(); self.buttons = nil end          
 end
-
-
-local sav_old = save_run
-function save_run()
-  local loc = {
-    "merge_1",
-    "merge_2",
-    "result",
-    "SUITS_AREA"
-  }
-    for _, key in pairs(loc) do
-      if G[key] and G[key].cards then LAB['load_'..key] = G[key]:save() end
-    end
-    sav_old()
-    G.culled_table = G.culled_table or {}
-    G.culled_table.medium_areas = {}
-    for _, key in pairs(loc) do
-        G.culled_table.medium_areas[key] = LAB['load_'..key] and recursive_table_cull(LAB['load_'..key])
-    end
-end
-
-local start_old = Game.start_run
