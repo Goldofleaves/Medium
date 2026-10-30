@@ -43,6 +43,17 @@ end
 '''
 match_indent = true 
 
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+pattern = '''if (self == G.hand or self == G.deck or self == G.discard or self == G.play) and G.view_deck and G.view_deck[1] and G.view_deck[1].cards then return end'''
+position = "at"
+payload = '''
+if (self == G.hand or self == G.deck or self == G.discard or self == G.play or self == G.SUITS_AREA) and G.view_deck and G.view_deck[1] and G.view_deck[1].cards then return end
+'''
+match_indent = true
+
+
 #TODO: Remove these and fix the actual fucking bug cuz this is so fucked up omfg
 # YAY MORE PATCHES I SHOULDNT DO AND FIX THE ACTUAL ISSUE WOHOO
 [[patches]]

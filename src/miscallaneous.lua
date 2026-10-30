@@ -598,7 +598,9 @@ function ez_move(card, reverse, area)
     if not reverse then
         draw_card(area, G.SUITS_AREA, 100, 'up', true, card)
     else
-        draw_card(G.SUITS_AREA, area, 100, 'up', true, card)
+        if G.SUITS_AREA and G.SUITS_AREA.cards and #G.SUITS_AREA.cards>0 then
+            draw_card(G.SUITS_AREA, area, 100, 'up', true, card)
+        end
     end
 end
 

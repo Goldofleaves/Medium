@@ -312,3 +312,10 @@ function Game:update_lab(dt)
     end  
     if self.buttons then self.buttons:remove(); self.buttons = nil end          
 end
+
+	local card_area_align_cards_ref = CardArea.align_cards
+	function CardArea:align_cards(...)
+		if self and self.cards then
+		  return card_area_align_cards_ref(self, ...)
+    end
+	end
