@@ -13,7 +13,7 @@ position = "at"
 payload = '''
  (self.config.type == 'hand' and ({[G.STATES.SHOP]=1, [G.STATES.LAB] =1,[G.STATES.TAROT_PACK]=1, [G.STATES.SPECTRAL_PACK]=1, [G.STATES.STANDARD_PACK]=1,[G.STATES.BUFFOON_PACK]=1,[G.STATES.PLANET_PACK]=1, [G.STATES.ROUND_EVAL]=1, [G.STATES.BLIND_SELECT]=1})[state]) or
 '''
-match_indent = true 
+match_indent = true
 
 
 [[patches]]
@@ -24,9 +24,9 @@ pattern = '''
 '''
 position = "after"
 payload = '''
- LAB.merge_cost = LAB.merge_cost_reset
+ G.GAME.LAB.merge_cost = G.GAME.LAB.merge_cost_reset
 '''
-match_indent = true 
+match_indent = true
 
 [[patches]]
 [patches.pattern]
@@ -36,12 +36,12 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-if LAB.in_lab then
+if G.GAME.LAB.in_lab then
     reset_merge()
-    LAB.in_lab = false
+    G.GAME.LAB.in_lab = false
 end
 '''
-match_indent = true 
+match_indent = true
 
 [[patches]]
 [patches.pattern]
@@ -62,25 +62,7 @@ target = 'cardarea.lua'
 pattern = '''
 if self.config.type == 'play' or self.config.type == 'shop' then
         for k, card in ipairs(self.cards) do
-            if not card.states.drag.is then 
-                card.T.r = 0
-                local max_cards = math.max(#self.cards, self.config.temp_limit)
-                card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w) + (self.config.card_limit == 1 and 0.5*(self.T.w - card.T.w) or 0)
-                local highlight_height = G.HIGHLIGHT_H
-                if not card.highlighted then highlight_height = 0 end
-                card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height
-                card.T.x = card.T.x + card.shadow_parrallax.x/30
-            end
-        end
-        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
-    end 
-'''
-position = "at"
-payload = '''
-if self.config.type == 'play' or self.config.type == 'shop' then
-    if self and self.cards then
-        for k, card in ipairs(self.cards) do
-            if not card.states.drag.is then 
+            if not card.states.drag.is then
                 card.T.r = 0
                 local max_cards = math.max(#self.cards, self.config.temp_limit)
                 card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w) + (self.config.card_limit == 1 and 0.5*(self.T.w - card.T.w) or 0)
@@ -92,7 +74,25 @@ if self.config.type == 'play' or self.config.type == 'shop' then
         end
         table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
     end
-end 
+'''
+position = "at"
+payload = '''
+if self.config.type == 'play' or self.config.type == 'shop' then
+    if self and self.cards then
+        for k, card in ipairs(self.cards) do
+            if not card.states.drag.is then
+                card.T.r = 0
+                local max_cards = math.max(#self.cards, self.config.temp_limit)
+                card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w) + (self.config.card_limit == 1 and 0.5*(self.T.w - card.T.w) or 0)
+                local highlight_height = G.HIGHLIGHT_H
+                if not card.highlighted then highlight_height = 0 end
+                card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height
+                card.T.x = card.T.x + card.shadow_parrallax.x/30
+            end
+        end
+        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
+    end
+end
 '''
 match_indent = true
 

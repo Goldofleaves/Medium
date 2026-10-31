@@ -42,7 +42,15 @@ function Game:init_game_object(...)
     ret.max_injogged_cards = 0
     ret.modus = "array"
     ret.slots = 5
-    ret.sajevents = {'Shop', 'Shop', 'Shop'}
+    ret.sajevents = { 'Shop', 'Shop', 'Shop' }
+    ret.LAB = {
+    merge_cost = 5,
+    merge_cost_increase = 2,
+    merge_cost_reset = 5,
+    in_lab = false,
+
+    old_pos = {},
+}
     return ret
 end
 
@@ -92,7 +100,7 @@ function Card:highlight(highlighted)
         end
     end
 
-    if self.highlighted and LAB.in_lab and (self.ability.set == 'Joker' or self:is_playing_card()) then
+    if self.highlighted and G.GAME.LAB.in_lab and (self.ability.set == 'Joker' or self:is_playing_card()) then
         self.children.med_merge_button = UIBox {
             definition = MEDIUM.merge_emplace(self),
             config = {
@@ -338,11 +346,11 @@ function MEDIUM.merge(result_area, area1, area2, check)
                     local resultsuit = vv[3]
                     local crrd
                     if not check then
-                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", suit = resultsuit, rank = resultrank, area = result_area } 
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", suit = resultsuit, rank = resultrank, area = result_area }
                     G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                    table.insert(G.playing_cards, crrd) 
-                    G.result:emplace(crrd) else 
-                        crrd = result_area.cards[1] 
+                    table.insert(G.playing_cards, crrd)
+                    G.result:emplace(crrd) else
+                        crrd = result_area.cards[1]
                         assert(SMODS.change_base(crrd, resultsuit))
                     end
                     end
@@ -351,26 +359,26 @@ function MEDIUM.merge(result_area, area1, area2, check)
                     local resultsuit = vv[3]
                     local crrd
                     if not check then
-                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", suit = resultsuit, rank = resultrank, area = result_area } 
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", suit = resultsuit, rank = resultrank, area = result_area }
                     G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                    table.insert(G.playing_cards, crrd) 
-                    G.result:emplace(crrd) else 
-                        crrd = result_area.cards[1] 
+                    table.insert(G.playing_cards, crrd)
+                    G.result:emplace(crrd) else
+                        crrd = result_area.cards[1]
                         assert(SMODS.change_base(crrd, resultsuit))
                     end
                     end
                 end
-                
+
                 if k == "seals" and card1.seal == vv[1] and card2.seal == vv[2] then
                     if check then return true end
                     local resultseal = vv[3]
                     local crrd
                     if not check then
-                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", seal = resultseal, rank = resultrank, area = result_area } 
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", seal = resultseal, rank = resultrank, area = result_area }
                     G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                    table.insert(G.playing_cards, crrd) 
-                    G.result:emplace(crrd) else 
-                        crrd = result_area.cards[1] 
+                    table.insert(G.playing_cards, crrd)
+                    G.result:emplace(crrd) else
+                        crrd = result_area.cards[1]
                         crrd:set_seal(resultseal, nil, true)
                     end
                     end
@@ -379,11 +387,11 @@ function MEDIUM.merge(result_area, area1, area2, check)
                     local resultseal = vv[3]
                     local crrd
                     if not check then
-                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", seal = resultseal, rank = resultrank, area = result_area } 
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", seal = resultseal, rank = resultrank, area = result_area }
                     G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                    table.insert(G.playing_cards, crrd) 
-                    G.result:emplace(crrd) else 
-                        crrd = result_area.cards[1] 
+                    table.insert(G.playing_cards, crrd)
+                    G.result:emplace(crrd) else
+                        crrd = result_area.cards[1]
                         crrd:set_seal(resultseal, nil, true)
                     end
                     end
@@ -394,11 +402,11 @@ function MEDIUM.merge(result_area, area1, area2, check)
                     local resultenhancement = vv[3]
                     local crrd
                     if not check then
-                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", enhancement = resultenhancement, rank = resultrank, area = result_area } 
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", enhancement = resultenhancement, rank = resultrank, area = result_area }
                     G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                    table.insert(G.playing_cards, crrd)  
-                    G.result:emplace(crrd) else 
-                        crrd = result_area.cards[1] 
+                    table.insert(G.playing_cards, crrd)
+                    G.result:emplace(crrd) else
+                        crrd = result_area.cards[1]
                         crrd:set_ability(G.P_CENTERS[resultenhancement])
                     end
                     end
@@ -407,11 +415,11 @@ function MEDIUM.merge(result_area, area1, area2, check)
                     local resultenhancement = vv[3]
                     local crrd
                     if not check then
-                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", enhancement = resultenhancement, rank = resultrank, area = result_area } 
+                    if not result_area.cards[1] then crrd = SMODS.create_card { set = "Base", enhancement = resultenhancement, rank = resultrank, area = result_area }
                     G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                    table.insert(G.playing_cards, crrd) 
-                    G.result:emplace(crrd) else 
-                        crrd = result_area.cards[1] 
+                    table.insert(G.playing_cards, crrd)
+                    G.result:emplace(crrd) else
+                        crrd = result_area.cards[1]
                         crrd:set_ability(G.P_CENTERS[resultenhancement])
                     end
                     end
@@ -490,7 +498,7 @@ G.E_MANAGER:add_event(Event({
         area:remove_card(card)
         card:add_to_deck()
         play_sound("card1")
-        
+
         _area:emplace(card)
         end
     end
@@ -502,7 +510,7 @@ end
 
 
     G.FUNCS.suit_my_next = function(e)
-        if LAB.suit_lock then
+        if G.GAME.LAB.suit_lock then
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
             e.config.button = nil
         else
@@ -516,7 +524,7 @@ end
     end
 
     G.FUNCS.med_can_merge = function(e)
-        if ((G.GAME.dollars - G.GAME.bankrupt_at) - LAB.merge_cost < 0) or not MEDIUM.merge(G.result, nil, nil, true) or
+        if ((G.GAME.dollars - G.GAME.bankrupt_at) - G.GAME.LAB.merge_cost < 0) or not MEDIUM.merge(G.result, nil, nil, true) or
             (#G.merge_1.cards == 0 or #G.merge_2.cards == 0) then
             e.config.colour = G.C.UI.BACKGROUND_INACTIVE
             e.config.button = nil
@@ -527,8 +535,8 @@ end
     end
 
     G.FUNCS.med_lab_merge = function(e)
-        ease_dollars(-LAB.merge_cost)
-        LAB.merge_cost = LAB.merge_cost + LAB.merge_cost_increase
+        ease_dollars(-G.GAME.LAB.merge_cost)
+        G.GAME.LAB.merge_cost = G.GAME.LAB.merge_cost + G.GAME.LAB.merge_cost_increase
         MEDIUM.merge(G.result)
 
         if not next(SMODS.find_card("j_med_poison")) then G.result.cards[1].old_area = G.merge_1.cards[1].old_area or G.jokers end
@@ -569,12 +577,12 @@ end
             MEDIUM.move_card(card, card.old_area or G.jokers)
             merge_save_nil(carda)
             card.old_area = nil
-            
+
         else
             MEDIUM.move_card(card, card.old_area or G.jokers)
             merge_save_nil(carda)
             card.old_area = nil
-            
+
         end
         end
 
@@ -608,7 +616,7 @@ end
 
 function next_suit()
 
-    LAB.suit_lock = true
+    G.GAME.LAB.suit_lock = true
 
     for k, v in pairs(G.SUITS_AREA.cards) do
         if v and v.children.switch_suits then
@@ -618,14 +626,14 @@ function next_suit()
 
     suit_check_merge()
 
-    if not LAB.current_suit then
-        LAB.current_suit = 0
+    if not G.GAME.LAB.current_suit then
+        G.GAME.LAB.current_suit = 0
     end
 
-    if LAB.current_suit >= #LAB.SUITS then
-        LAB.current_suit = 1
+    if G.GAME.LAB.current_suit >= #G.GAME.LAB.SUITS then
+        G.GAME.LAB.current_suit = 1
     else
-        LAB.current_suit = LAB.current_suit + 1
+        G.GAME.LAB.current_suit = G.GAME.LAB.current_suit + 1
     end
 
     if G.SUITS_AREA and G.SUITS_AREA.cards and #G.SUITS_AREA.cards > 0 then
@@ -635,7 +643,7 @@ function next_suit()
     end
 
     for k, v in pairs(G.deck.cards) do
-        if v.base.suit == LAB.SUITS[LAB.current_suit] then
+        if v.base.suit == G.GAME.LAB.SUITS[G.GAME.LAB.current_suit] then
             MEDIUM.move_card(v, G.SUITS_AREA)
             v.children.switch_suits = UIBox {
                 definition = MEDIUM.nxt_st(v),
@@ -655,7 +663,7 @@ function next_suit()
         trigger = "after",
         func = function()
             save_run();
-            LAB.suit_lock = false;
+            G.GAME.LAB.suit_lock = false;
             return true
         end
     }))
@@ -700,11 +708,11 @@ function reset_merge()
 end
 
 function suit_check_merge()
-    LAB.SUITS = {}
+    G.GAME.LAB.SUITS = {}
         for k, v in pairs(SMODS.Suits) do
           for kk, vv in pairs(G.deck.cards) do
             if vv.base.suit == k then
-                LAB.SUITS[#LAB.SUITS+1] = k
+                G.GAME.LAB.SUITS[#G.GAME.LAB.SUITS+1] = k
                 break
             end
         end
@@ -714,7 +722,7 @@ end
 function merge_save_nil(args) --??
     if args == G.merge_1 then
         G.load_merge_1 = nil
-    else 
+    else
         G.load_merge_2 = nil
     end
 end
@@ -764,7 +772,7 @@ G.FUNCS.your_collecion_merge_list = function(args)
       local center = MEDIUM.MERGE_LIST[i+(j-1)*3 + (3*#G.merge_list*(args.cycle_config.current_option - 1))]
       if not center then break end
       local card = Card(G.merge_list[j].T.x + G.merge_list[j].T.w/2, G.merge_list[j].T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, center)
-      
+
       G.merge_list[j]:emplace(card)
     end
   end
@@ -774,7 +782,7 @@ end
 function create_UI_merge_list()
   local deck_tables = {}
 
-  table.insert(deck_tables, 
+  table.insert(deck_tables,
     {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
       {n=G.UIT.T, config = { text = " ENTRY", colour = G.C.UI.TEXT_DARK, scale = 0.55}},
       {n=G.UIT.T, config = { text = "     ENTRY    ", colour = G.C.UI.TEXT_DARK, scale = 0.55, padding =0.95}},  -- this is so stupid please change this im begging
@@ -782,7 +790,7 @@ function create_UI_merge_list()
     }}
   )
 
-table.insert(deck_tables, 
+table.insert(deck_tables,
     {n=G.UIT.R, config={align = "cm", padding = 0.15, no_fill = true}, nodes={}}
   )
 
@@ -791,9 +799,9 @@ table.insert(deck_tables,
     G.merge_list[j] = CardArea(
       G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
       3*G.CARD_W,
-      0.95*G.CARD_H, 
+      0.95*G.CARD_H,
       {card_limit = 3, type = 'title', highlight_limit = 0, collection = true})
-    table.insert(deck_tables, 
+    table.insert(deck_tables,
     {n=G.UIT.R, config={align = "cm", padding = 0.07, no_fill = true}, nodes={
       {n=G.UIT.O, config={object = G.merge_list[j]}}
     }}
@@ -809,15 +817,15 @@ table.insert(deck_tables,
     for j = 1, #G.merge_list do
       local center = MEDIUM.MERGE_LIST[i+(j-1)*(3)]
       local card = Card(G.merge_list[j].T.x + G.merge_list[j].T.w/2, G.merge_list[j].T.y, G.CARD_W, G.CARD_H, nil, center)
-      
+
       G.merge_list[j]:emplace(card)
     end
   end
 
    MEDIUM.INIT_COLLECTION_CARD_ALERTS()
-  
+
   local t =  create_UIBox_generic_options({ back_func = 'your_collection', contents = {
-        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}, 
+        {n=G.UIT.R, config={align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables},
         {n=G.UIT.R, config={align = "cm"}, nodes={
           create_option_cycle({options = joker_options, w = 4.5, cycle_shoulders = true, opt_callback = 'your_collecion_merge_list', current_option = 1, colour = G.C.RED, no_pips = true, focus_args = {snap_to = true, nav = 'wide'}})
         }}
@@ -875,7 +883,7 @@ function add_calc_effect(key_table, funct, display_message_func, color, eval_car
                 bool = true
             end
         end
-        if bool then 
+        if bool then
             funct(amount)
             update_hand_text({delay = 0}, {mult = mult, chips = hand_chips})
     		if eval_card then card_eval_status_text(effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus, 'extra', nil, percent, nil, {message = tostring(display_message_func(amount)), colour = copy_table(color), sound = sound}) end
@@ -942,7 +950,7 @@ function Game:update(...) -- making sure you never have more injogged cards than
     end
     return ret
 end
--- shuffling 
+-- shuffling
 
 -- shuffle hook, taken from aikoyori
 local function compareFirstElement(a,b)

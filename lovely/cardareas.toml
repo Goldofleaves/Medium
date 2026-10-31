@@ -1,0 +1,41 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''G.SPLASH_BACK = Sprite(-30, -6, G.ROOM.T.w+60, G.ROOM.T.h+12, G.ASSET_ATLAS["ui_1"], {x = 2, y = 0})'''
+position = "before"
+payload = '''
+      local m = 0.87
+    self.merge_1 = CardArea(
+      G.hand.T.x+0,
+      G.hand.T.y+G.ROOM.T.y + 9,
+      G.CARD_W * m,
+      G.CARD_H * m,
+      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
+
+    self.merge_2 = CardArea(
+      G.hand.T.x+0,
+      G.hand.T.y+G.ROOM.T.y + 9,
+      G.CARD_W * m,
+      G.CARD_H * m,
+      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
+
+    self.result = CardArea(
+      G.hand.T.x+0,
+      G.hand.T.y+G.ROOM.T.y + 9,
+      G.CARD_W * m,
+      G.CARD_H * m,
+      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
+
+    self.SUITS_AREA = CardArea(
+      G.hand.T.x+0,
+      G.hand.T.y+G.ROOM.T.y + 9,
+      G.CARD_W * 2.6,
+      G.CARD_H * m,
+      {card_limit = 13, type = 'hand', highlight_limit = 1})
+    '''
+match_indent = true

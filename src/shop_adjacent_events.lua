@@ -1,15 +1,5 @@
 MEDIUM.sajeventpool = {Shop = 3, Lab = 2} -- weights, must be integers
 
-LAB = {
-    merge_cost = 5,
-    merge_cost_increase = 2,
-    merge_cost_reset = 5,
-    in_lab = false,
-
-    old_pos = {},
-}
-
-
 function generate_shop_adjacent_event()
     local thunk = {}
     for k, v in pairs(MEDIUM.sajeventpool) do
@@ -55,38 +45,9 @@ end
 
 function G.UIDEF.lab()
       local stake_sprite = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 1, y = 0 }) --get_stake_sprite(G.GAME.stake or 1, 0.5)
-      local stake_sprite2 = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 0, y = 0 }) -- get_stake_sprite(G.GAME.stake or 1, 0.5) 
-      
+      local stake_sprite2 = Sprite(0, 0, 0.5, 0.5, G.ASSET_ATLAS["med_lab_ui_stuff"], { x = 0, y = 0 }) -- get_stake_sprite(G.GAME.stake or 1, 0.5)
+
       local stake_spritebbb = get_stake_sprite(G.GAME.stake or 1, 0.5)
-
-      local m = 0.87
-    G.merge_1 = CardArea(
-      G.hand.T.x+0,
-      G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W * m,
-      G.CARD_H * m, 
-      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
-
-    G.merge_2 = CardArea(
-      G.hand.T.x+0,
-      G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W * m,
-      G.CARD_H * m, 
-      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
-
-    G.result = CardArea(
-      G.hand.T.x+0,
-      G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W * m,
-      G.CARD_H * m, 
-      {card_limit = G.GAME.shop.joker_max, type = 'shop', highlight_limit = 1})
-
-    G.SUITS_AREA = CardArea(
-      G.hand.T.x+0,
-      G.hand.T.y+G.ROOM.T.y + 9,
-      G.CARD_W * 2.6,
-      G.CARD_H * m, 
-      {card_limit = 13, type = 'hand', highlight_limit = 1})
 
 
     local shop_sign = AnimatedSprite(0,0, 4.4, 2.2, G.ANIMATION_ATLAS['med_lab_sign'])
@@ -95,7 +56,7 @@ function G.UIDEF.lab()
       {shader = 'dissolve'}
     })
     G.SHOP_SIGN = UIBox{
-      definition = 
+      definition =
         {n=G.UIT.ROOT, config = {colour = G.C.DYN_UI.MAIN, emboss = 0.05, align = 'cm', r = 0.1, padding = 0.1}, nodes={
           {n=G.UIT.R, config={align = "cm", padding = 0.1, minw = 4.72, minh = 3.1, colour = G.C.DYN_UI.DARK, r = 0.1}, nodes={
             {n=G.UIT.R, config={align = "cm"}, nodes={
@@ -135,8 +96,8 @@ function G.UIDEF.lab()
                             }},
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3}, nodes={
                               {n=G.UIT.T, config={text = localize('b_next_round_2'), scale = 0.4, colour = G.C.WHITE, shadow = true}}
-                            }}   
-                          }},              
+                            }}
+                          }},
                         }},
                         {n=G.UIT.R, config={align = "cm", minw = 2.3, minh = 1.6, r=0.15,colour = G.C.GREEN, button = 'med_lab_merge', func = 'med_can_merge', hover = true,shadow = true}, nodes = {
                           {n=G.UIT.R, config={align = "cm", padding = 0.07, focus_args = {button = 'x', orientation = 'cr'}, func = 'set_button_pip'}, nodes={
@@ -145,7 +106,7 @@ function G.UIDEF.lab()
                             }},
                             {n=G.UIT.R, config={align = "cm", maxw = 1.3, minw = 1}, nodes={
                               {n=G.UIT.T, config={text = localize('$'), scale = 0.7, colour = G.C.WHITE, shadow = true}},
-                              {n=G.UIT.T, config={ref_table = LAB, ref_value = 'merge_cost', scale = 0.75, colour = G.C.WHITE, shadow = true}},
+                              {n=G.UIT.T, config={ref_table = G.GAME.LAB, ref_value = 'merge_cost', scale = 0.75, colour = G.C.WHITE, shadow = true}},
                             }}
                           }}
                         }},
@@ -184,12 +145,12 @@ function G.UIDEF.lab()
                         }},
                       }},
 
-                      
+
 
 
                       {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
 
-                    
+
 
                         {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
                           {n=G.UIT.C, config={align = "cm", padding = 0.1,r=0.2,colour = G.C.L_BLACK}, nodes={
@@ -198,19 +159,19 @@ function G.UIDEF.lab()
 
                           }},
                         }},
-              
-                        
-                        {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.DYN_UI.BOSS_MAIN, emboss = 0.05}, nodes={  
+
+
+                        {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.DYN_UI.BOSS_MAIN, emboss = 0.05}, nodes={
 
                         {n=G.UIT.O, config={padding = 0.2,w=n,h=n, colour = G.C.BLUE, object = stake_spritebbb, hover = true, can_collide = true}},
-                                 
+
                         }},
-                        
+
                       }},
                     }}
                 }
               },
-              
+
               }, false)
         }}
     return t
@@ -222,9 +183,9 @@ function Game:update_lab(dt)
         stop_use()
         ease_background_colour_blind(G.STATES.LAB)
 
-        LAB.in_lab = true
-      
-        
+        G.GAME.LAB.in_lab = true
+
+
         G.shop = G.shop or UIBox{
             definition = G.UIDEF.lab(),
             config = {align='tmi', offset = {x=0,y=G.ROOM.T.y+11},major = G.hand, bond = 'Weak'}
@@ -249,7 +210,7 @@ function Game:update_lab(dt)
                                 end
 
                                 -- could've looped these
-                                
+
                                 if G.load_result then
                                   G.result:load(G.result)
                                   G.load_result = nil
@@ -259,7 +220,7 @@ function Game:update_lab(dt)
 
                                     G.SUITS_AREA:load(G.load_SUITS_AREA)
                                     G.load_SUITS_AREA = nil
-                                    
+
                                     for k, v in pairs(G.SUITS_AREA.cards) do
                                     if v then
 
@@ -292,7 +253,7 @@ function Game:update_lab(dt)
                                     G.load_merge_2 = nil
                                 end
 
-                                
+
 
                                 G.CONTROLLER:snap_to({node = G.shop:get_UIE_by_ID('next_round_button')})
                                 G.E_MANAGER:add_event(Event({ func = function() save_run(); return true end}))
@@ -302,15 +263,15 @@ function Game:update_lab(dt)
                     return true
                 end
             }))
-            
 
 
-            
-          
+
+
+
 
           G.STATE_COMPLETE = true
-    end  
-    if self.buttons then self.buttons:remove(); self.buttons = nil end          
+    end
+    if self.buttons then self.buttons:remove(); self.buttons = nil end
 end
 
 	local card_area_align_cards_ref = CardArea.align_cards
