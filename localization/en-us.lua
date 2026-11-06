@@ -139,6 +139,39 @@ return {
             },
         },
         Other = {
+            cc_kamoshida = {
+                name = "Kamoshida's Method",
+                text = {
+                    "Play a flush of",
+                    "{C:hearts}Hearts"
+                }
+            },
+            cc_madarame = {
+                name = "Madarame's Method",
+                text = {
+                    "Create a card"
+                }
+            },
+            cc_kaneshiro = {
+                name = "Kaneshiro's Method",
+                text = {
+                    "Sell a {C:attention}Joker",
+                }
+            },
+            cc_okumura = {
+                name = "Okumura's Method",
+                text = {
+                    "Destroy a card",
+                }
+            },
+            cc_treasure = {
+                name = "Treasure",
+                text = {
+                    "Stealing the treasure",
+                    "{C:attention}disables the boss blind and",
+                    "grants you {C:gold}20$"
+                }
+            },
             -- seals
             med_orange_seal = {
                 name = "Orange Seal",
@@ -287,6 +320,21 @@ return {
             },
         },
         Joker = {
+            j_med_calling_card_inactive = {
+                name = {"Calling Card", "{s:0.5}Persona 5"},
+                text = {
+                    "{C:attention}Materialize {}the",
+                    "treasure"
+                }
+            },
+            j_med_calling_card_active = {
+                name = { "Calling Card", "{s:0.5}Persona 5" },
+                text = {
+                    "{C:attention}Steal {}the",
+                    "treasure based on the",
+                    "{C:attention}method{}!"
+                }
+            },
             j_med_defect = {
                 name = "The Defect",
                 text = {
