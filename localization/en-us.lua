@@ -336,7 +336,7 @@ return {
                 }
             },
             j_med_defect = {
-                name = "The Defect",
+                name = { "The Defect", "{s:0.5}Slay the Spire" },
                 text = {
                         "At the start of blind,",
                         "{C:attention}Channel{} or {C:attention}Evoke{} an orb"
