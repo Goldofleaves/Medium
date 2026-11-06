@@ -63,7 +63,7 @@ local fucks = function (a, b)
     if type(b) ~="number" then
         b = 1
     end
-    return math.min(a,b)
+    return (a+b)/2
 end
 
 SMODS.Scoring_Calculation({
@@ -182,7 +182,7 @@ SMODS.Scoring_Calculation({
 			}},
 			SMODS.GUI.operator(scale*0.75),
             {n=G.UIT.C, config={align = "cm", id = 'hand_operator_container'}, nodes={
-                {n=G.UIT.T, config={text = "min(", scale = scale * 2 * 0.75, colour = G.C.WHITE, shadow = true}},
+                {n=G.UIT.T, config={text = "avg(", scale = scale * 2 * 0.75, colour = G.C.WHITE, shadow = true}},
             }},
 			{n=G.UIT.C, config={align = 'cm', id = 'hand_mult'}, nodes = {
 				SMODS.GUI.score_container({

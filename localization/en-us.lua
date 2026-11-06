@@ -235,7 +235,7 @@ return {
             decapitated_jank = {
                 name = "Decapitated Operator",
                 text = {
-                    "Score = {C:mult}Mult{} x min({C:chips}Chips{}, {C:attention}Jank{})"
+                    "Score = {C:mult}Mult{} x avg({C:chips}Chips{}, {C:attention}Jank{})"
                 }
             },
             improved_jank = {
